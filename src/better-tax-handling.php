@@ -1,36 +1,17 @@
 <?php
 
-namespace Woocart\BetterTaxHandling;
+namespace Niteo\Woocart\BetterTaxHandling;
 
 /**
  * Plugin Name: Better Tax Handling
  * Description: Better Tax Handling is a plugin for WooCommerce stores that simplifies the complex part of taxation for B2B and B2C selling.
  * Version:     1.0.0
- * Runtime:     5.3+
+ * Runtime:     5.4+
  * Author:      WooCart
  * Text Domain: better-tax-handling
  * Domain Path: /langs/
  * Author URI:  www.woocart.com
  */
-
-/**
- * Checks for PHP version and stop the plugin if the version is < 5.4.0.
- */
-if ( version_compare( PHP_VERSION, '5.4.0', '<' ) ) {
-	?>
-	<div id="error-page">
-		<p>
-		<?php
-		esc_html_e(
-			'This plugin requires PHP 5.4.0 or higher. Please contact your hosting provider about upgrading your
-			server software. Your PHP version is', 'better-tax-handling'
-		);
-		?>
-		<b><?php echo esc_html( PHP_VERSION ); ?></b></p>
-	</div>
-	<?php
-	die();
-}
 
 /**
  * BetterTaxHandling class where all the action happens.
@@ -45,7 +26,9 @@ class BetterTaxHandling {
 	 * Class Constructor.
 	 */
 	public function __construct() {
-
+		if ( class_exists( 'WooCommerce' ) )  {
+			print_r( woocommerce_admin_fields() );
+		}
 	}
 
 	/**
