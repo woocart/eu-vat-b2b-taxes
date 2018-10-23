@@ -1,6 +1,6 @@
 <?php
 
-namespace Niteo\Woocart\BetterTaxHandling;
+namespace Niteo\WooCart\BetterTaxHandling;
 
 /**
  * Plugin Name: Better Tax Handling
@@ -13,6 +13,15 @@ namespace Niteo\Woocart\BetterTaxHandling;
  * Author URI:  www.woocart.com
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+/**
+ * Include composer autoload.
+ */
+require_once plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
+
 /**
  * BetterTaxHandling class where all the action happens.
  *
@@ -23,37 +32,33 @@ namespace Niteo\Woocart\BetterTaxHandling;
 class BetterTaxHandling {
 
 	/**
-	 * Class Constructor.
+	 * @var string
+	 */
+	public static $version = '1.0.0';
+
+	/**
+	 * @var string
+	 */
+	public static $plugin_url;
+
+	/**
+	 * Class constructor.
 	 */
 	public function __construct() {
-		if ( class_exists( 'WooCommerce' ) )  {
-			print_r( woocommerce_admin_fields() );
-		}
-	}
+		// Get the directory URL.
+		self::$plugin_url = plugin_dir_url( __FILE__ );
 
-	/**
-	 * Attached to the activation hook.
-	 */
-	public function activate_plugin() {
-		
-	}
+		// For WP admin.
+		$admin 	= new Admin();
 
-	/**
-	 * Attached to the de-activation hook.
-	 */
-	public function deactivate_plugin() {
-		
+		// Tax rates.
+		$rates 	= new Rates();
+
+		// Frontend.
+		$user 	= new User();
 	}
 
 }
 
 // Initialize Plugin.
-if ( defined( 'ABSPATH' ) ) {
-	$niteo_tax_handling = new BetterTaxHandling();
-
-	// Activation Hook.
-	register_activation_hook( __FILE__, array( &$niteo_tax_handling, 'activate_plugin' ) );
-
-	// Deactivation Hook.
-	register_deactivation_hook( __FILE__, array( &$niteo_tax_handling, 'deactivate_plugin' ) );
-}
+$plugin = new BetterTaxHandling();
