@@ -5,10 +5,10 @@
  * @package better-tax-handling
  */
 
-use Niteo\WooCart\BetterTaxHandling\User;
+use Niteo\WooCart\BetterTaxHandling\UserView;
 use PHPUnit\Framework\TestCase;
 
-class UserTest extends TestCase {
+class UserViewTest extends TestCase {
 
 	function setUp() {
 		\WP_Mock::setUsePatchwork( true );
@@ -24,15 +24,118 @@ class UserTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\BetterTaxHandling\User::__construct
+	 * @covers \Niteo\WooCart\BetterTaxHandling\UserView::__construct
 	 */	 
 	public function testConstructor() {
-		$user = new User();
+		$user = new UserView();
 
 		\WP_Mock::expectActionAdded( 'init', [ $user, 'init' ] );
 
         $user->__construct();
 		\WP_Mock::assertHooksAdded();
+	}
+
+	/**
+	 * @covers \Niteo\WooCart\BetterTaxHandling\UserView::__construct
+	 * @covers \Niteo\WooCart\BetterTaxHandling\UserView::init
+	 */	 
+	public function testInit() {
+		$user = new UserView();
+
+		\WP_Mock::expectActionAdded( 'wp_enqueue_scripts', [ $user, 'scripts' ] );
+		\WP_Mock::expectActionAdded( 'woocommerce_cart_calculate_fees', [ $user, 'calculate_tax' ] );
+		\WP_Mock::expectActionAdded( 'woocommerce_after_checkout_validation', [ $user, 'checkout_validation' ], PHP_INT_MAX, 2 );
+
+		\WP_Mock::expectFilterAdded( 'woocommerce_billing_fields', [ $user, 'checkout_fields' ] );
+
+        $user->init();
+		\WP_Mock::assertHooksAdded();
+	}
+
+	/**
+	 * @covers \Niteo\WooCart\BetterTaxHandling\UserView::__construct
+	 * @covers \Niteo\WooCart\BetterTaxHandling\UserView::scripts
+	 */	 
+	public function testScripts() {
+		$user = new UserView();
+
+		\WP_Mock::userFunction(
+			'wp_enqueue_script', [
+				'return' => true
+			]
+		);
+		\WP_Mock::userFunction(
+			'wp_enqueue_style', [
+				'return' => true
+			]
+		);
+
+        $user->scripts();
+	}
+
+	/**
+	 * @covers \Niteo\WooCart\BetterTaxHandling\UserView::__construct
+	 * @covers \Niteo\WooCart\BetterTaxHandling\UserView::checkout_fields
+	 */	 
+	public function testCheckoutFields() {
+		$user = new UserView();
+
+		\WP_Mock::userFunction(
+			'get_option', [
+				'return' => 'none'
+			]
+		);
+
+        $this->assertEquals( [], $user->checkout_fields( [] ) );
+	}
+
+	/**
+	 * @covers \Niteo\WooCart\BetterTaxHandling\UserView::__construct
+	 * @covers \Niteo\WooCart\BetterTaxHandling\UserView::checkout_fields
+	 */	 
+	public function testCheckoutFieldsNotEmpty() {
+		$user = new UserView();
+
+		\WP_Mock::userFunction(
+			'get_option', [
+				'return' => 'notnone'
+			]
+		);
+
+        $this->assertNotEquals( [], $user->checkout_fields( [] ) );
+	}
+
+	/**
+	 * @covers \Niteo\WooCart\BetterTaxHandling\UserView::__construct
+	 * @covers \Niteo\WooCart\BetterTaxHandling\UserView::return_tax
+	 */	 
+	public function testReturnTax() {
+		$user = new UserView();
+
+        $this->assertEmpty( $user->return_tax( '', '', '', false, false ) );
+	}
+
+	/**
+	 * @covers \Niteo\WooCart\BetterTaxHandling\UserView::__construct
+	 * @covers \Niteo\WooCart\BetterTaxHandling\UserView::checkout_validation
+	 */	 
+	public function testCheckoutValidation() {
+		$user = new UserView();
+
+		$_POST['business_check'] = 'yes';
+
+		\WP_Mock::userFunction(
+			'get_option', [
+				'return' => 'yes'
+			]
+		);
+
+		$mock = \Mockery::mock( '\WP_Error' );
+		$mock->shouldReceive( 'add' )
+			 ->with( 'billing', 'Business Tax ID is a required field.' )
+			 ->andReturns( true );
+
+        $user->checkout_validation( '', $mock );
 	}
 
 }

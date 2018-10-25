@@ -83,11 +83,12 @@ namespace Niteo\WooCart\BetterTaxHandling {
 		 * All the action happens here.
 		 *
 		 * @todo Seperate JS from the code.
+		 * @codeCoverageIgnore
 		 */
 		public function footer() {
 			$get_rates 			= $this->get_tax_rates();
 			$rates 				= ( is_array( $get_rates ) ) ? $get_rates : array();
-			$rate_description 	= esc_html__('Add / Update EU Tax Rates', 'better-tax-handling');
+			$rate_description 	= esc_html__( 'Add / Update EU Tax Rates', 'better-tax-handling' );
 			?>
 			<script type="text/javascript">
 			( function( $ ) {

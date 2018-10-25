@@ -3,9 +3,10 @@
  * Setup tests.
  */
 
-define( 'ABSPATH', true );
+define( 'Plugin_Url', 'xyz' );
+define( 'Version', '1.0' );
 
-$root_dir = dirname( dirname(__FILE__) );
+$root_dir = dirname( dirname( __FILE__ ) );
 require_once "$root_dir/vendor/autoload.php";
 
 WP_Mock::setUsePatchwork(true);

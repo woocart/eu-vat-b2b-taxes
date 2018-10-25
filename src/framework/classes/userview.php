@@ -30,12 +30,12 @@ namespace Niteo\WooCart\BetterTaxHandling {
 	     * Add styles and scripts for the frontend.
 	     */
 	    public function scripts() {
-	    	wp_enqueue_script( 'better-tax-public', BetterTaxHandling::$plugin_url . 'framework/js/public.js', array( 'jquery' ), BetterTaxHandling::$version, true );
-	    	wp_enqueue_style( 'better-tax-public', BetterTaxHandling::$plugin_url . 'framework/css/public.css', '', BetterTaxHandling::$version );
+	    	wp_enqueue_script( 'better-tax-public', Plugin_Url . 'framework/js/public.js', array( 'jquery' ), Version, true );
+	    	wp_enqueue_style( 'better-tax-public', Plugin_Url . 'framework/css/public.css', '', Version );
 	    }
 
 	    /**
-	     * Add custom fields to the checkout page.
+		 * Add custom fields to the checkout page.
 	     */
 	    public function checkout_fields( $fields ) {
 	    	$b2b_sales = esc_html( get_option( 'b2b_sales' ) );
@@ -78,6 +78,7 @@ namespace Niteo\WooCart\BetterTaxHandling {
 	     * Simplifying taxation for the user.
 	     *
 	     * @todo Live validation for the Tax ID
+	     * @codeCoverageIgnore
 	     */
 	    public function calculate_tax( $cart ) {
 	    	global $woocommerce, $wpdb;
@@ -179,9 +180,9 @@ namespace Niteo\WooCart\BetterTaxHandling {
 	     */
 	    public function checkout_validation( $data, $errors ) {
 	    	if ( isset( $_POST['business_check'] ) ) {
-	    		if ( ! isset( $_POST['business_tax_id'] ) || empty( $_POST['business_tax_id'] ) ) {
-	    			if ( 'yes' === get_option( 'tax_id_required' ) ) {
-				    	$errors->add( 'billing', esc_html__( 'Business Tax ID is a required field.', 'better-tax-handling' ) );
+				if ( ! isset( $_POST['business_tax_id'] ) || empty( $_POST['business_tax_id'] ) ) {
+					if ( 'yes' === get_option( 'tax_id_required' ) ) {
+						$errors->add( 'billing', esc_html__( 'Business Tax ID is a required field.', 'better-tax-handling' ) );
 	    			}
 	    		}
 	    	}
