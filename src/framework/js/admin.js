@@ -29,4 +29,51 @@
 	$( document ).on( 'change', '#b2b_sales', function() {
 		trigger_change();
 	} );
+
+	/**
+	 * AJAX function.
+	 */
+	function btp_ajax( req_type, trigger ) {
+		var req_data = {
+			action: 'add_' + req_type,
+			nonce: btp_localize.nonce
+		};
+
+		if( req_type == 'distance_taxes' ) {
+			req_data.countries = $( 'select[name="vat_distance_selling_countries[]"]' ).val();
+		}
+
+		$.ajax( {
+			type: 'POST',
+			url: ajaxurl,
+			data: req_data,
+			beforeSend: function() {
+				trigger.prop( 'disabled', true );
+			}
+		} ).done( function( data ) {
+			// Unblock the button
+			trigger.prop( 'disabled', false );
+
+			if( data.success ) {
+				// Refreshes the options to the latest values.
+				window.location.href = window.location.href;
+			}
+		} );
+	}
+
+	/**
+	 * Import taxes for digital goods & distance selling.
+	 */
+	$( '.import-digital-tax-rates' ).on( 'click', function( event ) {
+		event.preventDefault();
+
+		btp_ajax( 'digital_taxes', $( this ) );
+	} );
+
+	// Distance selling.
+	$( '.import-distance-tax-rates' ).on( 'click', function( event ) {
+		event.preventDefault();
+
+		btp_ajax( 'distance_taxes', $( this ) );
+	} );
 } )( jQuery );

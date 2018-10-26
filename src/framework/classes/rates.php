@@ -32,11 +32,6 @@ namespace Niteo\WooCart\BetterTaxHandling {
 		);
 
 		/**
-		 * @var object
-		 */
-		private $wc;
-
-		/**
 		 * Class constructor. 
 		 */
 		public function __construct() {
@@ -72,11 +67,6 @@ namespace Niteo\WooCart\BetterTaxHandling {
 					$this->which_rate = 'reduced_rate';
 				}
 			}
-
-			// Grab the WC object.
-			if ( function_exists( 'WC' ) ) {
-				$this->wc = WC();
-			}
 		}
 
 		/**
@@ -94,27 +84,6 @@ namespace Niteo\WooCart\BetterTaxHandling {
 			( function( $ ) {
 				$( document ).ready( function() {
 					var rates = <?php echo json_encode( $rates ); ?>;
-					var availableCountries = [<?php
-						$countries = array();
-
-						foreach ( $this->wc->countries->get_allowed_countries() as $value => $label ) {
-							$countries[] = '{ label: "' . $label . '", value: "' . $value . '" }';
-						}
-
-						echo implode( ', ', $countries );
-					?>];
-
-					var availableStates = [<?php
-						$countries = array();
-
-						foreach ( $this->wc->countries->get_allowed_country_states() as $value => $label ) {
-							foreach ( $label as $code => $state ) {
-								$countries[] = '{ label: "' . $state . '", value: "' . $code . '" }';
-							}
-						}
-
-						echo implode( ', ', $countries );
-					?>];
 
 					function better_tax_add_row( iso_code, tax_rate, tax_label ) {
 						// From WC_Settings_Tax::output_tax_rates (class-wc-settings-tax.php)
