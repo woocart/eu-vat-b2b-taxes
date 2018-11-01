@@ -44,6 +44,9 @@ namespace Niteo\WooCart\BetterTaxHandling {
 
 			// Frontend.
 			new UserView();
+
+			// Reports.
+			new Reports();
 		}
 
 	}

@@ -28,7 +28,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Niteo\\WooCart\\BetterTaxHandling\\": "framework/classes"
+      "Niteo\\WooCart\\BetterTaxHandling\\": "framework/classes",
+      "Niteo\\WooCart\\BetterTaxHandling\\Reports\\": "framework/classes/reports"
     }
   }
 }

@@ -27,6 +27,7 @@ namespace Niteo\WooCart\BetterTaxHandling {
 				add_action( 'woocommerce_admin_field_button', array( &$this, 'button_field' ), 10, 1 );
 				add_action( 'wp_ajax_add_digital_taxes', array( &$this, 'ajax_digital_tax_rates' ) );
 				add_action( 'wp_ajax_add_distance_taxes', array( &$this, 'ajax_distance_tax_rates' ) );
+				add_action( 'woocommerce_admin_order_data_after_billing_address', array( &$this, 'order_meta' ), 10, 1 );
 			}
 		}
 
@@ -400,6 +401,24 @@ namespace Niteo\WooCart\BetterTaxHandling {
 				wp_send_json_error( $response );
 			}
 	    }
+
+	    /**
+		 * Display field value on the order edit page.
+		 *
+		 * @param object $order Order object for getting post meta information.
+		 * @return void
+		 */
+		public function order_meta( $order ) {
+			$b2b_sale 			= get_post_meta( $order->get_id(), 'b2b_sale', true ) ? esc_html__( 'Yes', 'better-tax-handling' ) : esc_html__( 'No', 'better-tax-handling' );
+			$business_tax_id 	= esc_html( get_post_meta( $order->get_id(), 'business_tax_id', true ) );
+
+			if ( empty( $business_tax_id ) ) {
+				$business_tax_id = esc_html__( 'None', 'better-tax-handling' );
+			}
+
+			echo '<p><strong>' . esc_html__( 'B2B Sale', 'better-tax-handling' ) . ':</strong><br/>' . $b2b_sale . '</p>';
+			echo '<p><strong>' . esc_html__( 'Business Tax ID', 'better-tax-handling' ) . ':</strong><br/>' . $business_tax_id . '</p>';
+		}
 
 	}
 
