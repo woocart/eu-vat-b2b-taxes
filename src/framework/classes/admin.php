@@ -69,7 +69,7 @@ namespace Niteo\WooCart\BetterTaxHandling {
 				),
 				array(
 					'id' 		=> 'tax_eu_with_vatid',
-					'name' 		=> esc_html__( 'B2B sales in the EU when valid VIES/VAT ID', 'better-tax-handling' ),
+					'name' 		=> esc_html__( 'B2B sales in the EU when VIES/VAT ID is provided', 'better-tax-handling' ),
 					'type' 		=> 'checkbox',
 					'desc' 		=> esc_html__( 'Do not charge Tax', 'better-tax-handling' ),
 					'default' 	=> 'yes'

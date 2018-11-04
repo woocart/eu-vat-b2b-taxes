@@ -88,8 +88,8 @@ namespace Niteo\WooCart\BetterTaxHandling\Reports {
 					'function'  => '',
 					'name'      => 'tax_id'
 				),
-				'_completed_date'   => array(
-					'type'      => 'meta',
+				'post_date_gmt'   => array(
+					'type'      => 'post_data',
 					'function'  => '',
 					'name'      => 'order_date'
 				)

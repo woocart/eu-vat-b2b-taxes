@@ -108,7 +108,7 @@ namespace Niteo\WooCart\BetterTaxHandling {
 		    	// We will continue only if B2B sales are not disabled.
 		    	if ( 'none' !== $b2b_sales ) {
 			    	$b2b_home_tax 		= esc_html( get_option( 'tax_home_country' ) );
-			    	$b2b_eu_tax_vat_id 	= esc_html( get_option( 'tax_eu_with_vatid' ) );
+			    	$b2b_eu_tax_id 		= esc_html( get_option( 'tax_eu_with_vatid' ) );
 			    	$b2b_tax_outside 	= esc_html( get_option( 'tax_charge_vat' ) );
 			    	$base_location 		= wc_get_base_location()['country'];
 
@@ -124,6 +124,13 @@ namespace Niteo\WooCart\BetterTaxHandling {
 			    	// If the sale is not made in the base country, and the option to not charge tax is ticked.
 			    	if ( ( $base_location !== $country ) && 'yes' === $b2b_tax_outside ) {
 			    		add_filter( 'woocommerce_calc_tax', array( &$this, 'return_tax' ), PHP_INT_MAX, 5 );
+			    	}
+
+			    	// Check if `business_tax_id` is provided and the option to not charge tax is turned on. We will return empty taxes if the first statement is true.
+			    	if ( isset( $new_data['business_tax_id'] ) && ! empty( $new_data['business_tax_id'] ) ) {
+			    		if ( 'yes' === $b2b_eu_tax_id ) {
+			    			add_filter( 'woocommerce_calc_tax', array( &$this, 'return_tax' ), PHP_INT_MAX, 5 );
+			    		}
 			    	}
 			    }
 	    	} else {
