@@ -77,6 +77,16 @@ class AdminTest extends TestCase {
 				'return' => true
 			]
 		);
+		\WP_Mock::userFunction(
+			'wp_create_nonce', [
+				'return' => true
+			]
+		);
+		\WP_Mock::userFunction(
+			'wp_localize_script', [
+				'return' => true
+			]
+		);
 
         $admin->scripts();
 	}

@@ -38,13 +38,30 @@ class UserViewTest extends TestCase {
 	/**
 	 * @covers \Niteo\WooCart\BetterTaxHandling\UserView::__construct
 	 * @covers \Niteo\WooCart\BetterTaxHandling\UserView::init
-	 */	 
+	 */
 	public function testInit() {
 		$user = new UserView();
 
+		\WP_Mock::userFunction(
+			'admin_url', [
+				'return' => true
+			]
+		);
+		\WP_Mock::userFunction(
+			'wp_create_nonce', [
+				'return' => true
+			]
+		);
+		\WP_Mock::userFunction(
+			'wp_localize_script', [
+				'return' => true
+			]
+		);
+
 		\WP_Mock::expectActionAdded( 'wp_enqueue_scripts', [ $user, 'scripts' ] );
-		\WP_Mock::expectActionAdded( 'woocommerce_cart_calculate_fees', [ $user, 'calculate_tax' ] );
+		\WP_Mock::expectActionAdded( 'woocommerce_checkout_update_order_review', [ $user, 'calculate_tax' ] );
 		\WP_Mock::expectActionAdded( 'woocommerce_after_checkout_validation', [ $user, 'checkout_validation' ], PHP_INT_MAX, 2 );
+		\WP_Mock::expectActionAdded( 'woocommerce_checkout_update_order_meta', [ $user, 'update_order_meta' ], 10, 1 );
 
 		\WP_Mock::expectFilterAdded( 'woocommerce_billing_fields', [ $user, 'checkout_fields' ] );
 
@@ -136,6 +153,30 @@ class UserViewTest extends TestCase {
 			 ->andReturns( true );
 
         $user->checkout_validation( '', $mock );
+	}
+
+	/**
+	 * @covers \Niteo\WooCart\BetterTaxHandling\UserView::__construct
+	 * @covers \Niteo\WooCart\BetterTaxHandling\UserView::update_order_meta
+	 */	 
+	public function testUpdateOrderMeta() {
+		$user = new UserView();
+
+		$_POST['business_check'] 	= 'NOT_EMPTY';
+		$_POST['business_tax_id'] 	= 'NOT_EMPTY';
+
+		\WP_Mock::userFunction(
+			'update_post_meta', [
+				'return' => true
+			]
+		);
+		\WP_Mock::userFunction(
+			'sanitize_text_field', [
+				'return' => true
+			]
+		);
+
+		$user->update_order_meta( '1000' );
 	}
 
 }

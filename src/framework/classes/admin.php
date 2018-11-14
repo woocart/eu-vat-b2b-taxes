@@ -147,7 +147,7 @@ namespace Niteo\WooCart\BetterTaxHandling {
 	     * Add required admin script for the tax page.
 	     */
 	    public function scripts() {
-	    	wp_enqueue_script( 'better-tax-admin', Plugin_Url . 'framework/js/admin.js', array( 'jquery' ), Version, true );
+			wp_enqueue_script( 'better-tax-admin', Plugin_Url . 'framework/js/admin.js', array( 'jquery' ), Version, true );
 
 	    	/**
              * Localization

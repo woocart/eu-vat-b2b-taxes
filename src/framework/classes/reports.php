@@ -45,8 +45,8 @@ namespace Niteo\WooCart\BetterTaxHandling {
 			);
 
 			// Merging arrays to add our tabs to the tax reports section.
-			$reports['taxes']['reports'] = array_merge( $reports['taxes']['reports'], $taxes );
-			$reports['orders']['reports'] = array_merge( $reports['orders']['reports'], $orders );
+			$reports['taxes']['reports'] 	= array_merge( $reports['taxes']['reports'], $taxes );
+			$reports['orders']['reports'] 	= array_merge( $reports['orders']['reports'], $orders );
 
 			return $reports;
 		}
