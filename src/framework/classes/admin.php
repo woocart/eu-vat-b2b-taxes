@@ -143,31 +143,33 @@ namespace Niteo\WooCart\BetterTaxHandling {
 			return array_merge( $settings, $this->form_fields );
 		}
 
-	    /**
-	     * Add required admin script for the tax page.
-	     */
-	    public function scripts() {
-			wp_enqueue_script( 'better-tax-admin', Plugin_Url . 'framework/js/admin.js', array( 'jquery' ), Version, true );
+    /**
+     * Add required admin script for the tax page.
+     */
+    public function scripts() {
+      global $plugin_url, $version;
 
-	    	/**
-             * Localization
-             */
-            $localization = array(
-                'nonce' => wp_create_nonce( '__btp_nonce' )
-            );
+			wp_enqueue_script( 'better-tax-admin', $plugin_url . 'framework/js/admin.js', array( 'jquery' ), $version, true );
 
-	    	wp_localize_script( 'better-tax-admin', 'btp_localize', $localization );
-	    }
+    	/**
+       * Localization
+       */
+      $localization = array(
+        'nonce' => wp_create_nonce( '__btp_nonce' )
+      );
 
-	    /**
-	     * Adds a custom button field for woocommerce settings.
-	     *
-	     * @param $value array
-	     *
-	     * @codeCoverageIgnore
-	     */
-	    public function button_field( $value ) {
-	    	// Custom attribute handling.
+    	wp_localize_script( 'better-tax-admin', 'btp_localize', $localization );
+    }
+
+    /**
+     * Adds a custom button field for woocommerce settings.
+     *
+     * @param $value array
+     *
+     * @codeCoverageIgnore
+     */
+    public function button_field( $value ) {
+    	// Custom attribute handling.
 			$custom_attributes = array();
 
 			if ( ! empty( $value['custom_attributes'] ) && is_array( $value['custom_attributes'] ) ) {
@@ -192,11 +194,11 @@ namespace Niteo\WooCart\BetterTaxHandling {
 				</td>
 			</tr>
 	    	<?php
-	    }
+    }
 
-	    /**
-	     * AJAX request for importing digital goods tax rates.
-	     */
+    /**
+     * AJAX request for importing digital goods tax rates.
+     */
 		public function ajax_digital_tax_rates() {
 			global $wpdb;
 
@@ -294,16 +296,16 @@ namespace Niteo\WooCart\BetterTaxHandling {
 			}
 		}
 
-	    /**
-	     * AJAX request for importing distance selling tax rates.
-	     */
-	    public function ajax_distance_tax_rates() {
-	    	global $wpdb;
+    /**
+     * AJAX request for importing distance selling tax rates.
+     */
+    public function ajax_distance_tax_rates() {
+    	global $wpdb;
 
-	    	// Check for nonce.
-            check_ajax_referer( '__btp_nonce', 'nonce' );
+    	// Check for nonce.
+      check_ajax_referer( '__btp_nonce', 'nonce' );
 
-            // Check for existing classes.
+      // Check for existing classes.
 			$class_name = esc_html__( 'Distance Selling', 'better-tax-handling' );
 			$class_slug = 'distance-selling';
 
@@ -400,9 +402,9 @@ namespace Niteo\WooCart\BetterTaxHandling {
 
 				wp_send_json_error( $response );
 			}
-	    }
+    }
 
-	    /**
+    /**
 		 * Display field value on the order edit page.
 		 *
 		 * @param object $order Order object for getting post meta information.
