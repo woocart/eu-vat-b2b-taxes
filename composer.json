@@ -12,15 +12,10 @@
     "dealerdirect/phpcodesniffer-composer-installer": "*",
     "edsonmedina/php_testability": "dev-master",
     "rregeer/phpunit-coverage-check": "^0.1.6",
-    "phpunit/phpcov": "^5.0"
-  },
-  "scripts": {
-    "post-install-cmd": [
-      "\"bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs"
-    ],
-    "post-update-cmd": [
-      "\"bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs"
-    ]
+    "phpunit/phpcov": "^5.0",
+    "phpro/grumphp": "^0.14.2",
+    "sensiolabs/security-checker": "^5.0",
+    "maglnet/composer-require-checker": "^1.1"
   },
   "minimum-stability": "stable",
   "config": {
