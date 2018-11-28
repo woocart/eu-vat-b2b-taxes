@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Better Tax Handling
  * Description: Better Tax Handling is a plugin for WooCommerce stores that simplifies the complex part of taxation for B2B and B2C selling.
- * Version:     1.0.0
+ * Version:     @##VERSION##@
  * Runtime:     7.2+
  * Author:      WooCart
  * Text Domain: better-tax-handling
@@ -21,7 +21,7 @@ namespace Niteo\WooCart\BetterTaxHandling {
 	 * Constants for the plugin.
 	 */
 	$plugin_url = plugin_dir_url( __FILE__ );
-	$version 		= '1.0.0';
+	$version 		= '@##VERSION##@';
 
 	/**
 	 * BetterTaxHandling class where all the action happens.
