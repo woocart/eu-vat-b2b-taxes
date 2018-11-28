@@ -43,6 +43,10 @@
 			req_data.countries = $( 'select[name="vat_distance_selling_countries[]"]' ).val();
 		}
 
+		if( req_type == 'tax_id_check' ) {
+			req_data.business_id = trigger.attr( 'data-value' );
+		}
+
 		$.ajax( {
 			type: 'POST',
 			url: ajaxurl,
@@ -55,8 +59,12 @@
 			trigger.prop( 'disabled', false );
 
 			if( data.success ) {
-				// Refreshes the options to the latest values.
-				window.location.href = window.location.href;
+				if( req_type == 'tax_id_check' ) {
+					// Act according to the response received.
+				} else {
+					// Refreshes the options to the latest values.
+					window.location.href = window.location.href;
+				}
 			}
 		} );
 	}
@@ -75,5 +83,12 @@
 		event.preventDefault();
 
 		btp_ajax( 'distance_taxes', $( this ) );
+	} );
+
+	// Tax ID checker AJAX request.
+	$( '#bth-vat-check' ).on( 'click', function( event ) {
+		event.preventDefault();
+
+		btp_ajax( 'tax_id_check', $( this ) );
 	} );
 } )( jQuery );
