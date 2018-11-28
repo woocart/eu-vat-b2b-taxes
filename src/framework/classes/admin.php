@@ -27,6 +27,7 @@ namespace Niteo\WooCart\BetterTaxHandling {
 				add_action( 'woocommerce_admin_field_button', array( &$this, 'button_field' ), 10, 1 );
 				add_action( 'wp_ajax_add_digital_taxes', array( &$this, 'ajax_digital_tax_rates' ) );
 				add_action( 'wp_ajax_add_distance_taxes', array( &$this, 'ajax_distance_tax_rates' ) );
+				add_action( 'wp_ajax_add_tax_id_check', array( &$this, 'ajax_tax_id_check' ) );
 				add_action( 'woocommerce_admin_order_data_after_billing_address', array( &$this, 'order_meta' ), 10, 1 );
 			}
 		}
@@ -420,6 +421,23 @@ namespace Niteo\WooCart\BetterTaxHandling {
 
 			echo '<p><strong>' . esc_html__( 'B2B Sale', 'better-tax-handling' ) . ':</strong><br/>' . $b2b_sale . '</p>';
 			echo '<p><strong>' . esc_html__( 'Business Tax ID', 'better-tax-handling' ) . ':</strong><br/>' . $business_tax_id . '</p>';
+			echo '<p><button id="bth-vat-check" class="button button-primary" data-value="' . $business_tax_id . '">' . esc_html__( 'Check VAT ID', 'better-tax-handling' ) . '</button>';
+			echo '<div id="btn-vat-response"></div>';
+		}
+
+		/**
+		 * Process AJAX request for checking the Tax ID.
+		 */
+		public function ajax_tax_id_check() {
+			// Check for nonce.
+      check_ajax_referer( '__btp_nonce', 'nonce' );
+
+      // Doing Tax ID check over here.
+      // We are using Vies class for validating our request.
+      
+
+      // Response which we will be sending back to the page.
+			$response = array();
 		}
 
 	}
