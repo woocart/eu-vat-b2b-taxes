@@ -42,9 +42,9 @@ namespace Niteo\WooCart\BetterTaxHandling\Reports {
 		 */
 		public function output_report() {
 			$ranges = array(
-			'year'         => esc_html__( 'Year', 'better-tax-handling' ),
-			'last_month'   => esc_html__( 'Last month', 'better-tax-handling' ),
-			'month'        => esc_html__( 'This month', 'better-tax-handling' ),
+				'year'       => esc_html__( 'Year', 'better-tax-handling' ),
+				'last_month' => esc_html__( 'Last month', 'better-tax-handling' ),
+				'month'      => esc_html__( 'This month', 'better-tax-handling' ),
 			);
 
 			$current_range = ! empty( $_GET['range'] ) ? sanitize_text_field( $_GET['range'] ) : 'month';
@@ -58,7 +58,7 @@ namespace Niteo\WooCart\BetterTaxHandling\Reports {
 
 			$hide_sidebar = true;
 
-			include( WC()->plugin_path() . '/includes/admin/views/html-report-by-date.php' );
+			include WC()->plugin_path() . '/includes/admin/views/html-report-by-date.php';
 		}
 
 		/**
@@ -68,44 +68,44 @@ namespace Niteo\WooCart\BetterTaxHandling\Reports {
 			global $wpdb;
 
 			$query_data = array(
-				'ID' => array(
+				'ID'               => array(
 					'type'     => 'post_data',
 					'function' => '',
 					'name'     => 'post_id',
 				),
 				'_billing_country' => array(
-					'type'      => 'meta',
-					'function'  => '',
-					'name'      => 'country'
+					'type'     => 'meta',
+					'function' => '',
+					'name'     => 'country',
 				),
-				'_order_total'   => array(
-					'type'      => 'meta',
-					'function'  => '',
-					'name'      => 'order_total'
+				'_order_total'     => array(
+					'type'     => 'meta',
+					'function' => '',
+					'name'     => 'order_total',
 				),
-				'business_tax_id'   => array(
-					'type'      => 'meta',
-					'function'  => '',
-					'name'      => 'tax_id'
+				'business_tax_id'  => array(
+					'type'     => 'meta',
+					'function' => '',
+					'name'     => 'tax_id',
 				),
-				'post_date_gmt'   => array(
-					'type'      => 'post_data',
-					'function'  => '',
-					'name'      => 'order_date'
-				)
+				'post_date_gmt'    => array(
+					'type'     => 'post_data',
+					'function' => '',
+					'name'     => 'order_date',
+				),
 			);
 
 			$tax_row_orders = $this->get_order_report_data(
 				array(
-					'data'                  => $query_data,
-					'query_type'            => 'get_results',
-					'filter_range'          => true,
-					'order_types'           => array_merge( wc_get_order_types( 'sales-reports' ), array( 'shop_order_refund' ) ),
+					'data'                => $query_data,
+					'query_type'          => 'get_results',
+					'filter_range'        => true,
+					'order_types'         => array_merge( wc_get_order_types( 'sales-reports' ), array( 'shop_order_refund' ) ),
 					'order_status'        => array( 'completed', 'processing', 'on-hold' ),
 					'parent_order_status' => array( 'completed', 'processing', 'on-hold' ), // Partial refunds inside refunded orders should be ignored
 				)
 			);
-		?>
+			?>
 			<table class="widefat">
 				<thead>
 					<tr>
@@ -117,9 +117,9 @@ namespace Niteo\WooCart\BetterTaxHandling\Reports {
 					</tr>
 				</thead>
 				<tbody>
-					<?php foreach( $tax_row_orders as $tax_row ) { ?>
+					<?php foreach ( $tax_row_orders as $tax_row ) { ?>
 					<tr>
-						<td><?php echo WC()->countries->countries[$tax_row->country]; ?> (<?php echo $tax_row->country; ?>)</td>
+						<td><?php echo WC()->countries->countries[ $tax_row->country ]; ?> (<?php echo $tax_row->country; ?>)</td>
 						<td><?php echo $tax_row->order_date; ?></td>
 						<td><?php echo $tax_row->post_id; ?></td>
 						<td><?php echo $tax_row->tax_id; ?></td>
@@ -128,7 +128,7 @@ namespace Niteo\WooCart\BetterTaxHandling\Reports {
 					<?php } ?>
 				</tbody>
 			</table>
-		<?php
+			<?php
 		}
 
 	}
