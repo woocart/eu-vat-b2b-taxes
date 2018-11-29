@@ -28,11 +28,11 @@ namespace Niteo\WooCart\BetterTaxHandling {
 		 * @var array
 		 */
 		private $sources = array(
-			'https://euvatrates.com/rates.json'
+			'https://euvatrates.com/rates.json',
 		);
 
 		/**
-		 * Class constructor. 
+		 * Class constructor.
 		 */
 		public function __construct() {
 			add_action( 'admin_init', array( &$this, 'init' ) );
@@ -46,17 +46,16 @@ namespace Niteo\WooCart\BetterTaxHandling {
 
 			$this->known_rates = array(
 				'standard_rate' => esc_html__( 'Standard Rate', 'better-tax-handling' ),
-				'reduced_rate' 	=> esc_html__( 'Reduced Rate', 'better-tax-handling' )
+				'reduced_rate'  => esc_html__( 'Reduced Rate', 'better-tax-handling' ),
 			);
 
 			// Check for tax settings and tab.
-			if ( 
-				'admin.php' == $pagenow && 
-				! empty( $_REQUEST['page'] ) && 
-				( 'woocommerce_settings' == $_REQUEST['page'] || 'wc-settings' == $_REQUEST['page'] ) && 
-				! empty( $_REQUEST['tab'] ) && 
-				'tax' == $_REQUEST['tab'] && 
-				! empty( $_REQUEST['section'] ) 
+			if ( 'admin.php' == $pagenow &&
+				! empty( $_REQUEST['page'] ) &&
+				( 'woocommerce_settings' == $_REQUEST['page'] || 'wc-settings' == $_REQUEST['page'] ) &&
+				! empty( $_REQUEST['tab'] ) &&
+				'tax' == $_REQUEST['tab'] &&
+				! empty( $_REQUEST['section'] )
 			) {
 				$this->which_rate = 'standard_rate';
 
@@ -76,9 +75,9 @@ namespace Niteo\WooCart\BetterTaxHandling {
 		 * @codeCoverageIgnore
 		 */
 		public function footer() {
-			$get_rates 			= $this->get_tax_rates();
-			$rates 				= ( is_array( $get_rates ) ) ? $get_rates : array();
-			$rate_description 	= esc_html__( 'Add / Update EU Tax Rates', 'better-tax-handling' );
+			$get_rates        = $this->get_tax_rates();
+			$rates            = ( is_array( $get_rates ) ) ? $get_rates : array();
+			$rate_description = esc_html__( 'Add / Update EU Tax Rates', 'better-tax-handling' );
 			?>
 			<script type="text/javascript">
 			( function( $ ) {
@@ -150,7 +149,7 @@ namespace Niteo\WooCart\BetterTaxHandling {
 
 					rate_selector = rate_selector + '</select>';
 
-					var tax_description = ' <?php esc_attr_e( 'Name:', 'better-tax-handling' );?> <input id="better-tax-whatdescription" title="<?php esc_attr_e( 'The description that will be used when using the button for mass adding/updating of EU rates', 'better-tax-handling' ); ?>" type="text" size="6" value="<?php esc_attr_e( 'Tax', 'better-tax-handling' ); ?>">';
+					var tax_description = ' <?php esc_attr_e( 'Name:', 'better-tax-handling' ); ?> <input id="better-tax-whatdescription" title="<?php esc_attr_e( 'The description that will be used when using the button for mass adding/updating of EU rates', 'better-tax-handling' ); ?>" type="text" size="6" value="<?php esc_attr_e( 'Tax', 'better-tax-handling' ); ?>">';
 
 					$foot.after( '<?php echo esc_js( __( 'Use rates:', 'better-tax-handling' ) ); ?> ' + rate_selector + tax_description );
 
@@ -160,7 +159,7 @@ namespace Niteo\WooCart\BetterTaxHandling {
 						var which_rate = $( '#better-tax-whichrate' ).val();
 
 						if( typeof which_rate == 'undefined' || '' == which_rate ) {
-							which_rate = '<?php echo $this->which_rate;?>';
+							which_rate = '<?php echo $this->which_rate; ?>';
 						}
 
 						$.each( rates, function( iso, country ) {
@@ -193,16 +192,16 @@ namespace Niteo\WooCart\BetterTaxHandling {
 
 			// Deal with exceptions
 			switch ( $country ) {
-				case 'GR' :
+				case 'GR':
 					$country_code = 'EL';
-				break;
-				case 'IM' :
-				case 'GB' :
+					break;
+				case 'IM':
+				case 'GB':
 					$country_code = 'UK';
-				break;
-				case 'MC' :
+					break;
+				case 'MC':
 					$country_code = 'FR';
-				break;
+					break;
 			}
 
 			return $country_code;
@@ -216,10 +215,10 @@ namespace Niteo\WooCart\BetterTaxHandling {
 
 			// Deal with exceptions
 			switch ( $country ) {
-				case 'EL' :
+				case 'EL':
 					$iso_code = 'GR';
 					break;
-				case 'UK' :
+				case 'UK':
 					$iso_code = 'GB';
 					break;
 			}
@@ -234,15 +233,15 @@ namespace Niteo\WooCart\BetterTaxHandling {
 		public function get_tax_rate_for_country( $country_code, $rate = 'standard_rate' ) {
 			$rates = $this->get_tax_rates();
 
-			if ( empty( $rates ) || ! is_array( $rates ) || ! isset( $rates[$country_code] ) ) {
+			if ( empty( $rates ) || ! is_array( $rates ) || ! isset( $rates[ $country_code ] ) ) {
 				return false;
 			}
 
-			if ( ! isset( $rates[$country_code][$rate] ) ) {
+			if ( ! isset( $rates[ $country_code ][ $rate ] ) ) {
 				return false;
 			}
 
-			return $rates[$country_code][$rate];
+			return $rates[ $country_code ][ $rate ];
 		}
 
 		/**
@@ -252,9 +251,12 @@ namespace Niteo\WooCart\BetterTaxHandling {
 			$new_rates = false;
 
 			foreach ( $this->sources as $url ) {
-				$get = wp_remote_get( $url, array(
-					'timeout' => 5,
-				) );
+				$get = wp_remote_get(
+					$url,
+					array(
+						'timeout' => 5,
+					)
+				);
 
 				if ( is_wp_error( $get ) || ! is_array( $get ) ) {
 					continue;
@@ -294,8 +296,8 @@ namespace Niteo\WooCart\BetterTaxHandling {
 			if ( is_array( $rates ) && ! empty( $rates ) ) {
 				$new_rates = $rates;
 			} else {
-				$this->rates 	= false;
-				$new_rates 		= $this->fetch_remote_tax_rates();
+				$this->rates = false;
+				$new_rates   = $this->fetch_remote_tax_rates();
 			}
 
 			// The array we return should use ISO country codes.
@@ -303,8 +305,8 @@ namespace Niteo\WooCart\BetterTaxHandling {
 				$corrected_rates = array();
 
 				foreach ( $new_rates as $country => $rate ) {
-					$iso 					= $this->get_iso_code( $country );
-					$corrected_rates[$iso] 	= $rate;
+					$iso                     = $this->get_iso_code( $country );
+					$corrected_rates[ $iso ] = $rate;
 				}
 
 				// Add - Monaco.
@@ -314,8 +316,8 @@ namespace Niteo\WooCart\BetterTaxHandling {
 
 				// Add - Isle of Man.
 				if ( isset( $corrected_rates['GB'] ) ) {
-					$corrected_rates['IM'] 				= $corrected_rates['GB'];
-					$corrected_rates['IM']['country'] 	= esc_html__( 'Isle of Man', 'better-tax-handling' );
+					$corrected_rates['IM']            = $corrected_rates['GB'];
+					$corrected_rates['IM']['country'] = esc_html__( 'Isle of Man', 'better-tax-handling' );
 				}
 
 				set_site_transient( 'tax_rates_byiso', $corrected_rates, 43200 );

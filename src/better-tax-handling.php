@@ -21,7 +21,7 @@ namespace Niteo\WooCart\BetterTaxHandling {
 	 * Constants for the plugin.
 	 */
 	$plugin_url = plugin_dir_url( __FILE__ );
-	$version 		= '@##VERSION##@';
+	$version    = '@##VERSION##@';
 
 	/**
 	 * BetterTaxHandling class where all the action happens.
