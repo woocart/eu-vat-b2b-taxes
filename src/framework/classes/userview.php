@@ -2,6 +2,8 @@
 
 namespace Niteo\WooCart\BetterTaxHandling {
 
+  use Niteo\WooCart\BetterTaxHandling\Vies;
+
 	/**
 	 * User class where we calculate taxes and get stuff done.
 	 *
@@ -131,7 +133,14 @@ namespace Niteo\WooCart\BetterTaxHandling {
 		    	// Check if `business_tax_id` is provided and the option to not charge tax is turned on. We will return empty taxes if the first statement is true.
 		    	if ( isset( $new_data['business_tax_id'] ) && ! empty( $new_data['business_tax_id'] ) ) {
 		    		if ( 'yes' === $b2b_eu_tax_id ) {
-		    			add_filter( 'woocommerce_calc_tax', array( &$this, 'return_tax' ), PHP_INT_MAX, 5 );
+              // Doing Tax ID check over here.
+              // We are using Vies class for validating our request.
+              $validator  = new Vies();
+              $bool       = $validator->isValid( $new_data['business_tax_id'], true );
+
+              if ( $bool ) {
+                add_filter( 'woocommerce_calc_tax', array( &$this, 'return_tax' ), PHP_INT_MAX, 5 );
+              }
 		    		}
 		    	}
 		    }
