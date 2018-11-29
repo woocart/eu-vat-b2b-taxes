@@ -412,6 +412,7 @@ namespace Niteo\WooCart\BetterTaxHandling {
 		 *
 		 * @param object $order Order object for getting post meta information.
 		 * @return void
+		 * @codeCoverageIgnore
 		 */
 		public function order_meta( $order ) {
 			$b2b_sale        = get_post_meta( $order->get_id(), 'b2b_sale', true ) ? esc_html__( 'Yes', 'better-tax-handling' ) : esc_html__( 'No', 'better-tax-handling' );

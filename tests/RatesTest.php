@@ -125,4 +125,37 @@ class RatesTest extends TestCase {
 		$this->assertEquals( 'GR', $rates->get_iso_code( 'EL' ) );
 	}
 
+	/**
+	 * @covers \Niteo\WooCart\BetterTaxHandling\Rates::__construct
+	 * @covers \Niteo\WooCart\BetterTaxHandling\Rates::fetch_remote_tax_rates
+	 */
+	public function testFetchRemoteTaxRatesFalse() {
+		$rates = new Rates();
+
+		$this->assertEquals( false, $rates->fetch_remote_tax_rates() );
+	}
+
+	/**
+	 * @covers \Niteo\WooCart\BetterTaxHandling\Rates::__construct
+	 * @covers \Niteo\WooCart\BetterTaxHandling\Rates::get_tax_rate_for_country
+	 * @covers \Niteo\WooCart\BetterTaxHandling\Rates::get_tax_rates
+	 * @covers \Niteo\WooCart\BetterTaxHandling\Rates::fetch_remote_tax_rates
+	 */
+	public function testGetTaxRatesForCountryFalse() {
+		$rates = new Rates();
+
+		$this->assertEquals( false, $rates->get_tax_rate_for_country( 'ABC' ) );
+	}
+
+	/**
+	 * @covers \Niteo\WooCart\BetterTaxHandling\Rates::__construct
+	 * @covers \Niteo\WooCart\BetterTaxHandling\Rates::get_tax_rates
+	 * @covers \Niteo\WooCart\BetterTaxHandling\Rates::fetch_remote_tax_rates
+	 */
+	public function testGetTaxRatesFalse() {
+		$rates = new Rates();
+
+		$this->assertEquals( false, $rates->get_tax_rates() );
+	}
+
 }
