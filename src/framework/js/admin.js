@@ -60,10 +60,16 @@
 
 			if( data.success ) {
 				if( req_type == 'tax_id_check' ) {
-					// Act according to the response received.
+					// Success.
+					$( '#btn-vat-response' ).css( {'color':'#2d882d' } ).html( data.data );
 				} else {
 					// Refreshes the options to the latest values.
 					window.location.href = window.location.href;
+				}
+			} else {
+				if( req_type == 'tax_id_check' ) {
+					// Error.
+					$( '#btn-vat-response' ).css( {'color':'#ff0000' } ).html( data.data );
 				}
 			}
 		} );

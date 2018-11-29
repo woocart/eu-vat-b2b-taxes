@@ -2,6 +2,8 @@
 
 namespace Niteo\WooCart\BetterTaxHandling {
 
+	use Niteo\WooCart\BetterTaxHandling\Vies;
+
 	/**
 	 * Class for all the WP admin panel magic.
 	 *
@@ -432,12 +434,23 @@ namespace Niteo\WooCart\BetterTaxHandling {
 			// Check for nonce.
       check_ajax_referer( '__btp_nonce', 'nonce' );
 
-      // Doing Tax ID check over here.
-      // We are using Vies class for validating our request.
-      
+      // Business Tax ID
+      $business_id = sanitize_text_field( $_POST['business_id'] );
 
-      // Response which we will be sending back to the page.
-			$response = array();
+      if ( ! empty( $business_id ) ) {
+	      // Doing Tax ID check over here.
+	      // We are using Vies class for validating our request.
+	      $validator 	= new Vies();
+				$bool 			= $validator->isValid( $business_id, true );
+
+				if ( $bool ) {
+					wp_send_json_success( esc_html__( 'The TAX ID has been verified correctly and is marked as valid.', 'better-tax-handling' ) );
+				} else {
+					wp_send_json_error( esc_html__( 'The Tax ID has been verified correctly and is marked as invalid.', 'better-tax-handling' ) );
+				}
+			} else {
+				wp_send_json_error( esc_html__( 'The Tax ID has been verified correctly and is marked as invalid.', 'better-tax-handling' ) );
+			}
 		}
 
 	}
