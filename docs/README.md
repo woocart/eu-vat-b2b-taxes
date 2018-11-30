@@ -6,7 +6,7 @@ The plugin adds three sections to the default Tax menu in WooCommerce:
 - EU Tax Handling - Digital Goods (B2C)
 - EU Tax Handling - Distance Selling (B2C)
 
-If you haven't yet, you still need to manually enter your country's standard, reduced and zero rates. This is not handled by the plugin.
+Make sure you have your country's standard, reduced and zero rates entered in WooCommerce settings. This is not handled by the plugin. We also recommend using Shop base address for tax calculation.
 
 The default settings should be the correct setting for all EU countries. That said, make sure to confirm the settings with your accountant or tax advisor.
 
