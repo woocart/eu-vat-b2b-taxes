@@ -1,27 +1,18 @@
 # Better Tax Handling Plugin
 
-<img src="images/better-tax-handling.png" alt="Better Tax Handling WordPress Plugin">
-
-## Introduction
-
-**Better Tax Handling** is a plugin for WooCommerce stores that simplifies the complex part of taxation for B2B and B2C selling. It is developed with EU countries in mind, but it can help handle taxes for any countries selling to the EU.
-
-Developed by [**WooCart**](https://woocart.com).
-
-The plugin covers the following tax scenarios:
+The plugin adds three sections to the default Tax menu in WooCommerce: 
 
 - **Tax Handling for B2B**
-- **Digital Goods in EU (B2C)**
-- **Distance Selling in EU (B2C)**
-
+- **EU Tax Handling - Digital Goods (B2C)**
+- **EU Tax Handling - Distance Selling (B2C)**
 
 ### Tax Handling for B2B
 
-<img src="images/b2b-tax-handling.png" alt="Tax Handling for B2B">
+<img src="images/tax-b2b.png" alt="Tax Handling for B2B">
 
-This part of the plugin handles taxes for B2B i.e. Business to Business. Let's have a look at the options for B2B tax handling offered by the plugin and how it affects tax calculation for the end user.
+This part of the plugin handles taxes for B2B (Business to Business). Let's have a look at the options for B2B tax handling offered by the plugin and how it affects tax calculation for the end user.
 
-- **B2B Sales** - When enabled (i.e. either EU Store or Non-EU Store), this option adds an option in the checkout form for making the purchase as a Business Entity. On clicking the B2B option in the checkout form, an additional Tax ID field is made visible for entering the Business Tax ID.
+- **B2B Sales** - When enabled (for either EU Store or Non-EU Store), this option adds an option in the checkout form for making the purchase as a Business Entity. When the visitor clicks the B2B option in the checkout form, an additional Tax ID field opens for entering the Business Tax ID.
 
 - **Tax ID field required for B2B** - Enabling this option makes it mandatory for all B2B transactions to provide a Business Tax ID.
 
@@ -34,7 +25,7 @@ This part of the plugin handles taxes for B2B i.e. Business to Business. Let's h
 
 ### Digital Goods (B2C - EU)
 
-<img src="images/digital-goods-b2c.png" alt="Digital Goods (B2C)">
+<img src="images/tax-b2c-digital.png" alt="Digital Goods (B2C)">
 
 This part of the plugin handles taxes for [Digital Goods](https://quaderno.io/resources/eu-vat-guide/) for Consumers when selling to the EU. Currently, the plugin offers 2 options for this class of taxes.
 
@@ -45,7 +36,7 @@ This part of the plugin handles taxes for [Digital Goods](https://quaderno.io/re
 
 ### Distance Selling (B2C - EU)
 
-<img src="images/distance-selling-b2c.png" alt="Distance Selling (B2C)">
+<img src="images/tax-b2c-distance.png" alt="Distance Selling (B2C)">
 
 This part of the plugin handles taxes for Digital Selling for Consumers. As a store owner, you will need to register for EU Tax ID in countries where you reach [Distance Selling EU Tax thresholds](https://www.vatlive.com/eu-vat-rules/distance-selling/distance-selling-eu-vat-thresholds/).
 
