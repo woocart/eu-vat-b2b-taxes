@@ -8,7 +8,9 @@ The plugin adds three sections to the default Tax menu in WooCommerce:
 
 If you haven't yet, you still need to manually enter your country's standard, reduced and zero rates. This is not handled by the plugin.
 
-The defaults are checked boxes and should be the correct setting for all EU countries. That said, make sure to confirm the settings with your accountant or tax advisor.
+The default settings should be the correct setting for all EU countries. That said, make sure to confirm the settings with your accountant or tax advisor.
+
+Please keep in mind you or your accountant need to do the VAT reporting to the EU, as this is not done by the plugin.
 
 
 ## Plugin Settings
@@ -19,38 +21,40 @@ This section handles taxes for B2B (Business to Business). Let's have a look at 
 
 <img src="images/tax-b2b.png" alt="Tax Handling for B2B">
 
-- **B2B Sales** - When enabled (for either EU Store or Non-EU Store), this option adds an option in the checkout form for making the purchase as a Business Entity. When the visitor clicks the B2B option in the checkout form, an additional Tax ID field opens for entering the Business Tax ID. Make sure to click Save at the bottom of the page after checking the enable box.
+- **B2B Sales** - Enable this option (for either EU Store or Non-EU Store) to add a checkbox for businesses to the checkout form. When the visitor clicks the option in the checkout form, an additional Tax ID field opens for entering the Business Tax ID. 
 
-- **Tax ID field required for B2B** - Enabling this option makes it mandatory for all B2B customers to provide a Business Tax ID.
+- **Tax ID field required for B2B** - Enabling this option makes it mandatory for all B2B customers to provide a Business Tax ID. By default it is required.
 
-- **B2B sales in the home country** - Whether B2B sales in the home country are taxed or not.
+- **B2B sales in the home country** - Whether B2B sales in the home country are taxed or not. By default it is charged.
 
-- **B2B sales in the EU when VIES/VAT ID is provided** - Whether B2B sales in EU are taxed or not. This option is disabled if you chose the Non-EU Store in the first dropdown.
+- **B2B sales in the EU when VIES/VAT ID is provided** - Whether B2B sales in EU are taxed or not. By default it is not charged. This option is disabled if you chose the Non-EU Store in the first dropdown.
 
-- **B2B sales outside the country** - Whether B2B sales outside the home country and EU are taxed or not. For example: selling from Germany to the USA.
+- **B2B sales outside the country** - Whether B2B sales outside the home country and EU are taxed or not. For example: selling from Germany to the USA. By default it is not charged.
 
 ### Digital Goods (B2C - EU)
 
-This part of the plugin handles taxes for [Digital Goods](https://quaderno.io/resources/eu-vat-guide/) for consumers when selling to the EU. 
+This part of the plugin handles taxes for [Digital Goods](https://quaderno.io/resources/eu-vat-guide/) for consumers when selling to the EU. This option has no impact on the B2B transactions.
 
 <img src="images/tax-b2c-digital.png" alt="Digital Goods (B2C)">
 
-- **EU Tax Handling for Digital Goods** - If you plan on selling Digital Goods in or into the EU, enable this option. Make sure to click Save at the bottom of the page. It's advised you use the next option ot import tax rates for Digital Goods.
+For this to work properly, you need to go through two steps.
 
-- **Import tax rates for all EU countries and create tax class Digital Goods** - Clicking this option imports tax rates for all EU countries (standard VAT rate) and creates a tax class Digital Goods. You must choose this tax class to all the digital goods in your store to make the proper tax calculations. Digital Goods are charged the customer's country standard VAT rate. 
+- **EU Tax Handling for Digital Goods** - Click to enable Digital Goods tax. Use the next option to import tax rates.
+
+- **Import tax rates for all EU countries and create tax class Digital Goods** - Click to import standard VAT rates for all EU countries and create a tax class Digital Goods. You must assign this tax class to all digital goods in your store. Digital goods are charged the customer's country tax rate. 
 
 ### Distance Selling (B2C - EU)
 
-This part of the plugin handles taxes for Digital Selling for Consumers. As a store owner, you will need to register for EU VAT ID in countries where you reach [Distance Selling EU Tax thresholds](https://www.vatlive.com/eu-vat-rules/distance-selling/distance-selling-eu-vat-thresholds/).
+This part of the plugin handles taxes for Digital Selling for Consumers. As a store owner, you will need to register for EU VAT ID in countries where you reach [Distance Selling EU Tax thresholds](https://www.vatlive.com/eu-vat-rules/distance-selling/distance-selling-eu-vat-thresholds/). This option has no impact on the B2B transactions.
 
 <img src="images/tax-b2c-distance.png" alt="Distance Selling (B2C)">
 
 For this to work properly, you need to go through three steps.
 
-- **Enable EU VAT Handling for Distance Selling** - Enabling this option will allow you to collect taxes on transactions done via countries which fall under the "Distance Selling" category. You will be responsible for specifying the countries for this category in the next option. Only the countries added will be applicable for tax calculation at the time of checkout. Also, this option has no impact on the B2B transactions.
+- **Enable EU VAT Handling for Distance Selling** - Enable to collect local taxes in specific countries. Choose the countries for this category in the next option. 
 
-- **Select countries for which you would like to import tax rates** - Add countries to this multi-select option box whose tax rates you would like to import.
+- **Select countries for which you would like to import tax rates** - Add countries whose tax rates you would like to import.
 
-- **Import tax rates for specific EU countries** - Clicking this option imports tax rates for all EU countries added to the above option. Any country added outside of EU will be ignored by this option and only taxes for countries which fall within EU will be imported.
+- **Import tax rates for specific EU countries** - Click to import tax rates for all EU countries selected in the above option. 
 
 ## Reports
