@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.com/woocart/tax-handling.svg?branch=master)](https://travis-ci.com/woocart/tax-handling)
 
-## Info
+Better Tax Handling plugin helps with configuring complex tax variations when selling in or into the EU. 
 
-**Better Tax Handling** is a plugin for WooCommerce stores that simplifies the complex part of taxation for B2B and B2C selling.
+The plugin is fully compliant with EU tax laws, with support for B2C and B2B sales, Digital Goods tax, and Distance Selling tax. The defaults are configured for the most common configuration for EU companies. There are additional reports available for easier tax reporting.
+
+Configurations instructions in the [readme file](https://github.com/woocart/tax-handling/blob/master/docs/README.md).
