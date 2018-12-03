@@ -23,13 +23,13 @@ This section handles taxes for B2B (Business to Business). Let's have a look at 
 
 - **B2B Sales** - Enable this option (for either EU Store or Non-EU Store) to add a checkbox for businesses to the checkout form. When the visitor clicks the option in the checkout form, an additional Tax ID field opens for entering the Business Tax ID. 
 
-- **Tax ID field required for B2B** - Enabling this option makes it mandatory for all B2B customers to provide a Business Tax ID. By default it is required.
+- **Tax ID field required for B2B** - Enabling this option makes it mandatory for all B2B customers to provide a Business Tax ID. By default, it is required.
 
-- **B2B sales in the home country** - Whether B2B sales in the home country are taxed or not. By default it is charged.
+- **B2B sales in the home country** - Whether B2B sales in the home country are taxed or not. By default, it is charged.
 
-- **B2B sales in the EU when VIES/VAT ID is provided** - Whether B2B sales in EU are taxed or not. By default it is not charged. This option is disabled if you chose the Non-EU Store in the first dropdown.
+- **B2B sales in the EU when VIES/VAT ID is provided** - Whether B2B sales in EU are taxed or not. By default, it is not charged. This option is disabled if you chose the Non-EU Store in the first dropdown.
 
-- **B2B sales outside the country** - Whether B2B sales outside the home country and EU are taxed or not. For example: selling from Germany to the USA. By default it is not charged.
+- **B2B sales outside the country** - Whether B2B sales outside the home country and EU are taxed or not. For example: selling from Germany to the USA. By default, it is not charged.
 
 ### Digital Goods (B2C - EU)
 
