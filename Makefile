@@ -50,7 +50,7 @@ release:
 
 fmt: vendor
 	bin/phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs
-	bin/phpcbf --standard=WordPress tests --ignore=src/vendor
+	bin/phpcbf --standard=WordPress src --ignore=src/vendor
 
 lint: vendor
 	bin/phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs
