@@ -6,7 +6,7 @@
  * Runtime:     7.2+
  * Author:      WooCart
  * Text Domain: better-tax-handling
- * Domain Path: /langs/
+ * Domain Path: /i18n/
  * Author URI:  www.woocart.com
  */
 

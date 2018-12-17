@@ -61,4 +61,4 @@ psr: src/vendor
 	cd src && composer dump-autoload -a
 
 i18n:
-	wp i18n make-pot src src/framework/langs/$(PLUGINSLUG).pot
+	wp i18n make-pot src src/i18n/$(PLUGINSLUG).pot
