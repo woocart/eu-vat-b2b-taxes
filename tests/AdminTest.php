@@ -25,70 +25,74 @@ class AdminTest extends TestCase {
 
 	/**
 	 * @covers \Niteo\WooCart\BetterTaxHandling\Admin::__construct
-	 */	 
+	 */
 	public function testConstructor() {
 		$admin = new Admin();
 
 		\WP_Mock::expectActionAdded( 'admin_init', [ $admin, 'init' ] );
 
-    $admin->__construct();
+		$admin->__construct();
 		\WP_Mock::assertHooksAdded();
 	}
 
 	/**
 	 * @covers \Niteo\WooCart\BetterTaxHandling\Admin::__construct
 	 * @covers \Niteo\WooCart\BetterTaxHandling\Admin::init
-	 */	 
+	 */
 	public function testInit() {
 		$admin = new Admin();
 
 		\WP_Mock::userFunction(
-			'is_plugin_active', [
-				'return' => true
+			'is_plugin_active',
+			[
+				'return' => true,
 			]
 		);
 
 		\WP_Mock::expectActionAdded( 'woocommerce_tax_settings', [ $admin, 'settings' ], PHP_INT_MAX, 2 );
 		\WP_Mock::expectActionAdded( 'admin_enqueue_scripts', [ $admin, 'scripts' ] );
 
-    $admin->init();
+		$admin->init();
 		\WP_Mock::assertHooksAdded();
 	}
 
 	/**
 	 * @covers \Niteo\WooCart\BetterTaxHandling\Admin::__construct
 	 * @covers \Niteo\WooCart\BetterTaxHandling\Admin::settings
-	 */	 
+	 */
 	public function testSettings() {
 		$admin = new Admin();
 
-    $this->assertNotEquals( [], $admin->settings( [] ) );
+		$this->assertNotEquals( [], $admin->settings( [] ) );
 	}
 
 	/**
 	 * @covers \Niteo\WooCart\BetterTaxHandling\Admin::__construct
 	 * @covers \Niteo\WooCart\BetterTaxHandling\Admin::scripts
-	 */	 
+	 */
 	public function testScripts() {
 		$admin = new Admin();
 
 		\WP_Mock::userFunction(
-			'wp_enqueue_script', [
-				'return' => true
+			'wp_enqueue_script',
+			[
+				'return' => true,
 			]
 		);
 		\WP_Mock::userFunction(
-			'wp_create_nonce', [
-				'return' => true
+			'wp_create_nonce',
+			[
+				'return' => true,
 			]
 		);
 		\WP_Mock::userFunction(
-			'wp_localize_script', [
-				'return' => true
+			'wp_localize_script',
+			[
+				'return' => true,
 			]
 		);
 
-    $admin->scripts();
+		$admin->scripts();
 	}
 
 	/**
@@ -102,52 +106,62 @@ class AdminTest extends TestCase {
 		$admin = new Admin();
 
 		\WP_Mock::userFunction(
-			'check_ajax_referer', [
-				'return' => true
+			'check_ajax_referer',
+			[
+				'return' => true,
 			]
 		);
 		\WP_Mock::userFunction(
-			'esc_html', [
-				'return' => true
+			'esc_html',
+			[
+				'return' => true,
 			]
 		);
 		\WP_Mock::userFunction(
-			'get_option', [
-				'return' => true
+			'get_option',
+			[
+				'return' => true,
 			]
 		);
 		\WP_Mock::userFunction(
-			'get_site_transient', [
-				'return' => true
+			'get_site_transient',
+			[
+				'return' => true,
 			]
 		);
 		\WP_Mock::userFunction(
-			'wp_remote_get', [
-				'return' => true
+			'wp_remote_get',
+			[
+				'return' => true,
 			]
 		);
 		\WP_Mock::userFunction(
-			'is_wp_error', [
-				'return' => false
+			'is_wp_error',
+			[
+				'return' => false,
 			]
 		);
 		\WP_Mock::userFunction(
-			'update_option', [
-				'return' => true
+			'update_option',
+			[
+				'return' => true,
 			]
 		);
 		\WP_Mock::userFunction(
-			'wp_send_json_error', [
-				'return' => true
+			'wp_send_json_error',
+			[
+				'return' => true,
 			]
 		);
 
 		$mock = \Mockery::mock( '\Niteo\WooCart\BetterTaxHandling\Rates' );
 		$mock->shouldReceive( 'get_tax_rates' )
-				 ->andReturn( [
-				 	'DE' => '20.0',
-				 	'SI' => '30.0'
-				 ] );
+				->andReturn(
+					[
+						'DE' => '20.0',
+						'SI' => '30.0',
+					]
+				);
 
 		$admin->ajax_digital_tax_rates();
 	}
@@ -163,56 +177,69 @@ class AdminTest extends TestCase {
 		$admin = new Admin();
 
 		\WP_Mock::userFunction(
-			'check_ajax_referer', [
-				'return' => true
+			'check_ajax_referer',
+			[
+				'return' => true,
 			]
 		);
 		\WP_Mock::userFunction(
-			'esc_html', [
-				'return' => true
+			'esc_html',
+			[
+				'return' => true,
 			]
 		);
 		\WP_Mock::userFunction(
-			'get_option', [
-				'return' => true
+			'get_option',
+			[
+				'return' => true,
 			]
 		);
 		\WP_Mock::userFunction(
-			'get_site_transient', [
-				'return' => true
+			'get_site_transient',
+			[
+				'return' => true,
 			]
 		);
 		\WP_Mock::userFunction(
-			'wp_remote_get', [
-				'return' => true
+			'wp_remote_get',
+			[
+				'return' => true,
 			]
 		);
 		\WP_Mock::userFunction(
-			'is_wp_error', [
-				'return' => false
+			'is_wp_error',
+			[
+				'return' => false,
 			]
 		);
 		\WP_Mock::userFunction(
-			'update_option', [
-				'return' => true
+			'update_option',
+			[
+				'return' => true,
 			]
 		);
 		\WP_Mock::userFunction(
-			'wp_send_json_error', [
-				'return' => true
+			'wp_send_json_error',
+			[
+				'return' => true,
 			]
 		);
 
 		$_POST['countries'] = [
-			'IN', 'SI', 'DE', 'GB'
+			'IN',
+			'SI',
+			'DE',
+			'GB',
 		];
 
 		$mock = \Mockery::mock( '\Niteo\WooCart\BetterTaxHandling\Rates' );
 		$mock->shouldReceive( 'get_tax_rates' )
-				 ->andReturn( [
-				 	'DE' => '20.0',
-				 	'SI' => '30.0'
-				 ] );
+				->andReturn(
+					[
+						'DE' => '20.0',
+						'SI' => '30.0',
+					]
+				);
 
 		$admin->ajax_distance_tax_rates();
 	}
@@ -228,13 +255,15 @@ class AdminTest extends TestCase {
 		$admin = new Admin();
 
 		\WP_Mock::userFunction(
-			'check_ajax_referer', [
-				'return' => true
+			'check_ajax_referer',
+			[
+				'return' => true,
 			]
 		);
 		\WP_Mock::userFunction(
-			'sanitize_text_field', [
-				'return' => true
+			'sanitize_text_field',
+			[
+				'return' => true,
 			]
 		);
 
@@ -246,8 +275,9 @@ class AdminTest extends TestCase {
 				 ->andReturn( true );
 
 		\WP_Mock::userFunction(
-			'wp_send_json_error', [
-				'return' => true
+			'wp_send_json_error',
+			[
+				'return' => true,
 			]
 		);
 
