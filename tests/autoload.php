@@ -11,5 +11,5 @@ require_once "$root_dir/vendor/autoload.php";
 
 class WC_Admin_Report {}
 
-WP_Mock::setUsePatchwork(true);
+WP_Mock::setUsePatchwork( true );
 WP_Mock::bootstrap();

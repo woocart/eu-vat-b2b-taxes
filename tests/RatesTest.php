@@ -25,13 +25,13 @@ class RatesTest extends TestCase {
 
 	/**
 	 * @covers \Niteo\WooCart\BetterTaxHandling\Rates::__construct
-	 */	 
+	 */
 	public function testConstructor() {
 		$rates = new Rates();
 
 		\WP_Mock::expectActionAdded( 'admin_init', [ $rates, 'init' ] );
 
-        $rates->__construct();
+		$rates->__construct();
 		\WP_Mock::assertHooksAdded();
 	}
 
@@ -44,14 +44,14 @@ class RatesTest extends TestCase {
 
 		$rates = new Rates();
 
-		$pagenow 				= 'admin.php';
-		$_REQUEST['tab'] 		= 'tax';
-		$_REQUEST['page'] 		= 'wc-settings';
-		$_REQUEST['section'] 	= 'not_empty';
+		$pagenow             = 'admin.php';
+		$_REQUEST['tab']     = 'tax';
+		$_REQUEST['page']    = 'wc-settings';
+		$_REQUEST['section'] = 'not_empty';
 
 		\WP_Mock::expectActionAdded( 'admin_footer', [ $rates, 'footer' ] );
 
-        $rates->init();
+		$rates->init();
 		\WP_Mock::assertHooksAdded();
 	}
 
