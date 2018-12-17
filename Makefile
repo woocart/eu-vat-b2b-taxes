@@ -50,7 +50,7 @@ release:
 
 fmt: vendor
 	bin/phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs
-	bin/phpcbf --standard=WordPress src --ignore=src/vendor
+	bin/phpcbf --standard=WordPress tests --ignore=src/vendor
 
 lint: vendor
 	bin/phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs
@@ -61,4 +61,4 @@ psr: src/vendor
 	cd src && composer dump-autoload -a
 
 i18n:
-	wp i18n make-pot src src/i18n/$(PLUGINSLUG).pot
+	wp i18n make-pot src src/framework/langs/$(PLUGINSLUG).pot
