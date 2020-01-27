@@ -28,7 +28,7 @@ namespace Niteo\WooCart\AdvancedTaxes {
 		public function tabs( $reports ) {
 			$taxes = array(
 				'taxes_by_country' => array(
-					'title'       => esc_html__( 'Tax Collected By Country', 'better-tax-handling' ),
+					'title'       => esc_html__( 'Tax Collected By Country', 'advanced-taxes-woocommerce' ),
 					'description' => '',
 					'hide_title'  => true,
 					'callback'    => array( __CLASS__, 'taxes_by_country' ),
@@ -37,7 +37,7 @@ namespace Niteo\WooCart\AdvancedTaxes {
 
 			$orders = array(
 				'business_sales' => array(
-					'title'       => esc_html__( 'B2B Transactions', 'better-tax-handling' ),
+					'title'       => esc_html__( 'B2B Transactions', 'advanced-taxes-woocommerce' ),
 					'description' => '',
 					'hide_title'  => true,
 					'callback'    => array( __CLASS__, 'business_orders' ),

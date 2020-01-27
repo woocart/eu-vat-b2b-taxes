@@ -59,7 +59,7 @@ namespace Niteo\WooCart\AdvancedTaxes {
 			if ( 'none' !== $b2b_sales ) {
 				// Check for business status.
 				$fields['business_check'] = array(
-					'label'    => esc_html__( 'Are you making this purchase as a Business entity?', 'better-tax-handling' ),
+					'label'    => esc_html__( 'Are you making this purchase as a Business entity?', 'advanced-taxes-woocommerce' ),
 					'type'     => 'checkbox',
 					'required' => false,
 					'class'    => array( 'better-tax-business-check', 'update_totals_on_change' ),
@@ -69,7 +69,7 @@ namespace Niteo\WooCart\AdvancedTaxes {
 
 					// Ask for VAT ID.
 					$fields['business_tax_id'] = array(
-						'label'    => esc_html__( 'Business Tax ID', 'better-tax-handling' ),
+						'label'    => esc_html__( 'Business Tax ID', 'advanced-taxes-woocommerce' ),
 						'type'     => 'text',
 						'required' => false,
 						'class'    => array( 'form-row-wide', 'better-tax-vat-id', 'better-tax-hidden', 'address-field' ),
@@ -190,7 +190,7 @@ namespace Niteo\WooCart\AdvancedTaxes {
 			if ( isset( $_POST['business_check'] ) ) {
 				if ( ! isset( $_POST['business_tax_id'] ) || empty( $_POST['business_tax_id'] ) ) {
 					if ( 'yes' === get_option( 'tax_id_required' ) ) {
-						$errors->add( 'billing', esc_html__( 'Business Tax ID is a required field.', 'better-tax-handling' ) );
+						$errors->add( 'billing', esc_html__( 'Business Tax ID is a required field.', 'advanced-taxes-woocommerce' ) );
 					}
 				}
 			}

@@ -45,8 +45,8 @@ namespace Niteo\WooCart\AdvancedTaxes {
 			global $pagenow;
 
 			$this->known_rates = array(
-				'standard_rate' => esc_html__( 'Standard Rate', 'better-tax-handling' ),
-				'reduced_rate'  => esc_html__( 'Reduced Rate', 'better-tax-handling' ),
+				'standard_rate' => esc_html__( 'Standard Rate', 'advanced-taxes-woocommerce' ),
+				'reduced_rate'  => esc_html__( 'Reduced Rate', 'advanced-taxes-woocommerce' ),
 			);
 
 			// Check for tax settings and tab.
@@ -77,7 +77,7 @@ namespace Niteo\WooCart\AdvancedTaxes {
 		public function footer() {
 			$get_rates        = $this->get_tax_rates();
 			$rates            = ( is_array( $get_rates ) ) ? $get_rates : array();
-			$rate_description = esc_html__( 'Add / Update EU Tax Rates', 'better-tax-handling' );
+			$rate_description = esc_html__( 'Add / Update EU Tax Rates', 'advanced-taxes-woocommerce' );
 			?>
 			<script type="text/javascript">
 			( function( $ ) {
@@ -133,7 +133,7 @@ namespace Niteo\WooCart\AdvancedTaxes {
 					}
 
 					<?php
-						$tax_info = esc_html__( 'Grab all the EU Tax rates at the click of a button.', 'better-tax-handling' );
+						$tax_info = esc_html__( 'Grab all the EU Tax rates at the click of a button.', 'advanced-taxes-woocommerce' );
 					?>
 
 					var known_rates = [ "<?php echo implode( '", "', array_keys( $this->known_rates ) ); ?>" ];
@@ -149,9 +149,9 @@ namespace Niteo\WooCart\AdvancedTaxes {
 
 					rate_selector = rate_selector + '</select>';
 
-					var tax_description = ' <?php esc_attr_e( 'Name:', 'better-tax-handling' ); ?> <input id="better-tax-whatdescription" title="<?php esc_attr_e( 'The description that will be used when using the button for mass adding/updating of EU rates', 'better-tax-handling' ); ?>" type="text" size="6" value="<?php esc_attr_e( 'Tax', 'better-tax-handling' ); ?>">';
+					var tax_description = ' <?php esc_attr_e( 'Name:', 'advanced-taxes-woocommerce' ); ?> <input id="better-tax-whatdescription" title="<?php esc_attr_e( 'The description that will be used when using the button for mass adding/updating of EU rates', 'advanced-taxes-woocommerce' ); ?>" type="text" size="6" value="<?php esc_attr_e( 'Tax', 'advanced-taxes-woocommerce' ); ?>">';
 
-					$foot.after( '<?php echo esc_js( __( 'Use rates:', 'better-tax-handling' ) ); ?> ' + rate_selector + tax_description );
+					$foot.after( '<?php echo esc_js( __( 'Use rates:', 'advanced-taxes-woocommerce' ) ); ?> ' + rate_selector + tax_description );
 
 					$( 'table.wc_tax_rates' ).first().before( '<p><em><?php echo $tax_info; ?></em></p>' );
 
@@ -317,7 +317,7 @@ namespace Niteo\WooCart\AdvancedTaxes {
 				// Add - Isle of Man.
 				if ( isset( $corrected_rates['GB'] ) ) {
 					$corrected_rates['IM']            = $corrected_rates['GB'];
-					$corrected_rates['IM']['country'] = esc_html__( 'Isle of Man', 'better-tax-handling' );
+					$corrected_rates['IM']['country'] = esc_html__( 'Isle of Man', 'advanced-taxes-woocommerce' );
 				}
 
 				set_site_transient( 'tax_rates_byiso', $corrected_rates, 43200 );
