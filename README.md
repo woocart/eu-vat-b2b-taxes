@@ -1,6 +1,6 @@
 # Advanced Taxes for WooCommerce
 
-[![Build Status](https://travis-ci.com/woocart/tax-handling.svg?branch=master)](https://travis-ci.com/woocart/tax-handling)
+
 
 Advanced Taxes for WooCommerce plugin helps with configuring complex tax variations when selling in or into the EU.
 
