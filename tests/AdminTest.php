@@ -2,7 +2,7 @@
 /**
  * Tests the admin class.
  *
- * @package better-tax-handling
+ * @package advanced-taxes-woocommerce
  */
 
 use Niteo\WooCart\AdvancedTaxes\Admin;

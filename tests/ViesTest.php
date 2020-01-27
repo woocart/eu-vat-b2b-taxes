@@ -2,7 +2,7 @@
 /**
  * Tests the vies class.
  *
- * @package better-tax-handling
+ * @package advanced-taxes-woocommerce
  */
 
 use Niteo\WooCart\AdvancedTaxes\Vies;

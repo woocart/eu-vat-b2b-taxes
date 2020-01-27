@@ -27,7 +27,7 @@ namespace Niteo\WooCart\AdvancedTaxes {
 	 * AdvancedTaxes class where all the action happens.
 	 *
 	 * @package WordPress
-	 * @subpackage better-tax-handling
+	 * @subpackage advanced-taxes-woocommerce
 	 * @since 1.0.0
 	 */
 	class AdvancedTaxes {

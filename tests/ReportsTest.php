@@ -2,7 +2,7 @@
 /**
  * Tests the reports class.
  *
- * @package better-tax-handling
+ * @package advanced-taxes-woocommerce
  */
 
 use Niteo\WooCart\AdvancedTaxes\Reports;
@@ -44,7 +44,7 @@ class ReportsTest extends TestCase {
 
 		$tabs['taxes']['reports'] = array(
 			'taxes_by_country' => array(
-				'title'       => esc_html__( 'Tax Collected By Country', 'better-tax-handling' ),
+				'title'       => esc_html__( 'Tax Collected By Country', 'advanced-taxes-woocommerce' ),
 				'description' => '',
 				'hide_title'  => true,
 				'callback'    => array( 'Niteo\WooCart\AdvancedTaxes\Reports', 'taxes_by_country' ),
@@ -53,7 +53,7 @@ class ReportsTest extends TestCase {
 
 		$tabs['orders']['reports'] = array(
 			'business_sales' => array(
-				'title'       => esc_html__( 'B2B Transactions', 'better-tax-handling' ),
+				'title'       => esc_html__( 'B2B Transactions', 'advanced-taxes-woocommerce' ),
 				'description' => '',
 				'hide_title'  => true,
 				'callback'    => array( 'Niteo\WooCart\AdvancedTaxes\Reports', 'business_orders' ),
