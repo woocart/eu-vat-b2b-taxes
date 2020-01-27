@@ -3,21 +3,20 @@
     "php": ">=7.2.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "*",
+    "dealerdirect/phpcodesniffer-composer-installer": "*",
+    "phpunit/phpunit": "6.5.9",
     "10up/wp_mock": "0.3.0",
     "antecedent/patchwork": "*",
     "php-coveralls/php-coveralls": "^2.1",
     "squizlabs/php_codesniffer": "*",
     "wp-coding-standards/wpcs": "*",
-    "dealerdirect/phpcodesniffer-composer-installer": "*",
-    "edsonmedina/php_testability": "dev-master",
     "rregeer/phpunit-coverage-check": "^0.1.6",
-    "phpunit/phpcov": "^5.0",
+    "phpunit/phpcov": "*",
     "phpro/grumphp": "^0.14.2",
     "sensiolabs/security-checker": "^5.0",
-    "maglnet/composer-require-checker": "^1.1"
+    "maglnet/composer-require-checker": "^1.1",
+    "wp-cli/wp-cli": "^2.0"
   },
-  "minimum-stability": "stable",
   "config": {
     "bin-dir": "bin/"
   },

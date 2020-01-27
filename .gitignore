@@ -10,3 +10,5 @@ build
 *.phar
 reports
 clover.xml
+src/vendor
+dist
