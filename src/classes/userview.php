@@ -1,8 +1,8 @@
 <?php
 
-namespace Niteo\WooCart\BetterTaxHandling {
+namespace Niteo\WooCart\AdvancedTaxes {
 
-	use Niteo\WooCart\BetterTaxHandling\Vies;
+	use Niteo\WooCart\AdvancedTaxes\Vies;
 
 	/**
 	 * User class where we calculate taxes and get stuff done.
@@ -35,18 +35,18 @@ namespace Niteo\WooCart\BetterTaxHandling {
 		public function scripts() {
 			global $plugin_url, $version;
 
-			wp_enqueue_script( 'better-tax-public', $plugin_url . 'framework/js/public.js', array( 'jquery' ), $version, true );
-			wp_enqueue_style( 'better-tax-public', $plugin_url . 'framework/css/public.css', '', $version );
+			wp_enqueue_script( 'advanced-taxes-public', $plugin_url . 'assets/js/public.js', array( 'jquery' ), $version, true );
+			wp_enqueue_style( 'advanced-taxes-public', $plugin_url . 'assets/css/public.css', '', $version );
 
 			/**
 		   * Localization
 		   */
 			$localization = array(
 				'ajaxurl' => admin_url( 'admin-ajax.php' ),
-				'nonce'   => wp_create_nonce( '__btp_nonce' ),
+				'nonce'   => wp_create_nonce( '__atw_nonce' ),
 			);
 
-			wp_localize_script( 'better-tax-public', 'btp_localize', $localization );
+			wp_localize_script( 'advanced-taxes-public', 'atw_localize', $localization );
 		}
 
 		/**

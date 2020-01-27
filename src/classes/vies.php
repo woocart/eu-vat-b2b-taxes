@@ -1,8 +1,8 @@
 <?php
 
-namespace Niteo\WooCart\BetterTaxHandling {
+namespace Niteo\WooCart\AdvancedTaxes {
 
-	use Niteo\WooCart\BetterTaxHandling\Vies\Client;
+	use Niteo\WooCart\AdvancedTaxes\Vies\Client;
 
 	/**
 	 * Validate a VAT identification number (VATIN)

@@ -5,7 +5,7 @@
  * @package better-tax-handling
  */
 
-use Niteo\WooCart\BetterTaxHandling\UserView;
+use Niteo\WooCart\AdvancedTaxes\UserView;
 use PHPUnit\Framework\TestCase;
 
 class UserViewTest extends TestCase {
@@ -24,7 +24,7 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\BetterTaxHandling\UserView::__construct
+	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::__construct
 	 */
 	public function testConstructor() {
 		$user = new UserView();
@@ -36,8 +36,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\BetterTaxHandling\UserView::__construct
-	 * @covers \Niteo\WooCart\BetterTaxHandling\UserView::init
+	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::__construct
+	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::init
 	 */
 	public function testInit() {
 		$user = new UserView();
@@ -73,8 +73,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\BetterTaxHandling\UserView::__construct
-	 * @covers \Niteo\WooCart\BetterTaxHandling\UserView::scripts
+	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::__construct
+	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::scripts
 	 */
 	public function testScripts() {
 		$user = new UserView();
@@ -96,8 +96,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\BetterTaxHandling\UserView::__construct
-	 * @covers \Niteo\WooCart\BetterTaxHandling\UserView::checkout_fields
+	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::__construct
+	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::checkout_fields
 	 */
 	public function testCheckoutFields() {
 		$user = new UserView();
@@ -113,8 +113,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\BetterTaxHandling\UserView::__construct
-	 * @covers \Niteo\WooCart\BetterTaxHandling\UserView::checkout_fields
+	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::__construct
+	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::checkout_fields
 	 */
 	public function testCheckoutFieldsNotEmpty() {
 		$user = new UserView();
@@ -130,8 +130,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\BetterTaxHandling\UserView::__construct
-	 * @covers \Niteo\WooCart\BetterTaxHandling\UserView::return_tax
+	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::__construct
+	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::return_tax
 	 */
 	public function testReturnTax() {
 		$user = new UserView();
@@ -140,8 +140,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\BetterTaxHandling\UserView::__construct
-	 * @covers \Niteo\WooCart\BetterTaxHandling\UserView::checkout_validation
+	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::__construct
+	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::checkout_validation
 	 */
 	public function testCheckoutValidation() {
 		$user = new UserView();
@@ -164,8 +164,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\BetterTaxHandling\UserView::__construct
-	 * @covers \Niteo\WooCart\BetterTaxHandling\UserView::update_order_meta
+	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::__construct
+	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::update_order_meta
 	 */
 	public function testUpdateOrderMeta() {
 		$user = new UserView();

@@ -1,9 +1,9 @@
 <?php
 
-namespace Niteo\WooCart\BetterTaxHandling {
+namespace Niteo\WooCart\AdvancedTaxes {
 
-	use Niteo\WooCart\BetterTaxHandling\Reports\Taxes_Report_By_Country;
-	use Niteo\WooCart\BetterTaxHandling\Reports\Business_Transactions_Report;
+	use Niteo\WooCart\AdvancedTaxes\Reports\Taxes_Report_By_Country;
+	use Niteo\WooCart\AdvancedTaxes\Reports\Business_Transactions_Report;
 
 	/**
 	 * Reports class for our custom tax reports.

@@ -1,6 +1,6 @@
 <?php
 
-namespace Niteo\WooCart\BetterTaxHandling {
+namespace Niteo\WooCart\AdvancedTaxes {
 
 	/**
 	 * For fetching tax rates and adding them to the settings.
