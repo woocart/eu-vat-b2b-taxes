@@ -1,6 +1,6 @@
 # Advanced Taxes for WooCommerce
 
-
+![](https://github.com/woocart/advanced-taxes-woocommerce/workflows/Tests/badge.svg)
 
 Advanced Taxes for WooCommerce plugin helps with configuring complex tax variations when selling in or into the EU.
 
