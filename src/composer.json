@@ -14,9 +14,9 @@
   },
   "autoload": {
     "psr-4": {
-      "Niteo\\WooCart\\AdvancedTaxes\\": "framework/classes",
-      "Niteo\\WooCart\\AdvancedTaxes\\Reports\\": "framework/classes/reports",
-      "Niteo\\WooCart\\AdvancedTaxes\\Vies\\": "framework/classes/vies"
+      "Niteo\\WooCart\\AdvancedTaxes\\": "classes",
+      "Niteo\\WooCart\\AdvancedTaxes\\Reports\\": "classes/reports",
+      "Niteo\\WooCart\\AdvancedTaxes\\Vies\\": "classes/vies"
     }
   }
 }
