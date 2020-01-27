@@ -5,7 +5,7 @@
  * @package better-tax-handling
  */
 
-use Niteo\WooCart\BetterTaxHandling\Reports;
+use Niteo\WooCart\AdvancedTaxes\Reports;
 use PHPUnit\Framework\TestCase;
 
 class ReportsTest extends TestCase {
@@ -24,7 +24,7 @@ class ReportsTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\BetterTaxHandling\Reports::__construct
+	 * @covers \Niteo\WooCart\AdvancedTaxes\Reports::__construct
 	 */
 	public function testConstructor() {
 		$reports = new Reports();
@@ -36,8 +36,8 @@ class ReportsTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\BetterTaxHandling\Reports::__construct
-	 * @covers \Niteo\WooCart\BetterTaxHandling\Reports::tabs
+	 * @covers \Niteo\WooCart\AdvancedTaxes\Reports::__construct
+	 * @covers \Niteo\WooCart\AdvancedTaxes\Reports::tabs
 	 */
 	public function testTabs() {
 		$reports = new Reports();
@@ -47,7 +47,7 @@ class ReportsTest extends TestCase {
 				'title'       => esc_html__( 'Tax Collected By Country', 'better-tax-handling' ),
 				'description' => '',
 				'hide_title'  => true,
-				'callback'    => array( 'Niteo\WooCart\BetterTaxHandling\Reports', 'taxes_by_country' ),
+				'callback'    => array( 'Niteo\WooCart\AdvancedTaxes\Reports', 'taxes_by_country' ),
 			),
 		);
 
@@ -56,7 +56,7 @@ class ReportsTest extends TestCase {
 				'title'       => esc_html__( 'B2B Transactions', 'better-tax-handling' ),
 				'description' => '',
 				'hide_title'  => true,
-				'callback'    => array( 'Niteo\WooCart\BetterTaxHandling\Reports', 'business_orders' ),
+				'callback'    => array( 'Niteo\WooCart\AdvancedTaxes\Reports', 'business_orders' ),
 			),
 		);
 

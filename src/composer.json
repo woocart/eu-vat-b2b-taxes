@@ -1,6 +1,6 @@
 {
-  "name": "better-tax-handling",
-  "description": "Better Tax Handling is a plugin for WooCommerce stores that simplifies the complex part of taxation for B2B and B2C selling.",
+  "name": "advanced-taxes-woocommerce",
+  "description": "Advanced Taxes for WooCommerce is a plugin for WooCommerce stores that simplifies the complex part of taxation for B2B and B2C selling.",
   "keywords": [
     "WordPress",
     "plugin"
@@ -14,9 +14,9 @@
   },
   "autoload": {
     "psr-4": {
-      "Niteo\\WooCart\\BetterTaxHandling\\": "framework/classes",
-      "Niteo\\WooCart\\BetterTaxHandling\\Reports\\": "framework/classes/reports",
-      "Niteo\\WooCart\\BetterTaxHandling\\Vies\\": "framework/classes/vies"
+      "Niteo\\WooCart\\AdvancedTaxes\\": "framework/classes",
+      "Niteo\\WooCart\\AdvancedTaxes\\Reports\\": "framework/classes/reports",
+      "Niteo\\WooCart\\AdvancedTaxes\\Vies\\": "framework/classes/vies"
     }
   }
 }

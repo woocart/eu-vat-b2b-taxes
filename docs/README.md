@@ -1,6 +1,6 @@
-# Better Tax Handling Plugin
+# Advanced Taxes for WooCommerce Plugin
 
-The plugin adds three sections to the default Tax menu in WooCommerce: 
+The plugin adds three sections to the default Tax menu in WooCommerce:
 
 - Tax Handling for B2B
 - EU Tax Handling - Digital Goods (B2C)
@@ -41,7 +41,7 @@ For this to work properly, you need to go through two steps.
 
 - **EU Tax Handling for Digital Goods** - Click to enable Digital Goods tax. Use the next option to import tax rates.
 
-- **Import tax rates for all EU countries and create tax class Digital Goods** - Click to import standard VAT rates for all EU countries and create a tax class Digital Goods. You must assign this tax class to all digital goods in your store. Digital goods are charged the customer's country tax rate. 
+- **Import tax rates for all EU countries and create tax class Digital Goods** - Click to import standard VAT rates for all EU countries and create a tax class Digital Goods. You must assign this tax class to all digital goods in your store. Digital goods are charged the customer's country tax rate.
 
 ### Distance Selling (B2C - EU)
 
@@ -51,10 +51,10 @@ This part of the plugin handles taxes for Digital Selling for Consumers. As a st
 
 For this to work properly, you need to go through three steps.
 
-- **Enable EU VAT Handling for Distance Selling** - Enable to collect local taxes in specific countries. Choose the countries for this category in the next option. 
+- **Enable EU VAT Handling for Distance Selling** - Enable to collect local taxes in specific countries. Choose the countries for this category in the next option.
 
 - **Select countries for which you would like to import tax rates** - Add countries whose tax rates you would like to import.
 
-- **Import tax rates for specific EU countries** - Click to import tax rates for all EU countries selected in the above option. 
+- **Import tax rates for specific EU countries** - Click to import tax rates for all EU countries selected in the above option.
 
 ## Reports

@@ -1,6 +1,6 @@
 <?php
 
-namespace Niteo\WooCart\BetterTaxHandling\Vies {
+namespace Niteo\WooCart\AdvancedTaxes\Vies {
 
 	use Exception;
 	use SoapClient;
@@ -33,7 +33,7 @@ namespace Niteo\WooCart\BetterTaxHandling\Vies {
 		 * @var array
 		 */
 		private $classmap = array(
-			'checkVatResponse' => 'Niteo\WooCart\BetterTaxHandling\Vies\Response',
+			'checkVatResponse' => 'Niteo\WooCart\AdvancedTaxes\Vies\Response',
 		);
 
 		/**
@@ -53,7 +53,7 @@ namespace Niteo\WooCart\BetterTaxHandling\Vies {
 		 * @param string $countryCode Country code
 		 * @param string $vatNumber VAT number
 		 *
-		 * @return Niteo\WooCart\BetterTaxHandling\Vies\Response
+		 * @return Niteo\WooCart\AdvancedTaxes\Vies\Response
 		 * @throws Exception
 		 */
 		public function checkVat( $countryCode, $vatNumber ) {
@@ -80,7 +80,7 @@ namespace Niteo\WooCart\BetterTaxHandling\Vies {
 					$this->wsdl,
 					array(
 						'classmap'   => $this->classmap,
-						'user_agent' => 'Mozilla/5.0 (compatible; Better Tax Handling Plugin; +https://shop.mywoocart.com)',
+						'user_agent' => 'Mozilla/5.0 (compatible; Advanced Taxes for WooCommerce Plugin; +https://shop.mywoocart.com)',
 						'exceptions' => true,
 					)
 				);

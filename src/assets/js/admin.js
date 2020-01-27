@@ -42,7 +42,7 @@
 	function btp_ajax( req_type, trigger ) {
 		var req_data = {
 			action: 'add_' + req_type,
-			nonce: btp_localize.nonce
+			nonce: atw_localize.nonce
 		};
 
 		if ( req_type == 'distance_taxes' ) {

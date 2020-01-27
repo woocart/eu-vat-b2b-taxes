@@ -1,8 +1,8 @@
 <?php
 
-namespace Niteo\WooCart\BetterTaxHandling {
+namespace Niteo\WooCart\AdvancedTaxes {
 
-	use Niteo\WooCart\BetterTaxHandling\Vies;
+	use Niteo\WooCart\AdvancedTaxes\Vies;
 
 	/**
 	 * Class for all the WP admin panel magic.
@@ -152,16 +152,16 @@ namespace Niteo\WooCart\BetterTaxHandling {
 		public function scripts() {
 			global $plugin_url, $version;
 
-			wp_enqueue_script( 'better-tax-admin', $plugin_url . 'framework/js/admin.js', array( 'jquery' ), $version, true );
+			wp_enqueue_script( 'advanced-taxes-admin', $plugin_url . 'assets/js/admin.js', array( 'jquery' ), $version, true );
 
 			/**
 		   * Localization
 		   */
 			$localization = array(
-				'nonce' => wp_create_nonce( '__btp_nonce' ),
+				'nonce' => wp_create_nonce( '__atw_nonce' ),
 			);
 
-			wp_localize_script( 'better-tax-admin', 'btp_localize', $localization );
+			wp_localize_script( 'advanced-taxes-admin', 'atw_localize', $localization );
 		}
 
 		/**
@@ -206,7 +206,7 @@ namespace Niteo\WooCart\BetterTaxHandling {
 			global $wpdb;
 
 			// Check for nonce.
-			check_ajax_referer( '__btp_nonce', 'nonce' );
+			check_ajax_referer( '__atw_nonce', 'nonce' );
 
 			// Check for existing classes.
 			$class_name = esc_html__( 'Digital Goods', 'better-tax-handling' );
@@ -306,7 +306,7 @@ namespace Niteo\WooCart\BetterTaxHandling {
 			global $wpdb;
 
 			// Check for nonce.
-			check_ajax_referer( '__btp_nonce', 'nonce' );
+			check_ajax_referer( '__atw_nonce', 'nonce' );
 
 			// Check for existing classes.
 			$class_name = esc_html__( 'Distance Selling', 'better-tax-handling' );
@@ -433,7 +433,7 @@ namespace Niteo\WooCart\BetterTaxHandling {
 		 */
 		public function ajax_tax_id_check() {
 			// Check for nonce.
-			check_ajax_referer( '__btp_nonce', 'nonce' );
+			check_ajax_referer( '__atw_nonce', 'nonce' );
 
 			// Business Tax ID
 			$business_id = sanitize_text_field( $_POST['business_id'] );

@@ -1,5 +1,5 @@
 VERSION := 1.0.0
-PLUGINSLUG := better-tax-handling
+PLUGINSLUG := advanced-taxes-woocommerce
 SRCPATH := $(shell pwd)/src
 
 bin/linux/amd64/github-release:

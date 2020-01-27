@@ -5,9 +5,9 @@
  * @package better-tax-handling
  */
 
-use Niteo\WooCart\BetterTaxHandling\Vies;
-use Niteo\WooCart\BetterTaxHandling\Vies\Client;
-use Niteo\WooCart\BetterTaxHandling\Vies\Response;
+use Niteo\WooCart\AdvancedTaxes\Vies;
+use Niteo\WooCart\AdvancedTaxes\Vies\Client;
+use Niteo\WooCart\AdvancedTaxes\Vies\Response;
 use PHPUnit\Framework\TestCase;
 
 class ViesTest extends TestCase {
@@ -30,9 +30,9 @@ class ViesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\BetterTaxHandling\Vies::__construct
-	 * @covers \Niteo\WooCart\BetterTaxHandling\Vies::isValid
-	 * @covers \Niteo\WooCart\BetterTaxHandling\Vies::isValidCountryCode
+	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::__construct
+	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::isValid
+	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::isValidCountryCode
 	 * @dataProvider getValidVatIds
 	 */
 	public function testValid( $value ) {
@@ -40,9 +40,9 @@ class ViesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\BetterTaxHandling\Vies::__construct
-	 * @covers \Niteo\WooCart\BetterTaxHandling\Vies::isValid
-	 * @covers \Niteo\WooCart\BetterTaxHandling\Vies::isValidCountryCode
+	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::__construct
+	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::isValid
+	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::isValidCountryCode
 	 * @dataProvider getInvalidVatIds
 	 */
 	public function testInvalid( $value ) {
@@ -50,10 +50,10 @@ class ViesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\BetterTaxHandling\Vies::__construct
-	 * @covers \Niteo\WooCart\BetterTaxHandling\Vies::isValid
-	 * @covers \Niteo\WooCart\BetterTaxHandling\Vies::getViesClient
-	 * @covers \Niteo\WooCart\BetterTaxHandling\Vies::isValidCountryCode
+	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::__construct
+	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::isValid
+	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::getViesClient
+	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::isValidCountryCode
 	 */
 	public function testValidWithVies() {
 		$client = $this->getClientMock();
@@ -67,10 +67,10 @@ class ViesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\BetterTaxHandling\Vies::__construct
-	 * @covers \Niteo\WooCart\BetterTaxHandling\Vies::isValid
-	 * @covers \Niteo\WooCart\BetterTaxHandling\Vies::getViesClient
-	 * @covers \Niteo\WooCart\BetterTaxHandling\Vies::isValidCountryCode
+	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::__construct
+	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::isValid
+	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::getViesClient
+	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::isValidCountryCode
 	 */
 	public function testInvalidWithVies() {
 		$client = $this->getClientMock();
@@ -180,19 +180,19 @@ class ViesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\BetterTaxHandling\Vies\Client
+	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies\Client
 	 */
 	private function getClientMock() {
-		return $this->getMockBuilder( '\Niteo\WooCart\BetterTaxHandling\Vies\Client' )
+		return $this->getMockBuilder( '\Niteo\WooCart\AdvancedTaxes\Vies\Client' )
 		->disableOriginalConstructor()
 		->getMock();
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\BetterTaxHandling\Vies\Response
+	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies\Response
 	 */
 	private function getResponseMock( $valid ) {
-		$mock = $this->getMockBuilder( '\Niteo\WooCart\BetterTaxHandling\Vies\Response' )->getMock();
+		$mock = $this->getMockBuilder( '\Niteo\WooCart\AdvancedTaxes\Vies\Response' )->getMock();
 
 		$mock->expects( $this->any() )
 		 ->method( 'isValid' )

@@ -1,16 +1,16 @@
 <?php
 /**
- * Plugin Name: Better Tax Handling
- * Description: Better Tax Handling is a plugin for WooCommerce stores that simplifies the complex part of taxation for B2B and B2C selling.
+ * Plugin Name: Advanced Taxes for WooCommerce
+ * Description: Advanced Taxes for WooCommerce is a plugin for WooCommerce stores that simplifies the complex part of taxation for B2B and B2C selling.
  * Version:     @##VERSION##@
- * Runtime:     7.2+
+ * Runtime:     5.6+
  * Author:      WooCart
- * Text Domain: better-tax-handling
- * Domain Path: /i18n/
+ * Text Domain: advanced-taxes-woocommerce
+ * Domain Path: i18n
  * Author URI:  www.woocart.com
  */
 
-namespace Niteo\WooCart\BetterTaxHandling {
+namespace Niteo\WooCart\AdvancedTaxes {
 
 	/**
 	 * Include composer autoload.
@@ -24,13 +24,13 @@ namespace Niteo\WooCart\BetterTaxHandling {
 	$version    = '@##VERSION##@';
 
 	/**
-	 * BetterTaxHandling class where all the action happens.
+	 * AdvancedTaxes class where all the action happens.
 	 *
 	 * @package WordPress
 	 * @subpackage better-tax-handling
 	 * @since 1.0.0
 	 */
-	class BetterTaxHandling {
+	class AdvancedTaxes {
 
 		/**
 		 * Class constructor.
@@ -52,6 +52,6 @@ namespace Niteo\WooCart\BetterTaxHandling {
 	}
 
 	// Initialize Plugin.
-	new BetterTaxHandling();
+	new AdvancedTaxes();
 
 }
