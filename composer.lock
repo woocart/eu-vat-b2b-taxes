@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0cbaa7607a17094a426c874ebdd7e782",
+    "content-hash": "a9016bbeebd178199b4656c9b69f1ae2",
     "packages": [],
     "packages-dev": [
         {
@@ -1351,36 +1351,6 @@
                 "php"
             ],
             "time": "2019-11-08T13:50:10+00:00"
-        },
-        {
-            "name": "pcov/clobber",
-            "version": "v2.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/krakjoe/pcov-clobber.git",
-                "reference": "4c30759e912e6e5d5bf833fb3d77b5bd51709f05"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/krakjoe/pcov-clobber/zipball/4c30759e912e6e5d5bf833fb3d77b5bd51709f05",
-                "reference": "4c30759e912e6e5d5bf833fb3d77b5bd51709f05",
-                "shasum": ""
-            },
-            "require": {
-                "ext-pcov": "^1.0",
-                "nikic/php-parser": "^4.2"
-            },
-            "bin": [
-                "bin/pcov"
-            ],
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "pcov\\Clobber\\": "src/pcov/clobber"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "time": "2019-10-29T05:03:37+00:00"
         },
         {
             "name": "phar-io/manifest",
