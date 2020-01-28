@@ -29,7 +29,7 @@ class AdminTest extends TestCase {
 	public function testConstructor() {
 		$admin = new Admin();
 
-		\WP_Mock::expectActionAdded( 'admin_init', [ $admin, 'init' ] );
+		\WP_Mock::expectActionAdded( 'admin_init', array( $admin, 'init' ) );
 
 		$admin->__construct();
 		\WP_Mock::assertHooksAdded();
@@ -44,13 +44,13 @@ class AdminTest extends TestCase {
 
 		\WP_Mock::userFunction(
 			'is_plugin_active',
-			[
+			array(
 				'return' => true,
-			]
+			)
 		);
 
-		\WP_Mock::expectActionAdded( 'woocommerce_tax_settings', [ $admin, 'settings' ], PHP_INT_MAX, 2 );
-		\WP_Mock::expectActionAdded( 'admin_enqueue_scripts', [ $admin, 'scripts' ] );
+		\WP_Mock::expectActionAdded( 'woocommerce_tax_settings', array( $admin, 'settings' ), PHP_INT_MAX, 2 );
+		\WP_Mock::expectActionAdded( 'admin_enqueue_scripts', array( $admin, 'scripts' ) );
 
 		$admin->init();
 		\WP_Mock::assertHooksAdded();
@@ -63,7 +63,7 @@ class AdminTest extends TestCase {
 	public function testSettings() {
 		$admin = new Admin();
 
-		$this->assertNotEquals( [], $admin->settings( [] ) );
+		$this->assertNotEquals( array(), $admin->settings( array() ) );
 	}
 
 	/**
@@ -75,21 +75,21 @@ class AdminTest extends TestCase {
 
 		\WP_Mock::userFunction(
 			'wp_enqueue_script',
-			[
+			array(
 				'return' => true,
-			]
+			)
 		);
 		\WP_Mock::userFunction(
 			'wp_create_nonce',
-			[
+			array(
 				'return' => true,
-			]
+			)
 		);
 		\WP_Mock::userFunction(
 			'wp_localize_script',
-			[
+			array(
 				'return' => true,
-			]
+			)
 		);
 
 		$admin->scripts();
@@ -107,60 +107,60 @@ class AdminTest extends TestCase {
 
 		\WP_Mock::userFunction(
 			'check_ajax_referer',
-			[
+			array(
 				'return' => true,
-			]
+			)
 		);
 		\WP_Mock::userFunction(
 			'esc_html',
-			[
+			array(
 				'return' => true,
-			]
+			)
 		);
 		\WP_Mock::userFunction(
 			'get_option',
-			[
+			array(
 				'return' => true,
-			]
+			)
 		);
 		\WP_Mock::userFunction(
 			'get_site_transient',
-			[
+			array(
 				'return' => true,
-			]
+			)
 		);
 		\WP_Mock::userFunction(
 			'wp_remote_get',
-			[
+			array(
 				'return' => true,
-			]
+			)
 		);
 		\WP_Mock::userFunction(
 			'is_wp_error',
-			[
+			array(
 				'return' => false,
-			]
+			)
 		);
 		\WP_Mock::userFunction(
 			'update_option',
-			[
+			array(
 				'return' => true,
-			]
+			)
 		);
 		\WP_Mock::userFunction(
 			'wp_send_json_error',
-			[
+			array(
 				'return' => true,
-			]
+			)
 		);
 
 		$mock = \Mockery::mock( '\Niteo\WooCart\AdvancedTaxes\Rates' );
 		$mock->shouldReceive( 'get_tax_rates' )
 				->andReturn(
-					[
+					array(
 						'DE' => '20.0',
 						'SI' => '30.0',
-					]
+					)
 				);
 
 		$admin->ajax_digital_tax_rates();
@@ -178,67 +178,67 @@ class AdminTest extends TestCase {
 
 		\WP_Mock::userFunction(
 			'check_ajax_referer',
-			[
+			array(
 				'return' => true,
-			]
+			)
 		);
 		\WP_Mock::userFunction(
 			'esc_html',
-			[
+			array(
 				'return' => true,
-			]
+			)
 		);
 		\WP_Mock::userFunction(
 			'get_option',
-			[
+			array(
 				'return' => true,
-			]
+			)
 		);
 		\WP_Mock::userFunction(
 			'get_site_transient',
-			[
+			array(
 				'return' => true,
-			]
+			)
 		);
 		\WP_Mock::userFunction(
 			'wp_remote_get',
-			[
+			array(
 				'return' => true,
-			]
+			)
 		);
 		\WP_Mock::userFunction(
 			'is_wp_error',
-			[
+			array(
 				'return' => false,
-			]
+			)
 		);
 		\WP_Mock::userFunction(
 			'update_option',
-			[
+			array(
 				'return' => true,
-			]
+			)
 		);
 		\WP_Mock::userFunction(
 			'wp_send_json_error',
-			[
+			array(
 				'return' => true,
-			]
+			)
 		);
 
-		$_POST['countries'] = [
+		$_POST['countries'] = array(
 			'IN',
 			'SI',
 			'DE',
 			'GB',
-		];
+		);
 
 		$mock = \Mockery::mock( '\Niteo\WooCart\AdvancedTaxes\Rates' );
 		$mock->shouldReceive( 'get_tax_rates' )
 				->andReturn(
-					[
+					array(
 						'DE' => '20.0',
 						'SI' => '30.0',
-					]
+					)
 				);
 
 		$admin->ajax_distance_tax_rates();
@@ -256,15 +256,15 @@ class AdminTest extends TestCase {
 
 		\WP_Mock::userFunction(
 			'check_ajax_referer',
-			[
+			array(
 				'return' => true,
-			]
+			)
 		);
 		\WP_Mock::userFunction(
 			'sanitize_text_field',
-			[
+			array(
 				'return' => true,
-			]
+			)
 		);
 
 		$_POST['business_id'] = 'EU123456789';
@@ -276,9 +276,9 @@ class AdminTest extends TestCase {
 
 		\WP_Mock::userFunction(
 			'wp_send_json_error',
-			[
+			array(
 				'return' => true,
-			]
+			)
 		);
 
 		$admin->ajax_tax_id_check();

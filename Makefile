@@ -18,7 +18,7 @@ clover.xml: vendor test
 unit: test
 
 test: vendor
-	bin/phpunit --coverage-html=./reports
+	bin/phpunit
 
 src/vendor:
 	cd src && composer install

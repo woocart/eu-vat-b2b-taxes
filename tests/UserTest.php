@@ -30,7 +30,7 @@ class UserViewTest extends TestCase {
 	public function testConstructor() {
 		$user = new UserView();
 
-		\WP_Mock::expectActionAdded( 'init', [ $user, 'init' ] );
+		\WP_Mock::expectActionAdded( 'init', array( $user, 'init' ) );
 
 		$user->__construct();
 		\WP_Mock::assertHooksAdded();
@@ -45,29 +45,29 @@ class UserViewTest extends TestCase {
 
 		\WP_Mock::userFunction(
 			'admin_url',
-			[
+			array(
 				'return' => true,
-			]
+			)
 		);
 		\WP_Mock::userFunction(
 			'wp_create_nonce',
-			[
+			array(
 				'return' => true,
-			]
+			)
 		);
 		\WP_Mock::userFunction(
 			'wp_localize_script',
-			[
+			array(
 				'return' => true,
-			]
+			)
 		);
 
-		\WP_Mock::expectActionAdded( 'wp_enqueue_scripts', [ $user, 'scripts' ] );
-		\WP_Mock::expectActionAdded( 'woocommerce_checkout_update_order_review', [ $user, 'calculate_tax' ] );
-		\WP_Mock::expectActionAdded( 'woocommerce_after_checkout_validation', [ $user, 'checkout_validation' ], PHP_INT_MAX, 2 );
-		\WP_Mock::expectActionAdded( 'woocommerce_checkout_update_order_meta', [ $user, 'update_order_meta' ], 10, 1 );
+		\WP_Mock::expectActionAdded( 'wp_enqueue_scripts', array( $user, 'scripts' ) );
+		\WP_Mock::expectActionAdded( 'woocommerce_checkout_update_order_review', array( $user, 'calculate_tax' ) );
+		\WP_Mock::expectActionAdded( 'woocommerce_after_checkout_validation', array( $user, 'checkout_validation' ), PHP_INT_MAX, 2 );
+		\WP_Mock::expectActionAdded( 'woocommerce_checkout_update_order_meta', array( $user, 'update_order_meta' ), 10, 1 );
 
-		\WP_Mock::expectFilterAdded( 'woocommerce_billing_fields', [ $user, 'checkout_fields' ] );
+		\WP_Mock::expectFilterAdded( 'woocommerce_billing_fields', array( $user, 'checkout_fields' ) );
 
 		$user->init();
 		\WP_Mock::assertHooksAdded();
@@ -82,15 +82,15 @@ class UserViewTest extends TestCase {
 
 		\WP_Mock::userFunction(
 			'wp_enqueue_script',
-			[
+			array(
 				'return' => true,
-			]
+			)
 		);
 		\WP_Mock::userFunction(
 			'wp_enqueue_style',
-			[
+			array(
 				'return' => true,
-			]
+			)
 		);
 
 		$user->scripts();
@@ -105,12 +105,12 @@ class UserViewTest extends TestCase {
 
 		\WP_Mock::userFunction(
 			'get_option',
-			[
+			array(
 				'return' => 'none',
-			]
+			)
 		);
 
-		$this->assertEquals( [], $user->checkout_fields( [] ) );
+		$this->assertEquals( array(), $user->checkout_fields( array() ) );
 	}
 
 	/**
@@ -122,12 +122,12 @@ class UserViewTest extends TestCase {
 
 		\WP_Mock::userFunction(
 			'get_option',
-			[
+			array(
 				'return' => 'notnone',
-			]
+			)
 		);
 
-		$this->assertNotEquals( [], $user->checkout_fields( [] ) );
+		$this->assertNotEquals( array(), $user->checkout_fields( array() ) );
 	}
 
 	/**
@@ -151,9 +151,9 @@ class UserViewTest extends TestCase {
 
 		\WP_Mock::userFunction(
 			'get_option',
-			[
+			array(
 				'return' => 'yes',
-			]
+			)
 		);
 
 		$mock = \Mockery::mock( '\WP_Error' );
@@ -176,15 +176,15 @@ class UserViewTest extends TestCase {
 
 		\WP_Mock::userFunction(
 			'update_post_meta',
-			[
+			array(
 				'return' => true,
-			]
+			)
 		);
 		\WP_Mock::userFunction(
 			'sanitize_text_field',
-			[
+			array(
 				'return' => true,
-			]
+			)
 		);
 
 		$user->update_order_meta( '1000' );
@@ -199,12 +199,12 @@ class UserViewTest extends TestCase {
 
 		\WP_Mock::userFunction(
 			'get_option',
-			[
-				'args' => [
-					'b2b_sales'
-				],
+			array(
+				'args'   => array(
+					'b2b_sales',
+				),
 				'return' => 'none',
-			]
+			)
 		);
 
 		$user->calculate_tax( 'billing_country=India&business_check=1' );
@@ -222,47 +222,47 @@ class UserViewTest extends TestCase {
 
 		\WP_Mock::userFunction(
 			'get_option',
-			[
-				'args' => [
-					'b2b_sales'
-				],
+			array(
+				'args'   => array(
+					'b2b_sales',
+				),
 				'return' => 'not_none',
-			]
+			)
 		);
 		\WP_Mock::userFunction(
 			'get_option',
-			[
-				'args' => [
-					'tax_home_country'
-				],
+			array(
+				'args'   => array(
+					'tax_home_country',
+				),
 				'return' => 'no',
-			]
+			)
 		);
 		\WP_Mock::userFunction(
 			'get_option',
-			[
-				'args' => [
-					'tax_charge_vat'
-				],
+			array(
+				'args'   => array(
+					'tax_charge_vat',
+				),
 				'return' => 'yes',
-			]
+			)
 		);
 		\WP_Mock::userFunction(
 			'get_option',
-			[
-				'args' => [
-					'tax_eu_with_vatid'
-				],
+			array(
+				'args'   => array(
+					'tax_eu_with_vatid',
+				),
 				'return' => 'yes',
-			]
+			)
 		);
 		\WP_Mock::userFunction(
 			'wc_get_base_location',
-			[
-				'return' => [
-					'country' => 'India'
-				],
-			]
+			array(
+				'return' => array(
+					'country' => 'India',
+				),
+			)
 		);
 
 		$mock = \Mockery::mock( '\Niteo\WooCart\AdvancedTaxes\Vies' );
@@ -281,47 +281,47 @@ class UserViewTest extends TestCase {
 
 		\WP_Mock::userFunction(
 			'get_option',
-			[
-				'args' => [
-					'b2b_sales'
-				],
+			array(
+				'args'   => array(
+					'b2b_sales',
+				),
 				'return' => 'not_none',
-			]
+			)
 		);
 		\WP_Mock::userFunction(
 			'get_option',
-			[
-				'args' => [
-					'tax_home_country'
-				],
+			array(
+				'args'   => array(
+					'tax_home_country',
+				),
 				'return' => 'no',
-			]
+			)
 		);
 		\WP_Mock::userFunction(
 			'get_option',
-			[
-				'args' => [
-					'tax_charge_vat'
-				],
+			array(
+				'args'   => array(
+					'tax_charge_vat',
+				),
 				'return' => 'yes',
-			]
+			)
 		);
 		\WP_Mock::userFunction(
 			'get_option',
-			[
-				'args' => [
-					'tax_eu_with_vatid'
-				],
+			array(
+				'args'   => array(
+					'tax_eu_with_vatid',
+				),
 				'return' => 'yes',
-			]
+			)
 		);
 		\WP_Mock::userFunction(
 			'wc_get_base_location',
-			[
-				'return' => [
-					'country' => 'India'
-				],
-			]
+			array(
+				'return' => array(
+					'country' => 'India',
+				),
+			)
 		);
 
 		$user->calculate_tax( 'billing_country=Spain&business_check=1' );

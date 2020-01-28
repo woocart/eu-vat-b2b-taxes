@@ -29,7 +29,7 @@ class ReportsTest extends TestCase {
 	public function testConstructor() {
 		$reports = new Reports();
 
-		\WP_Mock::expectFilterAdded( 'woocommerce_admin_reports', [ $reports, 'tabs' ], 10, 1 );
+		\WP_Mock::expectFilterAdded( 'woocommerce_admin_reports', array( $reports, 'tabs' ), 10, 1 );
 
 		$reports->__construct();
 		\WP_Mock::assertHooksAdded();
@@ -63,10 +63,10 @@ class ReportsTest extends TestCase {
 		$this->assertEquals(
 			$tabs,
 			$reports->tabs(
-				[
-					'taxes'  => [ 'reports' => [] ],
-					'orders' => [ 'reports' => [] ],
-				]
+				array(
+					'taxes'  => array( 'reports' => array() ),
+					'orders' => array( 'reports' => array() ),
+				)
 			)
 		);
 	}
