@@ -29,7 +29,7 @@ class RatesTest extends TestCase {
 	public function testConstructor() {
 		$rates = new Rates();
 
-		\WP_Mock::expectActionAdded( 'admin_init', [ $rates, 'init' ] );
+		\WP_Mock::expectActionAdded( 'admin_init', array( $rates, 'init' ) );
 
 		$rates->__construct();
 		\WP_Mock::assertHooksAdded();
@@ -47,9 +47,9 @@ class RatesTest extends TestCase {
 		$pagenow             = 'admin.php';
 		$_REQUEST['tab']     = 'tax';
 		$_REQUEST['page']    = 'wc-settings';
-		$_REQUEST['section'] = 'not_empty';
+		$_REQUEST['section'] = 'reduced-rate';
 
-		\WP_Mock::expectActionAdded( 'admin_footer', [ $rates, 'footer' ] );
+		\WP_Mock::expectActionAdded( 'admin_footer', array( $rates, 'footer' ) );
 
 		$rates->init();
 		\WP_Mock::assertHooksAdded();
@@ -83,6 +83,16 @@ class RatesTest extends TestCase {
 		$rates = new Rates();
 
 		$this->assertEquals( 'UK', $rates->get_tax_code( 'GB' ) );
+	}
+
+	/**
+	 * @covers \Niteo\WooCart\AdvancedTaxes\Rates::__construct
+	 * @covers \Niteo\WooCart\AdvancedTaxes\Rates::get_tax_code
+	 */
+	public function testGetTaxCodeExceptionIM() {
+		$rates = new Rates();
+
+		$this->assertEquals( 'UK', $rates->get_tax_code( 'IM' ) );
 	}
 
 	/**

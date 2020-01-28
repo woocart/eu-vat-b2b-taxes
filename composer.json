@@ -4,7 +4,7 @@
   },
   "require-dev": {
     "dealerdirect/phpcodesniffer-composer-installer": "*",
-    "phpunit/phpunit": "6.5.9",
+    "phpunit/phpunit": "7.5.0",
     "10up/wp_mock": "0.3.0",
     "antecedent/patchwork": "*",
     "php-coveralls/php-coveralls": "^2.1",
@@ -15,7 +15,8 @@
     "phpro/grumphp": "^0.14.2",
     "sensiolabs/security-checker": "^5.0",
     "maglnet/composer-require-checker": "^1.1",
-    "wp-cli/wp-cli": "^2.0"
+    "wp-cli/wp-cli": "^2.0",
+    "pcov/clobber": "^2.0"
   },
   "config": {
     "bin-dir": "bin/"
