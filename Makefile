@@ -87,3 +87,7 @@ cover: vendor
 
 clean:
 	rm -rf vendor/ bin src/vendor/
+
+extensions:
+	pecl install pcov
+	php -dpcov.enabled=1
