@@ -89,5 +89,7 @@ clean:
 	rm -rf vendor/ bin src/vendor/
 
 extensions:
+	apt-get update
+	apt-get install php-pear php5-dev
 	pecl install pcov
 	php -dpcov.enabled=1
