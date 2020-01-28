@@ -30,6 +30,23 @@ class ViesTest extends TestCase {
 	}
 
 	/**
+	 * Call protected/private method of a class.
+	 *
+	 * @param object &$object    Instantiated object that we will run method on.
+	 * @param string $methodName Method name to call
+	 * @param array  $parameters Array of parameters to pass into method.
+	 *
+	 * @return mixed Method return.
+	 */
+	public function invokeMethod( &$object, $methodName, array $parameters = array() ) {
+		$reflection = new \ReflectionClass( get_class( $object ) );
+		$method = $reflection->getMethod( $methodName );
+		$method->setAccessible( true );
+
+		return $method->invokeArgs( $object, $parameters );
+	}
+
+	/**
 	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::__construct
 	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::isValid
 	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::isValidCountryCode
@@ -199,6 +216,17 @@ class ViesTest extends TestCase {
 		 ->willReturn( $valid );
 
 		return $mock;
+	}
+
+	/**
+	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::__construct
+	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies\Client::__construct
+	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::getViesClient
+	 */
+	public function testGetViesClient() {
+		$vies = new Vies();
+
+		$this->assertInstanceOf( '\\Niteo\\WooCart\\AdvancedTaxes\\Vies\\Client', $this->invokeMethod( $vies, 'getViesClient' ) );
 	}
 
 }

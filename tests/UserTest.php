@@ -6,6 +6,7 @@
  */
 
 use Niteo\WooCart\AdvancedTaxes\UserView;
+use Niteo\WooCart\AdvancedTaxes\Vies;
 use PHPUnit\Framework\TestCase;
 
 class UserViewTest extends TestCase {
@@ -187,6 +188,143 @@ class UserViewTest extends TestCase {
 		);
 
 		$user->update_order_meta( '1000' );
+	}
+
+	/**
+	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::__construct
+	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::calculate_tax
+	 */
+	public function testCalculateTaxb2bNone() {
+		$user = new UserView();
+
+		\WP_Mock::userFunction(
+			'get_option',
+			[
+				'args' => [
+					'b2b_sales'
+				],
+				'return' => 'none',
+			]
+		);
+
+		$user->calculate_tax( 'billing_country=India&business_check=1' );
+	}
+
+	/**
+	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::__construct
+	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::calculate_tax
+	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::__construct
+	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::isValid
+	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::isValidCountryCode
+	 */
+	public function testCalculateTaxb2bNotNone() {
+		$user = new UserView();
+
+		\WP_Mock::userFunction(
+			'get_option',
+			[
+				'args' => [
+					'b2b_sales'
+				],
+				'return' => 'not_none',
+			]
+		);
+		\WP_Mock::userFunction(
+			'get_option',
+			[
+				'args' => [
+					'tax_home_country'
+				],
+				'return' => 'no',
+			]
+		);
+		\WP_Mock::userFunction(
+			'get_option',
+			[
+				'args' => [
+					'tax_charge_vat'
+				],
+				'return' => 'yes',
+			]
+		);
+		\WP_Mock::userFunction(
+			'get_option',
+			[
+				'args' => [
+					'tax_eu_with_vatid'
+				],
+				'return' => 'yes',
+			]
+		);
+		\WP_Mock::userFunction(
+			'wc_get_base_location',
+			[
+				'return' => [
+					'country' => 'India'
+				],
+			]
+		);
+
+		$mock = \Mockery::mock( '\Niteo\WooCart\AdvancedTaxes\Vies' );
+		$mock->shouldReceive( 'isValid' )
+				->andReturn( true );
+
+		$user->calculate_tax( 'billing_country=India&business_check=1&business_tax_id=VAT_ID' );
+	}
+
+	/**
+	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::__construct
+	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::calculate_tax
+	 */
+	public function testCalculateTaxb2bNotNoneDiffCountry() {
+		$user = new UserView();
+
+		\WP_Mock::userFunction(
+			'get_option',
+			[
+				'args' => [
+					'b2b_sales'
+				],
+				'return' => 'not_none',
+			]
+		);
+		\WP_Mock::userFunction(
+			'get_option',
+			[
+				'args' => [
+					'tax_home_country'
+				],
+				'return' => 'no',
+			]
+		);
+		\WP_Mock::userFunction(
+			'get_option',
+			[
+				'args' => [
+					'tax_charge_vat'
+				],
+				'return' => 'yes',
+			]
+		);
+		\WP_Mock::userFunction(
+			'get_option',
+			[
+				'args' => [
+					'tax_eu_with_vatid'
+				],
+				'return' => 'yes',
+			]
+		);
+		\WP_Mock::userFunction(
+			'wc_get_base_location',
+			[
+				'return' => [
+					'country' => 'India'
+				],
+			]
+		);
+
+		$user->calculate_tax( 'billing_country=Spain&business_check=1' );
 	}
 
 }
