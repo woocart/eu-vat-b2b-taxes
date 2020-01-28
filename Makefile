@@ -18,7 +18,7 @@ clover.xml: vendor test
 unit: test
 
 test: vendor
-	bin/phpunit
+	bin/phpunit --coverage-html=./reports
 
 src/vendor:
 	cd src && composer install
@@ -83,7 +83,7 @@ i18n: src/vendor
 	wp i18n make-pot src src/i18n/$(PLUGINSLUG).pot
 
 cover: vendor
-	bin/coverage-check clover.xml 50
+	bin/coverage-check clover.xml 65
 
 clean:
 	rm -rf vendor/ bin src/vendor/
