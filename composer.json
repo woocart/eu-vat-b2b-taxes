@@ -16,7 +16,6 @@
     "sensiolabs/security-checker": "^5.0",
     "maglnet/composer-require-checker": "^1.1",
     "wp-cli/wp-cli": "^2.0",
-    "pcov/clobber": "^2.0"
   },
   "config": {
     "bin-dir": "bin/"

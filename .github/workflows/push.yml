@@ -7,8 +7,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - name: Install Extensions
-      run: make extensions
     - name: Install Dependencies
       run: make ensure
     - name: Lint
