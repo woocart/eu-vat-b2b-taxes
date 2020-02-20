@@ -314,7 +314,9 @@ namespace Niteo\WooCart\AdvancedTaxes {
 
 			$option    = esc_html( get_option( 'woocommerce_tax_classes' ) );
 			$classes   = explode( PHP_EOL, $option );
-			$countries = json_decode( json_encode( $_POST['countries'] ), ARRAY_A );
+
+			$countries = array_map( 'sanitize_text_field', $_POST['countries'] );
+			$countries = json_decode( json_encode( $countries ), ARRAY_A );
 
 			// Initiate new class.
 			$rates = new Rates();
