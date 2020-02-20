@@ -312,8 +312,8 @@ namespace Niteo\WooCart\AdvancedTaxes {
 			$class_name = esc_html__( 'Distance Selling', 'advanced-taxes-woocommerce' );
 			$class_slug = 'distance-selling';
 
-			$option    = esc_html( get_option( 'woocommerce_tax_classes' ) );
-			$classes   = explode( PHP_EOL, $option );
+			$option  = esc_html( get_option( 'woocommerce_tax_classes' ) );
+			$classes = explode( PHP_EOL, $option );
 
 			$countries = array_map( 'sanitize_text_field', $_POST['countries'] );
 			$countries = json_decode( json_encode( $countries ), ARRAY_A );
