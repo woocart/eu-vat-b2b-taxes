@@ -1,4 +1,4 @@
-VERSION := 1.3.0
+VERSION := 1.3.1
 PLUGINSLUG := advanced-taxes-woocommerce
 SRCPATH := $(shell pwd)/src
 
@@ -65,7 +65,6 @@ release:
 	git tag v$(VERSION)
 	git push origin v$(VERSION)
 	git pull -r
-	@echo "Go to the https://github.com/woocart/$(PLUGINSLUG)/releases/new?tag=v$(VERSION) and publish the release in order to build the package for distribution!"
 
 fmt: ensure
 	bin/phpcbf --standard=WordPress src --ignore=src/vendor
