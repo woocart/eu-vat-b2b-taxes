@@ -203,16 +203,16 @@ namespace Niteo\WooCart\AdvancedTaxes {
 		 * @return void
 		 */
 		public function update_order_meta( $order_id ) {
-			$business_check = $_POST['business_check'];
+			$business_check = sanitize_text_field( $_POST['business_check'] );
 
 			if ( ! empty( $business_check ) ) {
-				update_post_meta( $order_id, 'b2b_sale', sanitize_text_field( $business_check ) );
+				update_post_meta( $order_id, 'b2b_sale', $business_check );
 			}
 
-			$business_tax_id = $_POST['business_tax_id'];
+			$business_tax_id = sanitize_text_field( $_POST['business_tax_id'] );
 
 			if ( ! empty( $business_tax_id ) ) {
-				update_post_meta( $order_id, 'business_tax_id', sanitize_text_field( $business_tax_id ) );
+				update_post_meta( $order_id, 'business_tax_id', $business_tax_id );
 			}
 		}
 
