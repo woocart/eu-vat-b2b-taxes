@@ -224,6 +224,12 @@ class AdminTest extends TestCase {
 				'return' => true,
 			)
 		);
+		\WP_Mock::userFunction(
+			'sanitize_text_field',
+			array(
+				'return' => true,
+			)
+		);
 
 		$_POST['countries'] = array(
 			'IN',
