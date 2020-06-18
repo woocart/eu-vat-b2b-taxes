@@ -1,4 +1,4 @@
-# Advanced Taxes for WooCommerce Plugin
+# EU VAT & B2B Taxes for WooCommerce
 
 The plugin adds three sections to the default Tax menu in WooCommerce:
 
