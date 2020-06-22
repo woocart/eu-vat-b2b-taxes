@@ -26,27 +26,19 @@ namespace Niteo\WooCart\AdvancedTaxes {
 		 * @return array
 		 */
 		public function tabs( $reports ) {
-			$taxes = array(
-				'taxes_by_country' => array(
-					'title'       => esc_html__( 'Tax Collected By Country', 'advanced-taxes-woocommerce' ),
-					'description' => '',
-					'hide_title'  => true,
-					'callback'    => array( __CLASS__, 'taxes_by_country' ),
-				),
+			$reports['taxes']['reports']['taxes_by_country'] = array(
+				'title'       => esc_html__( 'Tax Collected By Country', 'advanced-taxes-woocommerce' ),
+				'description' => '',
+				'hide_title'  => true,
+				'callback'    => array( __CLASS__, 'taxes_by_country' ),
 			);
 
-			$orders = array(
-				'business_sales' => array(
-					'title'       => esc_html__( 'B2B Transactions', 'advanced-taxes-woocommerce' ),
-					'description' => '',
-					'hide_title'  => true,
-					'callback'    => array( __CLASS__, 'business_orders' ),
-				),
+			$reports['taxes']['reports']['business_sales'] = array(
+				'title'       => esc_html__( 'B2B Transactions', 'advanced-taxes-woocommerce' ),
+				'description' => '',
+				'hide_title'  => true,
+				'callback'    => array( __CLASS__, 'business_orders' ),
 			);
-
-			// Merging arrays to add our tabs to the tax reports section.
-			$reports['taxes']['reports']  = array_merge( $reports['taxes']['reports'], $taxes );
-			$reports['orders']['reports'] = array_merge( $reports['orders']['reports'], $orders );
 
 			return $reports;
 		}
