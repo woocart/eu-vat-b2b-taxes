@@ -157,7 +157,9 @@ namespace Niteo\WooCart\AdvancedTaxes {
 		 * Add required admin script for the tax page.
 		 */
 		public function scripts() {
-			wp_enqueue_script( 'advanced-taxes-admin', Config::$plugin_url . 'assets/js/admin.js', array( 'jquery' ), Config::VERSION, true );
+			wp_enqueue_script( 'euvat-vendors', Config::$plugin_url . 'assets/js/vendors.js', array(), Config::VERSION, true );
+			wp_enqueue_script( 'euvat-admin', Config::$plugin_url . 'assets/js/admin.js', array( 'jquery' ), Config::VERSION, true );
+			wp_enqueue_style( 'euvat-admin', Config::$plugin_url . 'assets/css/admin.css', array(), Config::VERSION );
 
 			// Pass nonce to localize_script to use it in the JS file
 			$localization = array(
@@ -174,7 +176,7 @@ namespace Niteo\WooCart\AdvancedTaxes {
 		 * @codeCoverageIgnore
 		 */
 		public function button_field( $value ) {
-			// Custom attribute handling.
+			// Handling custom attribute
 			$custom_attributes = array();
 
 			if ( ! empty( $value['custom_attributes'] ) && is_array( $value['custom_attributes'] ) ) {

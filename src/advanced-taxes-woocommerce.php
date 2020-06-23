@@ -28,6 +28,7 @@ namespace Niteo\WooCart\AdvancedTaxes {
 		 * Class constructor.
 		 */
 		public function __construct() {
+			new Config();
 			new Admin();
 			new Rates();
 			new UserView();
