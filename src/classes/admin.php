@@ -1,4 +1,12 @@
 <?php
+/**
+ * Handle WP admin features of the plugin.
+ *
+ * @category   Plugins
+ * @package    WordPress
+ * @subpackage eu-vat-b2b-taxes
+ * @since      1.0.0
+ */
 
 namespace Niteo\WooCart\AdvancedTaxes {
 
@@ -15,7 +23,6 @@ namespace Niteo\WooCart\AdvancedTaxes {
 		 * Class constructor.
 		 */
 		public function __construct() {
-			// Initialize the admin part.
 			add_action( 'admin_init', array( &$this, 'init' ) );
 		}
 
@@ -38,7 +45,7 @@ namespace Niteo\WooCart\AdvancedTaxes {
 		 * Add custom settings to the `woocommerce` tax options page.
 		 */
 		public function settings( $settings ) {
-			$this->form_fields = array(
+			$form_fields = array(
 				array(
 					'id'   => 'vatoptions',
 					'name' => esc_html__( 'Tax Handling for B2B', 'advanced-taxes-woocommerce' ),
@@ -143,20 +150,16 @@ namespace Niteo\WooCart\AdvancedTaxes {
 				),
 			);
 
-			return array_merge( $settings, $this->form_fields );
+			return array_merge( $settings, $form_fields );
 		}
 
 		/**
 		 * Add required admin script for the tax page.
 		 */
 		public function scripts() {
-			global $plugin_url, $version;
+			wp_enqueue_script( 'advanced-taxes-admin', Config::$plugin_url . 'assets/js/admin.js', array( 'jquery' ), Config::VERSION, true );
 
-			wp_enqueue_script( 'advanced-taxes-admin', $plugin_url . 'assets/js/admin.js', array( 'jquery' ), $version, true );
-
-			/**
-		   * Localization
-		   */
+			// Pass nonce to localize_script to use it in the JS file
 			$localization = array(
 				'nonce' => wp_create_nonce( '__atw_nonce' ),
 			);
@@ -168,7 +171,6 @@ namespace Niteo\WooCart\AdvancedTaxes {
 		 * Adds a custom button field for woocommerce settings.
 		 *
 		 * @param $value array
-		 *
 		 * @codeCoverageIgnore
 		 */
 		public function button_field( $value ) {
@@ -205,32 +207,35 @@ namespace Niteo\WooCart\AdvancedTaxes {
 		public function ajax_digital_tax_rates() {
 			global $wpdb;
 
-			// Check for nonce.
+			// CSRF protection
 			check_ajax_referer( '__atw_nonce', 'nonce' );
 
-			// Check for existing classes.
+			// Check for existing classes
 			$class_name = esc_html__( 'Digital Goods', 'advanced-taxes-woocommerce' );
 			$class_slug = 'digital-goods';
 
 			$option  = esc_html( get_option( 'woocommerce_tax_classes' ) );
 			$classes = explode( PHP_EOL, $option );
 
-			// Initiate new class.
+			// Fetch tax rates
 			$rates = new Rates();
 			$data  = $rates->get_tax_rates();
+
+			print_r($option);
+			exit;
 
 			// Check if tax rates already exist!
 			if ( ! in_array( $class_name, $classes ) ) {
 				$update_option = $option . "\n" . $class_name;
 
-				// Add entry to `woocommerce_tax_classes` option.
+				// Add entry to `woocommerce_tax_classes` option
 				update_option( 'woocommerce_tax_classes', $update_option );
 			}
 
-			// Response which we will be sending back to the page.
+			// Response which we will be sending back to the page
 			$response = array();
 
-			// Adding tax rates to the table.
+			// Adding tax rates to the table
 			if ( ! empty( $data ) && is_array( $data ) ) {
 				foreach ( $data as $key => $value ) {
 					$query  = $wpdb->prepare(
@@ -244,7 +249,8 @@ namespace Niteo\WooCart\AdvancedTaxes {
 					);
 					$result = $wpdb->get_row( $query, ARRAY_A, 0 );
 
-					// Determine whether tax rate for specific country and tax class exists. If yes, then just update the option.
+					// Determine whether tax rate for specific country and tax class exists
+					// If yes, then just update the option
 					if ( null !== $result ) {
 						$wpdb->update(
 							$wpdb->prefix . 'woocommerce_tax_rates',
@@ -262,7 +268,7 @@ namespace Niteo\WooCart\AdvancedTaxes {
 							array( '%d' )
 						);
 
-						// Add to response.
+						// Add to response
 						$response[] = esc_html( 'Updated ', 'advanced-taxes-woocommerce' ) . $value['country'];
 					} else {
 						$wpdb->insert(
@@ -285,14 +291,14 @@ namespace Niteo\WooCart\AdvancedTaxes {
 							)
 						);
 
-						// Add to response.
+						// Add to response
 						$response[] = esc_html( 'Added ', 'advanced-taxes-woocommerce' ) . $value['country'];
 					}
 				}
 
 				wp_send_json_success( $response );
 			} else {
-				// Nothing added.
+				// Nothing added
 				$response[] = esc_html__( 'Nothing has been added or updated in the database.', 'advanced-taxes-woocommerce' );
 
 				wp_send_json_error( $response );
@@ -305,10 +311,10 @@ namespace Niteo\WooCart\AdvancedTaxes {
 		public function ajax_distance_tax_rates() {
 			global $wpdb;
 
-			// Check for nonce.
+			// Check nonce
 			check_ajax_referer( '__atw_nonce', 'nonce' );
 
-			// Check for existing classes.
+			// Check existing classes
 			$class_name = esc_html__( 'Distance Selling', 'advanced-taxes-woocommerce' );
 			$class_slug = 'distance-selling';
 
@@ -318,7 +324,7 @@ namespace Niteo\WooCart\AdvancedTaxes {
 			$countries = array_map( 'sanitize_text_field', $_POST['countries'] );
 			$countries = json_decode( json_encode( $countries ), ARRAY_A );
 
-			// Initiate new class.
+			// Fetch rates
 			$rates = new Rates();
 			$data  = $rates->get_tax_rates();
 
@@ -326,17 +332,18 @@ namespace Niteo\WooCart\AdvancedTaxes {
 			if ( ! in_array( $class_name, $classes ) ) {
 				$update_option = $option . "\n" . $class_name;
 
-				// Add entry to `woocommerce_tax_classes` option.
+				// Add entry to `woocommerce_tax_classes` option
 				update_option( 'woocommerce_tax_classes', $update_option );
 			}
 
-			// Also, update the countries option cause we refresh the page after AJAX call. So, we don't want to lose the option set for importing taxes for the specific countries.
+			// Also, update the countries option cause we refresh the page after AJAX call
+			// So, we don't want to lose the option set for importing taxes for the specific countries
 			update_option( 'vat_distance_selling_countries', $countries );
 
-			// Response which we will be sending back to the page.
+			// Response which we will be sending back to the page
 			$response = array();
 
-			// Adding tax rates to the table.
+			// Adding tax rates to the table
 			if ( ! empty( $data ) && is_array( $data ) ) {
 				foreach ( $data as $key => $value ) {
 					if ( in_array( $key, $countries ) ) {
@@ -351,7 +358,8 @@ namespace Niteo\WooCart\AdvancedTaxes {
 						);
 						$result = $wpdb->get_row( $query, ARRAY_A, 0 );
 
-						// Determine whether tax rate for specific country and tax class exists. If yes, then just update the option.
+						// Determine whether tax rate for specific country and tax class exists
+						// If yes, then just update the option
 						if ( null !== $result ) {
 							$wpdb->update(
 								$wpdb->prefix . 'woocommerce_tax_rates',
@@ -441,8 +449,8 @@ namespace Niteo\WooCart\AdvancedTaxes {
 			$business_id = sanitize_text_field( $_POST['business_id'] );
 
 			if ( ! empty( $business_id ) ) {
-				// Doing Tax ID check over here.
-				// We are using Vies class for validating our request.
+				// Doing Tax ID check over here
+				// We are using Vies class for validating our request
 				$validator = new Vies();
 				$bool      = $validator->isValid( $business_id, true );
 

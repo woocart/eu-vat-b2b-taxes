@@ -1,4 +1,12 @@
 <?php
+/**
+ * User facing plugin view.
+ *
+ * @category   Plugins
+ * @package    WordPress
+ * @subpackage eu-vat-b2b-taxes
+ * @since      1.0.0
+ */
 
 namespace Niteo\WooCart\AdvancedTaxes {
 
@@ -33,10 +41,8 @@ namespace Niteo\WooCart\AdvancedTaxes {
 		 * Add styles and scripts for the frontend.
 		 */
 		public function scripts() {
-			global $plugin_url, $version;
-
-			wp_enqueue_script( 'advanced-taxes-public', $plugin_url . 'assets/js/public.js', array( 'jquery' ), $version, true );
-			wp_enqueue_style( 'advanced-taxes-public', $plugin_url . 'assets/css/public.css', '', $version );
+			wp_enqueue_script( 'advanced-taxes-public', Config::$plugin_url . 'assets/js/public.js', array( 'jquery' ), Config::VERSION, true );
+			wp_enqueue_style( 'advanced-taxes-public', Config::$plugin_url . 'assets/css/public.css', '', Config::VERSION );
 
 			/**
 		   * Localization

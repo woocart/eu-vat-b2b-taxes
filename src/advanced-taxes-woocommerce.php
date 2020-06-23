@@ -12,19 +12,11 @@
 
 namespace Niteo\WooCart\AdvancedTaxes {
 
-	/**
-	 * Include composer autoload.
-	 */
+	// Composer autoloader
 	require_once __DIR__ . '/vendor/autoload.php';
 
 	/**
-	 * Constants for the plugin.
-	 */
-	$plugin_url = plugin_dir_url( __FILE__ );
-	$version    = '@##VERSION##@';
-
-	/**
-	 * AdvancedTaxes class where all the action happens.
+	 * AdvancedTaxes class which initializes plugin modules.
 	 *
 	 * @package WordPress
 	 * @subpackage advanced-taxes-woocommerce
@@ -36,22 +28,15 @@ namespace Niteo\WooCart\AdvancedTaxes {
 		 * Class constructor.
 		 */
 		public function __construct() {
-			// For WP admin.
 			new Admin();
-
-			// Tax rates.
 			new Rates();
-
-			// Frontend.
 			new UserView();
-
-			// Reports.
 			new Reports();
 		}
 
 	}
 
-	// Initialize Plugin.
+	// Initialize
 	new AdvancedTaxes();
 
 }

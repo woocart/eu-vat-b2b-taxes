@@ -1,4 +1,12 @@
 <?php
+/**
+ * Handles fetching & updating tax rates.
+ *
+ * @category   Plugins
+ * @package    WordPress
+ * @subpackage eu-vat-b2b-taxes
+ * @since      1.0.0
+ */
 
 namespace Niteo\WooCart\AdvancedTaxes {
 
@@ -27,9 +35,7 @@ namespace Niteo\WooCart\AdvancedTaxes {
 		/**
 		 * @var array
 		 */
-		private $sources = array(
-			'https://euvatrates.com/rates.json',
-		);
+		private $source = 'json/rates.json';
 
 		/**
 		 * Class constructor.
@@ -149,9 +155,9 @@ namespace Niteo\WooCart\AdvancedTaxes {
 
 					rate_selector = rate_selector + '</select>';
 
-					var tax_description = ' <?php esc_attr_e( 'Name:', 'advanced-taxes-woocommerce' ); ?> <input id="better-tax-whatdescription" title="<?php esc_attr_e( 'The description that will be used when using the button for mass adding/updating of EU rates', 'advanced-taxes-woocommerce' ); ?>" type="text" size="6" value="<?php esc_attr_e( 'Tax', 'advanced-taxes-woocommerce' ); ?>">';
+					var tax_description = '&nbsp;&nbsp;<?php esc_attr_e( 'Name:', 'advanced-taxes-woocommerce' ); ?> <input id="better-tax-whatdescription" style="vertical-align: middle; padding: 0 8px" title="<?php esc_attr_e( 'The description that will be used when using the button for mass adding/updating of EU rates', 'advanced-taxes-woocommerce' ); ?>" type="text" size="6" value="<?php esc_attr_e( 'Tax', 'advanced-taxes-woocommerce' ); ?>">';
 
-					$foot.after( '<?php echo esc_js( __( 'Use rates:', 'advanced-taxes-woocommerce' ) ); ?> ' + rate_selector + tax_description );
+					$foot.after( '&nbsp;&nbsp;<?php echo esc_js( __( 'Use rates:', 'advanced-taxes-woocommerce' ) ); ?> ' + rate_selector + tax_description );
 
 					$( 'table.wc_tax_rates' ).first().before( '<p><em><?php echo $tax_info; ?></em></p>' );
 
@@ -248,37 +254,28 @@ namespace Niteo\WooCart\AdvancedTaxes {
 		 * Fetch tax rates from remote URL.
 		 */
 		public function fetch_remote_tax_rates() {
-			$new_rates = false;
+			$get = wp_remote_get(
+				$this->source,
+				array(
+					'timeout' => 5,
+				)
+			);
 
-			foreach ( $this->sources as $url ) {
-				$get = wp_remote_get(
-					$url,
-					array(
-						'timeout' => 5,
-					)
-				);
-
-				if ( is_wp_error( $get ) || ! is_array( $get ) ) {
-					continue;
-				}
-
-				if ( ! isset( $get['response'] ) || ! isset( $get['response']['code'] ) ) {
-					continue;
-				}
-
-				if ( $get['response']['code'] >= 300 || $get['response']['code'] < 200 || empty( $get['body'] ) ) {
-					continue;
-				}
-
-				$rates = json_decode( $get['body'], true );
-
-				if ( empty( $rates ) || ! isset( $rates['rates'] ) ) {
-					continue;
-				}
-
-				$new_rates = $rates['rates'];
-				break;
+			if ( is_wp_error( $get ) || ! is_array( $get ) ) {
+				return false;
 			}
+
+			if ( ! isset( $get['response'] ) || ! isset( $get['response']['code'] ) ) {
+				return false;
+			}
+
+			if ( $get['response']['code'] !== 200 || empty( $get['body'] ) ) {
+				return false;
+			}
+
+			// Decode the JSON file so that we have an array of tax rates
+			$rates = json_decode( $get['body'], true );
+			$new_rates = $rates['rates'];
 
 			return $new_rates;
 		}

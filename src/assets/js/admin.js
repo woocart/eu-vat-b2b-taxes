@@ -67,6 +67,9 @@
 					// Unblock the button
 					trigger.prop( 'disabled', false );
 
+					console.log(data);
+					return;
+
 				if ( data.success ) {
 					if ( req_type == 'tax_id_check' ) {
 						// Success.
