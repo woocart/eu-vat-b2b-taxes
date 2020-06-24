@@ -35,7 +35,7 @@ namespace Niteo\WooCart\AdvancedTaxes {
 		/**
 		 * @var array
 		 */
-		private $source = 'json/rates.json';
+		private $source = 'assets/json/rates.json';
 
 		/**
 		 * Class constructor.
@@ -97,30 +97,51 @@ namespace Niteo\WooCart\AdvancedTaxes {
 		 * Fetches tax rates and passes it to JS for processing.
 		 */
 		public function footer() {
-			$get_rates        = $this->get_tax_rates();
-			$rates            = ( is_array( $get_rates ) ) ? $get_rates : array();
-			$rate_description = esc_html__( 'Add / Update EU Tax Rates', 'advanced-taxes-woocommerce' );
+			$tax_rates = $this->get_tax_rates();
+
+			$localize = array(
+				'tax_rates' 					=> $tax_rates,
+				'add_update_text' 		=> esc_html__( 'Add / Update EU Tax Rates', 'advanced-taxes-woocommerce' ),
+				'name_text' 					=> esc_html__( 'Name', 'advanced-taxes-woocommerce' ),
+				'use_rate_text' 			=> esc_html__( 'Use rates', 'advanced-taxes-woocommerce' ),
+				'name_desc_text'  		=> esc_html__( 'The description that will be used when using the button for mass adding/updating of EU rates', 'advanced-taxes-woocommerce' ),
+				'name_value_text' 		=> esc_html__( 'Tax', 'advanced-taxes-woocommerce' ),
+				'grab_tax_text' 			=> esc_html__( 'Grab all the EU Tax rates at the click of a button.', 'advanced-taxes-woocommerce' ),
+				'known_rates_key' 		=> implode( '", "', array_keys( $this->known_rates ) ),
+				'known_rates_values' 	=> implode( '", "', array_values( $this->known_rates ) ),
+				'which_rate' 					=> $this->which_rate,
+			);
+
+			// Pass data to JS
+			wp_localize_script(
+				'euvat-admin',
+				'wc_euvat_l10n',
+				$localize
+			);
 		}
 
 		/**
 		 * Get tax rates.
+		 *
+		 * @param bool $use_transient Whether to look for data in the transient.
 		 */
 		public function get_tax_rates( $use_transient = true ) {
 			if ( ! empty( $this->rates ) ) {
 				return $this->rates;
 			}
 
-			$rates = ( $use_transient ) ? get_site_transient( 'tax_rates_byiso' ) : array();
+			$rates = $use_transient ? get_site_transient( 'wc_euvat_tax_rates' ) : array();
 
+			// If data is not present in transients, then fetch it from JSON file
 			if ( empty( $rates ) ) {
 				$rates = $this->fetch_tax_rates();
 			}
 
 			// The array we return should use ISO country codes
-			if ( ! empty( $new_rates ) ) {
+			if ( ! empty( $rates ) ) {
 				$corrected_rates = array();
 
-				foreach ( $new_rates as $country => $rate ) {
+				foreach ( $rates as $country => $rate ) {
 					$iso                     = $this->get_iso_code( $country );
 					$corrected_rates[ $iso ] = $rate;
 				}
@@ -136,11 +157,99 @@ namespace Niteo\WooCart\AdvancedTaxes {
 					$corrected_rates['IM']['country'] = esc_html__( 'Isle of Man', 'advanced-taxes-woocommerce' );
 				}
 
-				set_site_transient( 'tax_rates_byiso', $corrected_rates, 43200 );
+				set_site_transient( 'wc_euvat_tax_rates', $corrected_rates, 43200 );
 				$this->rates = $corrected_rates;
 			}
 
 			return $this->rates;
+		}
+
+		/**
+		 * Fetch tax rates from remote URL.
+		 */
+		public function fetch_tax_rates() {
+			$get = file_get_contents( Config::$plugin_path . $this->source, true );
+
+			// Decode the JSON file so that we have an array of tax rates
+			if ( $get ) {
+				$rates = json_decode( $get, true );
+
+				return $rates['rates'];
+			}
+
+			return false;
+		}
+
+		/**
+		 * Convert from ISO 3166-1 country code to country VAT code.
+		 * https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes
+		 * http://ec.europa.eu/taxation_customs/resources/documents/taxation/vat/how_vat_works/rates/vat_rates_en.pdf
+		 */
+		public function get_tax_code( $country ) {
+			// Deal with exceptions
+			switch ( $country ) {
+				case 'GR':
+					$country = 'EL';
+					break;
+				case 'IM':
+				case 'GB':
+					$country = 'UK';
+					break;
+				case 'MC':
+					$country = 'FR';
+					break;
+			}
+
+			return $country;
+		}
+
+		/**
+		 * Fetch ISO code.
+		 */
+		public function get_iso_code( $country ) {
+			// Deal with exceptions
+			switch ( $country ) {
+				case 'EL':
+					$country = 'GR';
+					break;
+				case 'UK':
+					$country = 'GB';
+					break;
+			}
+
+			return $country;
+		}
+
+		/**
+		 * Takes an EU country code.
+		 * Available rates: standard_rate, reduced_rate
+		 * @see get_tax_code()
+		 *
+		 * @param string $country_code ISO code for the country
+		 * @param string $rate Tax rate to be fetched
+		 *
+		 * @return bool|string
+		 */
+		public function get_tax_rate_for_country( $country_code, $rate = 'standard_rate' ) {
+			$rates = $this->get_tax_rates();
+
+			if ( empty( $rates ) ) {
+				return false;
+			}
+
+			if ( ! is_array( $rates ) ) {
+				return false;
+			}
+
+			if ( ! isset( $rates[ $country_code ] ) ) {
+				return false;
+			}
+
+			if ( ! isset( $rates[ $country_code ][ $rate ] ) ) {
+				return false;
+			}
+
+			return $rates[ $country_code ][ $rate ];
 		}
 
 	}
