@@ -97,9 +97,16 @@ namespace Niteo\WooCart\AdvancedTaxes {
 		 * Fetches tax rates and passes it to JS for processing.
 		 */
 		public function footer() {
+			wp_enqueue_script( 'euvat-vendors', Config::$plugin_url . 'assets/js/vendors.js', array(), Config::VERSION, true );
+			wp_enqueue_script( 'euvat-admin', Config::$plugin_url . 'assets/js/admin.js', array( 'jquery' ), Config::VERSION, true );
+			wp_enqueue_style( 'euvat-admin', Config::$plugin_url . 'assets/css/admin.css', array(), Config::VERSION );
+
+			// Fetch tax rates
 			$tax_rates = $this->get_tax_rates();
 
+			// Add data to be passed to an array
 			$localize = array(
+				'nonce' 							=> wp_create_nonce( '__wc_euvat_nonce' ),
 				'tax_rates' 					=> $tax_rates,
 				'add_update_text' 		=> esc_html__( 'Add / Update EU Tax Rates', 'advanced-taxes-woocommerce' ),
 				'name_text' 					=> esc_html__( 'Name', 'advanced-taxes-woocommerce' ),

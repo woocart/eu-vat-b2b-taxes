@@ -32,7 +32,6 @@ namespace Niteo\WooCart\AdvancedTaxes {
 		public function init() {
 			if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 				add_action( 'woocommerce_tax_settings', array( &$this, 'settings' ), PHP_INT_MAX, 2 );
-				add_action( 'admin_enqueue_scripts', array( &$this, 'scripts' ) );
 				add_action( 'woocommerce_admin_field_button', array( &$this, 'button_field' ), 10, 1 );
 				add_action( 'wp_ajax_add_digital_taxes', array( &$this, 'ajax_digital_tax_rates' ) );
 				add_action( 'wp_ajax_add_distance_taxes', array( &$this, 'ajax_distance_tax_rates' ) );
@@ -151,22 +150,6 @@ namespace Niteo\WooCart\AdvancedTaxes {
 			);
 
 			return array_merge( $settings, $form_fields );
-		}
-
-		/**
-		 * Add required admin script for the tax page.
-		 */
-		public function scripts() {
-			wp_enqueue_script( 'euvat-vendors', Config::$plugin_url . 'assets/js/vendors.js', array(), Config::VERSION, true );
-			wp_enqueue_script( 'euvat-admin', Config::$plugin_url . 'assets/js/admin.js', array( 'jquery' ), Config::VERSION, true );
-			wp_enqueue_style( 'euvat-admin', Config::$plugin_url . 'assets/css/admin.css', array(), Config::VERSION );
-
-			// Pass nonce to localize_script to use it in the JS file
-			$localization = array(
-				'nonce' => wp_create_nonce( '__atw_nonce' ),
-			);
-
-			wp_localize_script( 'advanced-taxes-admin', 'atw_localize', $localization );
 		}
 
 		/**
