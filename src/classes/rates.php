@@ -45,7 +45,7 @@ namespace Niteo\WooCart\AdvancedTaxes {
 		}
 
 		/**
-		 * Initialize 
+		 * Initialize
 		 */
 		public function init() {
 			global $pagenow;
@@ -104,17 +104,17 @@ namespace Niteo\WooCart\AdvancedTaxes {
 
 			// Add data to be passed to an array
 			$localize = array(
-				'nonce' 							=> wp_create_nonce( '__wc_euvat_nonce' ),
-				'tax_rates' 					=> $tax_rates,
-				'add_update_text' 		=> esc_html__( 'Add / Update EU Tax Rates', 'advanced-taxes-woocommerce' ),
-				'name_text' 					=> esc_html__( 'Name', 'advanced-taxes-woocommerce' ),
-				'use_rate_text' 			=> esc_html__( 'Use rates', 'advanced-taxes-woocommerce' ),
-				'name_desc_text'  		=> esc_html__( 'The description that will be used when using the button for mass adding/updating of EU rates', 'advanced-taxes-woocommerce' ),
-				'name_value_text' 		=> esc_html__( 'Tax', 'advanced-taxes-woocommerce' ),
-				'grab_tax_text' 			=> esc_html__( 'Grab all the EU Tax rates at the click of a button.', 'advanced-taxes-woocommerce' ),
-				'known_rates_key' 		=> implode( '", "', array_keys( $this->known_rates ) ),
-				'known_rates_values' 	=> implode( '", "', array_values( $this->known_rates ) ),
-				'which_rate' 					=> $this->which_rate,
+				'nonce'              => wp_create_nonce( '__wc_euvat_nonce' ),
+				'tax_rates'          => $tax_rates,
+				'add_update_text'    => esc_html__( 'Add / Update EU Tax Rates', 'advanced-taxes-woocommerce' ),
+				'name_text'          => esc_html__( 'Name', 'advanced-taxes-woocommerce' ),
+				'use_rate_text'      => esc_html__( 'Use rates', 'advanced-taxes-woocommerce' ),
+				'name_desc_text'     => esc_html__( 'The description that will be used when using the button for mass adding/updating of EU rates', 'advanced-taxes-woocommerce' ),
+				'name_value_text'    => esc_html__( 'Tax', 'advanced-taxes-woocommerce' ),
+				'grab_tax_text'      => esc_html__( 'Grab all the EU Tax rates at the click of a button.', 'advanced-taxes-woocommerce' ),
+				'known_rates_key'    => implode( '", "', array_keys( $this->known_rates ) ),
+				'known_rates_values' => implode( '", "', array_values( $this->known_rates ) ),
+				'which_rate'         => $this->which_rate,
 			);
 
 			// Pass data to JS
@@ -228,6 +228,7 @@ namespace Niteo\WooCart\AdvancedTaxes {
 		/**
 		 * Takes an EU country code.
 		 * Available rates: standard_rate, reduced_rate
+		 *
 		 * @see get_tax_code()
 		 *
 		 * @param string $country_code ISO code for the country
