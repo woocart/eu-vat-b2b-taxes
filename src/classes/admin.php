@@ -23,133 +23,133 @@ namespace Niteo\WooCart\AdvancedTaxes {
 		 * Class constructor.
 		 */
 		public function __construct() {
-			add_action( 'admin_init', array( &$this, 'init' ) );
+			add_action( 'init', array( &$this, 'init' ) );
 		}
-
+		
 		/**
 		 * Initialize on `admin_init` hook.
 		 */
 		public function init() {
 			if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
-				add_action( 'woocommerce_tax_settings', array( &$this, 'settings' ), PHP_INT_MAX, 2 );
-				add_action( 'woocommerce_admin_field_button', array( &$this, 'button_field' ), 10, 1 );
+				add_filter( 'woocommerce_get_settings_tax', array( &$this, 'settings' ), PHP_INT_MAX, 2 );
+				add_action( 'woocommerce_admin_field_button', array( &$this, 'button_field' ) );
 				add_action( 'wp_ajax_add_digital_taxes', array( &$this, 'ajax_digital_tax_rates' ) );
 				add_action( 'wp_ajax_add_distance_taxes', array( &$this, 'ajax_distance_tax_rates' ) );
 				add_action( 'wp_ajax_add_tax_id_check', array( &$this, 'ajax_tax_id_check' ) );
-				add_action( 'woocommerce_admin_order_data_after_billing_address', array( &$this, 'order_meta' ), 10, 1 );
+				add_action( 'woocommerce_admin_order_data_after_billing_address', array( &$this, 'order_meta' ) );
 			}
 		}
 
 		/**
 		 * Add custom settings to the `woocommerce` tax options page.
 		 */
-		public function settings( $settings ) {
-			$form_fields = array(
+		public function settings( $settings, $current_section ) {
+			$tax_options = array(
 				array(
-					'id'   => 'vatoptions',
-					'name' => esc_html__( 'Tax Handling for B2B', 'advanced-taxes-woocommerce' ),
-					'type' => 'title',
-					'desc' => esc_html__( 'Customize settings if you sell to companies. Defaults are ticked checkboxes.', 'advanced-taxes-woocommerce' ),
+					'id'   		=> 'wc_euvat_options',
+					'title' 	=> esc_html__( 'Tax Handling for B2B', 'advanced-taxes-woocommerce' ),
+					'type' 		=> 'title',
+					'desc' 		=> esc_html__( 'Customize settings if you sell to companies. Defaults are ticked checkboxes.', 'advanced-taxes-woocommerce' ),
 				),
 				array(
-					'id'      => 'b2b_sales',
-					'name'    => esc_html__( 'B2B sales (adds fields Company Name and Tax ID)', 'advanced-taxes-woocommerce' ),
+					'id'      => 'wc_b2b_sales',
+					'title'   => esc_html__( 'B2B sales (adds fields Company Name and Tax ID)', 'advanced-taxes-woocommerce' ),
 					'type'    => 'select',
 					'options' => array(
-						'none'  => esc_html__( 'disabled' ),
-						'eu'    => esc_html__( 'EU store' ),
-						'noneu' => esc_html__( 'Non-EU store' ),
+						'none'  => esc_html__( 'disabled', 'advanced-taxes-woocommerce' ),
+						'eu'    => esc_html__( 'EU store', 'advanced-taxes-woocommerce' ),
+						'noneu' => esc_html__( 'Non-EU store', 'advanced-taxes-woocommerce' ),
 					),
 					'default' => 'none',
 				),
 				array(
-					'id'      => 'tax_id_required',
-					'name'    => esc_html__( 'Tax ID field required for B2B', 'advanced-taxes-woocommerce' ),
+					'id'      => 'wc_tax_id_required',
+					'title'   => esc_html__( 'Tax ID field required for B2B', 'advanced-taxes-woocommerce' ),
 					'type'    => 'checkbox',
 					'desc'    => esc_html__( 'Tax ID required', 'advanced-taxes-woocommerce' ),
 					'default' => 'yes',
 				),
 				array(
-					'id'      => 'tax_home_country',
-					'name'    => esc_html__( 'B2B sales in the home country', 'advanced-taxes-woocommerce' ),
+					'id'      => 'wc_tax_home_country',
+					'title' 	=> esc_html__( 'B2B sales in the home country', 'advanced-taxes-woocommerce' ),
 					'type'    => 'checkbox',
 					'desc'    => esc_html__( 'Charge Tax', 'advanced-taxes-woocommerce' ),
 					'default' => 'yes',
 				),
 				array(
-					'id'      => 'tax_eu_with_vatid',
-					'name'    => esc_html__( 'B2B sales in the EU when VIES/VAT ID is provided', 'advanced-taxes-woocommerce' ),
+					'id'      => 'wc_tax_eu_with_vatid',
+					'title'   => esc_html__( 'B2B sales in the EU when VIES/VAT ID is provided', 'advanced-taxes-woocommerce' ),
 					'type'    => 'checkbox',
 					'desc'    => esc_html__( 'Do not charge Tax', 'advanced-taxes-woocommerce' ),
 					'default' => 'yes',
 				),
 				array(
-					'id'      => 'tax_charge_vat',
-					'name'    => esc_html__( 'B2B sales outside the country', 'advanced-taxes-woocommerce' ),
+					'id'      => 'wc_tax_charge_vat',
+					'title'   => esc_html__( 'B2B sales outside the country', 'advanced-taxes-woocommerce' ),
 					'type'    => 'checkbox',
 					'desc'    => esc_html__( 'Do not charge Tax', 'advanced-taxes-woocommerce' ),
 					'default' => 'yes',
 				),
 				array(
-					'type' => 'sectionend',
-					'id'   => 'vatoptions',
+					'type' 		=> 'sectionend',
+					'id'   		=> 'wc_euvat_options',
 				),
 				array(
-					'id'   => 'vat_digital_goods',
-					'name' => esc_html__( 'EU Tax Handling - Digital Goods (B2C)', 'advanced-taxes-woocommerce' ),
-					'type' => 'title',
-					'desc' => esc_html__( 'If you sell digital goods in/to EU, you need to charge the customer\'s country Tax. Automatically validates the customer IP against their billing address, and prompts the customer to self-declare their address if they do not match. Applies only to digital goods and services sold to consumers (B2C).', 'advanced-taxes-woocommerce' ),
+					'id'   		=> 'wc_euvat_digital_goods',
+					'title' 	=> esc_html__( 'EU Tax Handling - Digital Goods (B2C)', 'advanced-taxes-woocommerce' ),
+					'type' 		=> 'title',
+					'desc' 		=> esc_html__( 'If you sell digital goods in/to EU, you need to charge the customer\'s country Tax. Automatically validates the customer IP against their billing address, and prompts the customer to self-declare their address if they do not match. Applies only to digital goods and services sold to consumers (B2C).', 'advanced-taxes-woocommerce' ),
 				),
 				array(
-					'id'      => 'vat_digital_goods_enable',
-					'name'    => esc_html__( 'EU Tax Handling for Digital Goods', 'advanced-taxes-woocommerce' ),
+					'id'      => 'wc_vat_digital_goods_enable',
+					'title' 	=> esc_html__( 'EU Tax Handling for Digital Goods', 'advanced-taxes-woocommerce' ),
 					'type'    => 'checkbox',
 					'desc'    => esc_html__( 'Enable', 'advanced-taxes-woocommerce' ),
 					'default' => 'no',
 				),
 				array(
-					'id'      => 'vat_digital_goods_rates',
-					'name'    => esc_html__( 'Import tax rates for all EU countries and create tax class Digital Goods' ),
+					'id'      => 'wc_vat_digital_goods_rates',
+					'title' 	=> esc_html__( 'Import tax rates for all EU countries and create tax class Digital Goods' ),
 					'type'    => 'button',
 					'default' => esc_html__( 'Import Taxes', 'advanced-taxes-woocommerce' ),
 					'class'   => 'button-secondary import-digital-tax-rates',
 				),
 				array(
-					'type' => 'sectionend',
-					'id'   => 'vat_digital_goods',
+					'type' 		=> 'sectionend',
+					'id'   		=> 'wc_euvat_digital_goods',
 				),
 				array(
-					'id'   => 'vat_distance_selling',
-					'name' => esc_html__( 'EU Tax Handling - Distance Selling (B2C)', 'advanced-taxes-woocommerce' ),
-					'type' => 'title',
-					'desc' => sprintf( esc_html__( 'You need to register for EU Tax ID in countries where you reach %1$sDistance Selling EU Tax thresholds%2$s. Add countries where you are registered and the customers will be charged the local VAT. Applies only to products sold to consumers (B2C).', 'advanced-taxes-woocommerce' ), '<a href="https://www.vatlive.com/eu-vat-rules/distance-selling/distance-selling-eu-vat-thresholds/" target="_blank">', '</a>' ),
+					'id'   		=> 'wc_euvat_distance_selling',
+					'title' 	=> esc_html__( 'EU Tax Handling - Distance Selling (B2C)', 'advanced-taxes-woocommerce' ),
+					'type' 		=> 'title',
+					'desc' 		=> sprintf( esc_html__( 'You need to register for EU Tax ID in countries where you reach %1$sDistance Selling EU Tax thresholds%2$s. Add countries where you are registered and the customers will be charged the local VAT. Applies only to products sold to consumers (B2C).', 'advanced-taxes-woocommerce' ), '<a href="https://www.vatlive.com/eu-vat-rules/distance-selling/distance-selling-eu-vat-thresholds/" target="_blank">', '</a>' ),
 				),
 				array(
-					'id'      => 'vat_distance_selling_enable',
-					'name'    => esc_html__( 'EU VAT Handling for Distance Selling', 'advanced-taxes-woocommerce' ),
+					'id'      => 'wc_vat_distance_selling_enable',
+					'title' 	=> esc_html__( 'EU VAT Handling for Distance Selling', 'advanced-taxes-woocommerce' ),
 					'type'    => 'checkbox',
 					'desc'    => esc_html__( 'Enable', 'advanced-taxes-woocommerce' ),
 					'default' => 'no',
 				),
 				array(
-					'id'   => 'vat_distance_selling_countries',
-					'name' => esc_html__( 'Select countries for which you would like to import tax rates.', 'advanced-taxes-woocommerce' ),
-					'type' => 'multi_select_countries',
+					'id'   		=> 'wc_vat_distance_selling_countries',
+					'title' 	=> esc_html__( 'Select countries for which you would like to import tax rates.', 'advanced-taxes-woocommerce' ),
+					'type' 		=> 'multi_select_countries',
 				),
 				array(
-					'id'      => 'vat_distance_selling_rates',
-					'name'    => esc_html__( 'Import tax rates for specific EU countries', 'advanced-taxes-woocommerce' ),
+					'id'      => 'wc_vat_distance_selling_rates',
+					'title' 	=> esc_html__( 'Import tax rates for specific EU countries', 'advanced-taxes-woocommerce' ),
 					'type'    => 'button',
 					'default' => esc_html__( 'Import Taxes', 'advanced-taxes-woocommerce' ),
 					'class'   => 'button-secondary import-distance-tax-rates',
 				),
 				array(
-					'type' => 'sectionend',
-					'id'   => 'vat_distance_selling',
+					'type' 		=> 'sectionend',
+					'id'   		=> 'wc_euvat_distance_selling',
 				),
 			);
 
-			return array_merge( $settings, $form_fields );
+			return array_merge( $settings, $tax_options );
 		}
 
 		/**
@@ -190,58 +190,114 @@ namespace Niteo\WooCart\AdvancedTaxes {
 		 * AJAX request for importing digital goods tax rates.
 		 */
 		public function ajax_digital_tax_rates() {
+			// CSRF protection
+			check_ajax_referer( '__wc_euvat_nonce', 'nonce' );
+
+			$tax_name = esc_html__( 'Digital Goods', 'advanced-taxes-woocommerce' );
+			$tax_slug = 'digital-goods';
+
+			// Add taxes to DB
+			$response = $this->add_taxes_to_db( $tax_name, $tax_slug );
+			
+			// Return response to JS
+			wp_send_json( $response );
+		}
+
+		/**
+		 * AJAX request for importing distance selling tax rates.
+		 */
+		public function ajax_distance_tax_rates() {
+			// CSRF protection
+			check_ajax_referer( '__wc_euvat_nonce', 'nonce' );
+
+			$tax_name = esc_html__( 'Distance Selling', 'advanced-taxes-woocommerce' );
+			$tax_slug = 'distance-selling';
+
+			// Add taxes to DB
+			$response = $this->add_taxes_to_db( $tax_name, $tax_slug );
+			
+			// Return response to JS
+			wp_send_json( $response );
+		}
+
+		/**
+		 * Add tax rates to DB.
+		 *
+		 * @param string $name Name used to define tax rates
+		 * @param string $slug Tax name slug
+		 */
+		public function add_taxes_to_db( $name, $slug ) {
 			global $wpdb;
 
-			// CSRF protection
-			check_ajax_referer( '__atw_nonce', 'nonce' );
+			$query  = $wpdb->prepare(
+				"SELECT * FROM {$wpdb->prefix}wc_tax_rate_classes WHERE slug = %s",
+				$slug
+			);
+			$result = $wpdb->get_row( $query, ARRAY_A, 0 );
 
-			// Check for existing classes
-			$class_name = esc_html__( 'Digital Goods', 'advanced-taxes-woocommerce' );
-			$class_slug = 'digital-goods';
+			// Tax class not found
+			// First, add class to DB
+			if ( ! $result ) {
+				$wpdb->insert(
+					$wpdb->prefix . 'wc_tax_rate_classes',
+					array(
+						'name' => $name,
+						'slug' => $slug,
+					),
+					array(
+						'%s',
+						'%s',
+					)
+				);
+			}
 
-			$option  = esc_html( get_option( 'woocommerce_tax_classes' ) );
-			$classes = explode( PHP_EOL, $option );
+			// Specific settings for `distance-selling`
+			if ( 'distance-selling' === $slug ) {
+				$countries = array_map( 'sanitize_text_field', $_POST['countries'] );
+				$countries = json_decode( json_encode( $countries ), ARRAY_A );
+
+				// Update countries cause we refresh the page after AJAX call
+				// And, we don't want to lose the option set for importing taxes for the specific countries
+				update_option( 'wc_vat_distance_selling_countries', $countries );
+			}
 
 			// Fetch tax rates
 			$rates = new Rates();
 			$data  = $rates->get_tax_rates();
 
-			print_r($option);
-			exit;
-
-			// Check if tax rates already exist!
-			if ( ! in_array( $class_name, $classes ) ) {
-				$update_option = $option . "\n" . $class_name;
-
-				// Add entry to `woocommerce_tax_classes` option
-				update_option( 'woocommerce_tax_classes', $update_option );
-			}
-
-			// Response which we will be sending back to the page
-			$response = array();
+      // Response which we will be sending back to the page
+			$response = array(
+				'status' 	=> 'error',
+				'message' => esc_html__( 'Nothing has been added or updated in the database.', 'advanced-taxes-woocommerce' )
+			);
 
 			// Adding tax rates to the table
 			if ( ! empty( $data ) && is_array( $data ) ) {
+				// Counter to calculate query changes
+				$i = 0;
+
 				foreach ( $data as $key => $value ) {
+					if ( 'distance-selling' === $slug && $countries ) {
+						if ( ! in_array( $key, $countries ) ) {
+							continue;
+						}
+					}
+
 					$query  = $wpdb->prepare(
-						"
-					SELECT * 
-					FROM {$wpdb->prefix}woocommerce_tax_rates 
-					WHERE tax_rate_country = %s 
-					AND tax_rate_class = %s",
+						"SELECT * FROM {$wpdb->prefix}woocommerce_tax_rates WHERE tax_rate_country = %s AND tax_rate_class = %s",
 						$key,
-						$class_slug
+						$slug
 					);
 					$result = $wpdb->get_row( $query, ARRAY_A, 0 );
 
 					// Determine whether tax rate for specific country and tax class exists
 					// If yes, then just update the option
-					if ( null !== $result ) {
+					if ( $result ) {
 						$wpdb->update(
 							$wpdb->prefix . 'woocommerce_tax_rates',
 							array(
 								'tax_rate'      => $value['standard_rate'] . '.0000',
-								'tax_rate_name' => $class_name . ' (' . $value['standard_rate'] . '%)',
+								'tax_rate_name' => $name . ' (' . $value['standard_rate'] . '%)',
 							),
 							array(
 								'tax_rate_id' => $result['tax_rate_id'],
@@ -252,19 +308,16 @@ namespace Niteo\WooCart\AdvancedTaxes {
 							),
 							array( '%d' )
 						);
-
-						// Add to response
-						$response[] = esc_html( 'Updated ', 'advanced-taxes-woocommerce' ) . $value['country'];
 					} else {
 						$wpdb->insert(
 							$wpdb->prefix . 'woocommerce_tax_rates',
 							array(
 								'tax_rate_country'  => $key,
 								'tax_rate'          => $value['standard_rate'] . '.0000',
-								'tax_rate_name'     => $class_name . ' (' . $value['standard_rate'] . '%)',
+								'tax_rate_name'     => $name . ' (' . $value['standard_rate'] . '%)',
 								'tax_rate_priority' => 1,
 								'tax_rate_order'    => 1,
-								'tax_rate_class'    => $class_slug,
+								'tax_rate_class'    => $slug,
 							),
 							array(
 								'%s',
@@ -275,179 +328,22 @@ namespace Niteo\WooCart\AdvancedTaxes {
 								'%s',
 							)
 						);
-
-						// Add to response
-						$response[] = esc_html( 'Added ', 'advanced-taxes-woocommerce' ) . $value['country'];
 					}
+
+					// Increase counter
+					++$i;
 				}
 
-				wp_send_json_success( $response );
-			} else {
-				// Nothing added
-				$response[] = esc_html__( 'Nothing has been added or updated in the database.', 'advanced-taxes-woocommerce' );
-
-				wp_send_json_error( $response );
+				$response = array(
+					'status' 	=> 'success',
+					'message' => $i . ' tax entries have been updated'
+				);
 			}
+			
+			return $response;
 		}
 
-		/**
-		 * AJAX request for importing distance selling tax rates.
-		 */
-		public function ajax_distance_tax_rates() {
-			global $wpdb;
-
-			// Check nonce
-			check_ajax_referer( '__atw_nonce', 'nonce' );
-
-			// Check existing classes
-			$class_name = esc_html__( 'Distance Selling', 'advanced-taxes-woocommerce' );
-			$class_slug = 'distance-selling';
-
-			$option  = esc_html( get_option( 'woocommerce_tax_classes' ) );
-			$classes = explode( PHP_EOL, $option );
-
-			$countries = array_map( 'sanitize_text_field', $_POST['countries'] );
-			$countries = json_decode( json_encode( $countries ), ARRAY_A );
-
-			// Fetch rates
-			$rates = new Rates();
-			$data  = $rates->get_tax_rates();
-
-			// Check if tax rates already exist!
-			if ( ! in_array( $class_name, $classes ) ) {
-				$update_option = $option . "\n" . $class_name;
-
-				// Add entry to `woocommerce_tax_classes` option
-				update_option( 'woocommerce_tax_classes', $update_option );
-			}
-
-			// Also, update the countries option cause we refresh the page after AJAX call
-			// So, we don't want to lose the option set for importing taxes for the specific countries
-			update_option( 'vat_distance_selling_countries', $countries );
-
-			// Response which we will be sending back to the page
-			$response = array();
-
-			// Adding tax rates to the table
-			if ( ! empty( $data ) && is_array( $data ) ) {
-				foreach ( $data as $key => $value ) {
-					if ( in_array( $key, $countries ) ) {
-						$query  = $wpdb->prepare(
-							"
-						SELECT * 
-						FROM {$wpdb->prefix}woocommerce_tax_rates 
-						WHERE tax_rate_country = %s 
-						AND tax_rate_class = %s",
-							$key,
-							$class_slug
-						);
-						$result = $wpdb->get_row( $query, ARRAY_A, 0 );
-
-						// Determine whether tax rate for specific country and tax class exists
-						// If yes, then just update the option
-						if ( null !== $result ) {
-							$wpdb->update(
-								$wpdb->prefix . 'woocommerce_tax_rates',
-								array(
-									'tax_rate'      => $value['standard_rate'] . '.0000',
-									'tax_rate_name' => $class_name . ' (' . $value['standard_rate'] . '%)',
-								),
-								array(
-									'tax_rate_id' => $result['tax_rate_id'],
-								),
-								array(
-									'%s',
-									'%s',
-								),
-								array( '%d' )
-							);
-
-							// Add to response.
-							$response[] = esc_html( 'Updated ', 'advanced-taxes-woocommerce' ) . $value['country'];
-						} else {
-							$wpdb->insert(
-								$wpdb->prefix . 'woocommerce_tax_rates',
-								array(
-									'tax_rate_country'  => $key,
-									'tax_rate'          => $value['standard_rate'] . '.0000',
-									'tax_rate_name'     => $class_name . ' (' . $value['standard_rate'] . '%)',
-									'tax_rate_priority' => 1,
-									'tax_rate_order'    => 1,
-									'tax_rate_class'    => $class_slug,
-								),
-								array(
-									'%s',
-									'%s',
-									'%s',
-									'%d',
-									'%d',
-									'%s',
-								)
-							);
-
-							// Add to response.
-							$response[] = esc_html( 'Added ', 'advanced-taxes-woocommerce' ) . $value['country'];
-						}
-					} else {
-						$response[] = esc_html( 'Skipped ', 'advanced-taxes-woocommerce' ) . $value['country'];
-					}
-				}
-
-				wp_send_json_success( $response );
-			} else {
-				// Nothing added.
-				$response[] = esc_html__( 'Nothing has been added or updated in the database.', 'advanced-taxes-woocommerce' );
-
-				wp_send_json_error( $response );
-			}
-		}
-
-		/**
-		 * Display field value on the order edit page.
-		 *
-		 * @param object $order Order object for getting post meta information.
-		 * @return void
-		 * @codeCoverageIgnore
-		 */
-		public function order_meta( $order ) {
-			$b2b_sale        = get_post_meta( $order->get_id(), 'b2b_sale', true ) ? esc_html__( 'Yes', 'advanced-taxes-woocommerce' ) : esc_html__( 'No', 'advanced-taxes-woocommerce' );
-			$business_tax_id = esc_html( get_post_meta( $order->get_id(), 'business_tax_id', true ) );
-
-			if ( empty( $business_tax_id ) ) {
-				$business_tax_id = esc_html__( 'None', 'advanced-taxes-woocommerce' );
-			}
-
-			echo '<p><strong>' . esc_html__( 'B2B Sale', 'advanced-taxes-woocommerce' ) . ':</strong><br/>' . $b2b_sale . '</p>';
-			echo '<p><strong>' . esc_html__( 'Business Tax ID', 'advanced-taxes-woocommerce' ) . ':</strong><br/>' . $business_tax_id . '</p>';
-			echo '<p><button id="bth-vat-check" class="button button-primary" data-value="' . $business_tax_id . '">' . esc_html__( 'Check VAT ID', 'advanced-taxes-woocommerce' ) . '</button>';
-			echo '<div id="btn-vat-response"></div>';
-		}
-
-		/**
-		 * Process AJAX request for checking the Tax ID.
-		 */
-		public function ajax_tax_id_check() {
-			// Check for nonce.
-			check_ajax_referer( '__atw_nonce', 'nonce' );
-
-			// Business Tax ID
-			$business_id = sanitize_text_field( $_POST['business_id'] );
-
-			if ( ! empty( $business_id ) ) {
-				// Doing Tax ID check over here
-				// We are using Vies class for validating our request
-				$validator = new Vies();
-				$bool      = $validator->isValid( $business_id, true );
-
-				if ( $bool ) {
-					wp_send_json_success( esc_html__( 'The TAX ID has been verified correctly and is marked as valid.', 'advanced-taxes-woocommerce' ) );
-				}
-
-				wp_send_json_error( esc_html__( 'The Tax ID has been verified correctly and is marked as invalid.', 'advanced-taxes-woocommerce' ) );
-			}
-
-			wp_send_json_error( esc_html__( 'The Tax ID has been verified correctly and is marked as invalid.', 'advanced-taxes-woocommerce' ) );
-		}
+		
 
 	}
 

@@ -10,8 +10,6 @@
 
 namespace Niteo\WooCart\AdvancedTaxes {
 
-	use Niteo\WooCart\AdvancedTaxes\Vies;
-
 	/**
 	 * User class where we calculate taxes and get stuff done.
 	 *
@@ -139,8 +137,8 @@ namespace Niteo\WooCart\AdvancedTaxes {
 					// Check if `business_tax_id` is provided and the option to not charge tax is turned on. We will return empty taxes if the first statement is true.
 					if ( isset( $new_data['business_tax_id'] ) && ! empty( $new_data['business_tax_id'] ) ) {
 						if ( 'yes' === $b2b_eu_tax_id ) {
-							// Doing Tax ID check over here.
-							// We are using Vies class for validating our request.
+							// Doing Tax ID check over here
+							// We are using Vies class for validating our request
 							$validator = new Vies();
 							$bool      = $validator->isValid( $new_data['business_tax_id'], true );
 

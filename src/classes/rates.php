@@ -65,10 +65,6 @@ namespace Niteo\WooCart\AdvancedTaxes {
 					return;
 				}
 
-				if ( ! isset( $_REQUEST['section'] ) ) {
-					return;
-				}
-
 				$current_page = sanitize_text_field( $_REQUEST['page'] );
 
 				// Should be on WooCommerce settings page
@@ -76,14 +72,16 @@ namespace Niteo\WooCart\AdvancedTaxes {
 					$tab = sanitize_text_field( $_REQUEST['tab'] );
 
 					if ( 'tax' == $tab ) {
-						$section = sanitize_text_field( $_REQUEST['section'] );
-
 						// Set standard rate
 						$this->which_rate = 'standard_rate';
 
-						// Reduced rate if on a different tab
-						if ( 'reduced-rate' == $section ) {
-							$this->which_rate = 'reduced_rate';
+						if ( isset( $_REQUEST['section'] ) ) {
+							$section = sanitize_text_field( $_REQUEST['section'] );
+
+							// Reduced rate if on a different tab
+							if ( 'reduced-rate' == $section ) {
+								$this->which_rate = 'reduced_rate';
+							}
 						}
 
 						// Add tax rates data to footer

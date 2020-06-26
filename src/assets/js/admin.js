@@ -2,8 +2,8 @@
 	'use strict';
 
 	function triggerChange() {
-		var option = $('#b2b_sales').val();
-		var parent = $('#b2b_sales').closest('tbody');
+		var option = $('#wc_b2b_sales').val();
+		var parent = $('#wc_b2b_sales').closest('tbody');
 	
 		if ('none' == option) {
 			// Hide all but show only first :)
@@ -15,7 +15,7 @@
 	
 			// Hide one option for Non-EU stores
 			if ('noneu' == option) {
-				parent.find('#tax_eu_with_vatid').closest('tr').hide();
+				parent.find('#wc_tax_eu_with_vatid').closest('tr').hide();
 			}
 		}
 	}
@@ -28,7 +28,7 @@
 		};
 	
 		if (req_type == 'distance_taxes') {
-			req_data.countries = $('select[name="vat_distance_selling_countries[]"]').val();
+			req_data.countries = $('select[name="wc_vat_distance_selling_countries[]"]').val();
 		}
 	
 		if (req_type == 'tax_id_check') {
@@ -46,7 +46,9 @@
 			// Unblock button
 			trigger.prop('disabled', false);
 
-			if (data.success) {
+			console.log(data);
+
+			if (data.status == 'success') {
 				if (req_type == 'tax_id_check') {
 					$('#btn-vat-response').css({ 'color':'#2d882d' }).html(data.data);
 				} else {
@@ -185,7 +187,7 @@
 	});
 
 	// On-change DOM
-	$(document).on('change', '#b2b_sales', function() {
+	$(document).on('change', '#wc_b2b_sales', function() {
 		triggerChange();
 	});
 
