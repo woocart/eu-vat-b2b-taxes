@@ -8,7 +8,7 @@
  * @since      1.0.0
  */
 
-namespace Niteo\WooCart\AdvancedTaxes {
+namespace Niteo\WooCart\EUVatTaxes {
 
 	/**
 	 * For fetching tax rates and adding them to the settings.

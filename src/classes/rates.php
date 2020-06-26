@@ -8,7 +8,7 @@
  * @since      1.0.0
  */
 
-namespace Niteo\WooCart\AdvancedTaxes {
+namespace Niteo\WooCart\EUVatTaxes {
 
 	/**
 	 * For fetching tax rates and adding them to the settings.
@@ -51,8 +51,8 @@ namespace Niteo\WooCart\AdvancedTaxes {
 			global $pagenow;
 
 			$this->known_rates = array(
-				'standard_rate' => esc_html__( 'Standard Rate', 'advanced-taxes-woocommerce' ),
-				'reduced_rate'  => esc_html__( 'Reduced Rate', 'advanced-taxes-woocommerce' ),
+				'standard_rate' => esc_html__( 'Standard Rate', 'eu-vat-b2b-taxes' ),
+				'reduced_rate'  => esc_html__( 'Reduced Rate', 'eu-vat-b2b-taxes' ),
 			);
 
 			// Check for tax settings and tab
@@ -106,12 +106,12 @@ namespace Niteo\WooCart\AdvancedTaxes {
 			$localize = array(
 				'nonce'              => wp_create_nonce( '__wc_euvat_nonce' ),
 				'tax_rates'          => $tax_rates,
-				'add_update_text'    => esc_html__( 'Add / Update EU Tax Rates', 'advanced-taxes-woocommerce' ),
-				'name_text'          => esc_html__( 'Name', 'advanced-taxes-woocommerce' ),
-				'use_rate_text'      => esc_html__( 'Use rates', 'advanced-taxes-woocommerce' ),
-				'name_desc_text'     => esc_html__( 'The description that will be used when using the button for mass adding/updating of EU rates', 'advanced-taxes-woocommerce' ),
-				'name_value_text'    => esc_html__( 'Tax', 'advanced-taxes-woocommerce' ),
-				'grab_tax_text'      => esc_html__( 'Grab all the EU Tax rates at the click of a button.', 'advanced-taxes-woocommerce' ),
+				'add_update_text'    => esc_html__( 'Add / Update EU Tax Rates', 'eu-vat-b2b-taxes' ),
+				'name_text'          => esc_html__( 'Name', 'eu-vat-b2b-taxes' ),
+				'use_rate_text'      => esc_html__( 'Use rates', 'eu-vat-b2b-taxes' ),
+				'name_desc_text'     => esc_html__( 'The description that will be used when using the button for mass adding/updating of EU rates', 'eu-vat-b2b-taxes' ),
+				'name_value_text'    => esc_html__( 'Tax', 'eu-vat-b2b-taxes' ),
+				'grab_tax_text'      => esc_html__( 'Grab all the EU Tax rates at the click of a button.', 'eu-vat-b2b-taxes' ),
 				'known_rates_key'    => implode( '", "', array_keys( $this->known_rates ) ),
 				'known_rates_values' => implode( '", "', array_values( $this->known_rates ) ),
 				'which_rate'         => $this->which_rate,
@@ -159,7 +159,7 @@ namespace Niteo\WooCart\AdvancedTaxes {
 				// Isle of Man
 				if ( isset( $corrected_rates['GB'] ) ) {
 					$corrected_rates['IM']            = $corrected_rates['GB'];
-					$corrected_rates['IM']['country'] = esc_html__( 'Isle of Man', 'advanced-taxes-woocommerce' );
+					$corrected_rates['IM']['country'] = esc_html__( 'Isle of Man', 'eu-vat-b2b-taxes' );
 				}
 
 				set_site_transient( 'wc_euvat_tax_rates', $corrected_rates, 43200 );

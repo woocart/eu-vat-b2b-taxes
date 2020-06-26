@@ -2,10 +2,10 @@
 /**
  * Tests the reports class.
  *
- * @package advanced-taxes-woocommerce
+ * @package eu-vat-b2b-taxes
  */
 
-use Niteo\WooCart\AdvancedTaxes\Reports;
+use Niteo\WooCart\EUVatTaxes\Reports;
 use PHPUnit\Framework\TestCase;
 
 class ReportsTest extends TestCase {
@@ -24,7 +24,7 @@ class ReportsTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Reports::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\Reports::__construct
 	 */
 	public function testConstructor() {
 		$reports = new Reports();
@@ -36,27 +36,27 @@ class ReportsTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Reports::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Reports::tabs
+	 * @covers \Niteo\WooCart\EUVatTaxes\Reports::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\Reports::tabs
 	 */
 	public function testTabs() {
 		$reports = new Reports();
 
 		$tabs['taxes']['reports'] = array(
 			'taxes_by_country' => array(
-				'title'       => esc_html__( 'Tax Collected By Country', 'advanced-taxes-woocommerce' ),
+				'title'       => esc_html__( 'Tax Collected By Country', 'eu-vat-b2b-taxes' ),
 				'description' => '',
 				'hide_title'  => true,
-				'callback'    => array( 'Niteo\WooCart\AdvancedTaxes\Reports', 'taxes_by_country' ),
+				'callback'    => array( 'Niteo\WooCart\EUVatTaxes\Reports', 'taxes_by_country' ),
 			),
 		);
 
 		$tabs['orders']['reports'] = array(
 			'business_sales' => array(
-				'title'       => esc_html__( 'B2B Transactions', 'advanced-taxes-woocommerce' ),
+				'title'       => esc_html__( 'B2B Transactions', 'eu-vat-b2b-taxes' ),
 				'description' => '',
 				'hide_title'  => true,
-				'callback'    => array( 'Niteo\WooCart\AdvancedTaxes\Reports', 'business_orders' ),
+				'callback'    => array( 'Niteo\WooCart\EUVatTaxes\Reports', 'business_orders' ),
 			),
 		);
 

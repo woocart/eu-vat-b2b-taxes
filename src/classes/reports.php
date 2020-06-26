@@ -1,9 +1,17 @@
 <?php
+/**
+ * Custom WC reports.
+ *
+ * @category   Plugins
+ * @package    WordPress
+ * @subpackage eu-vat-b2b-taxes
+ * @since      1.0.0
+ */
 
-namespace Niteo\WooCart\AdvancedTaxes {
+namespace Niteo\WooCart\EUVatTaxes {
 
-	use Niteo\WooCart\AdvancedTaxes\Reports\Taxes_Report_By_Country;
-	use Niteo\WooCart\AdvancedTaxes\Reports\Business_Transactions_Report;
+	use Niteo\WooCart\EUVatTaxes\Reports\Taxes_Report_By_Country;
+	use Niteo\WooCart\EUVatTaxes\Reports\Business_Transactions_Report;
 
 	/**
 	 * Reports class for our custom tax reports.
@@ -27,14 +35,14 @@ namespace Niteo\WooCart\AdvancedTaxes {
 		 */
 		public function tabs( $reports ) {
 			$reports['taxes']['reports']['taxes_by_country'] = array(
-				'title'       => esc_html__( 'Tax Collected By Country', 'advanced-taxes-woocommerce' ),
+				'title'       => esc_html__( 'Tax Collected By Country', 'eu-vat-b2b-taxes' ),
 				'description' => '',
 				'hide_title'  => true,
 				'callback'    => array( __CLASS__, 'taxes_by_country' ),
 			);
 
 			$reports['taxes']['reports']['business_sales'] = array(
-				'title'       => esc_html__( 'B2B Transactions', 'advanced-taxes-woocommerce' ),
+				'title'       => esc_html__( 'B2B Transactions', 'eu-vat-b2b-taxes' ),
 				'description' => '',
 				'hide_title'  => true,
 				'callback'    => array( __CLASS__, 'business_orders' ),

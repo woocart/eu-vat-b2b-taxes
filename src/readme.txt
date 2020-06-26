@@ -1,4 +1,4 @@
-=== Advanced Taxes for WooCommerce ===
+=== EU VAT & B2B Taxes for WooCommerce ===
 Contributors: woocart
 Tags: woocart, woocommerce, taxes, vat
 Requires at least: 4.8
@@ -8,20 +8,20 @@ Requires PHP: 5.6
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Advanced Taxes for WooCommerce
+EU VAT & B2B Taxes for WooCommerce
 
 == Description ==
 
-Advanced Taxes for WooCommerce plugin helps with configuring complex tax variations when selling in or into the EU.
+EU VAT & B2B Taxes for WooCommerce plugin helps with configuring complex tax variations when selling in or into the EU.
 
 The plugin is fully compliant with EU tax laws, with support for B2C and B2B sales, Digital Goods tax and Distance Selling tax. The defaults are configured for the most common configuration for EU companies. There are additional reports available for easier tax reporting.
 
 == Installation ==
 
-1. Upload the entire `advanced-taxes-woocommerce` folder to the /wp-content/plugins/ directory.
+1. Upload the entire `eu-vat-b2b-taxes` folder to the /wp-content/plugins/ directory.
 2. Activate the plugin through the ‘Plugins’ menu in WordPress.
 
-https://github.com/woocart/advanced-taxes-woocommerce
+https://github.com/woocart/eu-vat-b2b-taxes
 
 == Frequently Asked Questions ==
 

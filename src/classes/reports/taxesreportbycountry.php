@@ -1,6 +1,6 @@
 <?php
 
-namespace Niteo\WooCart\AdvancedTaxes\Reports {
+namespace Niteo\WooCart\EUVatTaxes\Reports {
 
 	use \WC_Admin_Report;
 
@@ -32,7 +32,7 @@ namespace Niteo\WooCart\AdvancedTaxes\Reports {
 				class="export_csv"
 				data-export="table"
 			>
-				<?php esc_html_e( 'Export CSV', 'advanced-taxes-woocommerce' ); ?>
+				<?php esc_html_e( 'Export CSV', 'eu-vat-b2b-taxes' ); ?>
 			</a>
 			<?php
 		}
@@ -42,9 +42,9 @@ namespace Niteo\WooCart\AdvancedTaxes\Reports {
 		 */
 		public function output_report() {
 			$ranges = array(
-				'year'       => esc_html__( 'Year', 'advanced-taxes-woocommerce' ),
-				'last_month' => esc_html__( 'Last month', 'advanced-taxes-woocommerce' ),
-				'month'      => esc_html__( 'This month', 'advanced-taxes-woocommerce' ),
+				'year'       => esc_html__( 'Year', 'eu-vat-b2b-taxes' ),
+				'last_month' => esc_html__( 'Last month', 'eu-vat-b2b-taxes' ),
+				'month'      => esc_html__( 'This month', 'eu-vat-b2b-taxes' ),
 			);
 
 			$current_range = ! empty( $_GET['range'] ) ? sanitize_text_field( $_GET['range'] ) : 'month';
@@ -106,10 +106,10 @@ namespace Niteo\WooCart\AdvancedTaxes\Reports {
 			<table class="widefat">
 				<thead>
 					<tr>
-						<th><strong><?php esc_html_e( 'Country', 'advanced-taxes-woocommerce' ); ?></strong></th>
-						<th><strong><?php esc_html_e( 'Number Of Transactions', 'advanced-taxes-woocommerce' ); ?></strong></th>
-						<th><strong><?php esc_html_e( 'Total Taxable Sales', 'advanced-taxes-woocommerce' ); ?></strong></th>
-						<th><strong><?php esc_html_e( 'Total Tax Collected', 'advanced-taxes-woocommerce' ); ?></strong></th>
+						<th><strong><?php esc_html_e( 'Country', 'eu-vat-b2b-taxes' ); ?></strong></th>
+						<th><strong><?php esc_html_e( 'Number Of Transactions', 'eu-vat-b2b-taxes' ); ?></strong></th>
+						<th><strong><?php esc_html_e( 'Total Taxable Sales', 'eu-vat-b2b-taxes' ); ?></strong></th>
+						<th><strong><?php esc_html_e( 'Total Tax Collected', 'eu-vat-b2b-taxes' ); ?></strong></th>
 					</tr>
 				</thead>
 				<tbody>

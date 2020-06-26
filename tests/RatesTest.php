@@ -2,10 +2,10 @@
 /**
  * Tests the rates class.
  *
- * @package advanced-taxes-woocommerce
+ * @package eu-vat-b2b-taxes
  */
 
-use Niteo\WooCart\AdvancedTaxes\Rates;
+use Niteo\WooCart\EUVatTaxes\Rates;
 use PHPUnit\Framework\TestCase;
 
 class RatesTest extends TestCase {
@@ -24,7 +24,7 @@ class RatesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Rates::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
 	 */
 	public function testConstructor() {
 		$rates = new Rates();
@@ -36,8 +36,8 @@ class RatesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Rates::init
+	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::init
 	 */
 	public function testInit() {
 		global $pagenow;
@@ -56,8 +56,8 @@ class RatesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Rates::get_tax_code
+	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_tax_code
 	 */
 	public function testGetTaxCode() {
 		$rates = new Rates();
@@ -66,8 +66,8 @@ class RatesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Rates::get_tax_code
+	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_tax_code
 	 */
 	public function testGetTaxCodeExceptionGR() {
 		$rates = new Rates();
@@ -76,8 +76,8 @@ class RatesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Rates::get_tax_code
+	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_tax_code
 	 */
 	public function testGetTaxCodeExceptionGB() {
 		$rates = new Rates();
@@ -86,8 +86,8 @@ class RatesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Rates::get_tax_code
+	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_tax_code
 	 */
 	public function testGetTaxCodeExceptionIM() {
 		$rates = new Rates();
@@ -96,8 +96,8 @@ class RatesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Rates::get_tax_code
+	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_tax_code
 	 */
 	public function testGetTaxCodeExceptionMC() {
 		$rates = new Rates();
@@ -106,8 +106,8 @@ class RatesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Rates::get_iso_code
+	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_iso_code
 	 */
 	public function testGetIsoCode() {
 		$rates = new Rates();
@@ -116,8 +116,8 @@ class RatesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Rates::get_iso_code
+	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_iso_code
 	 */
 	public function testGetIsoCodeExceptionUK() {
 		$rates = new Rates();
@@ -126,8 +126,8 @@ class RatesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Rates::get_iso_code
+	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_iso_code
 	 */
 	public function testGetIsoCodeExceptionEL() {
 		$rates = new Rates();
@@ -136,8 +136,8 @@ class RatesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Rates::fetch_remote_tax_rates
+	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::fetch_remote_tax_rates
 	 */
 	public function testFetchRemoteTaxRatesFalse() {
 		$rates = new Rates();
@@ -146,10 +146,10 @@ class RatesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Rates::get_tax_rate_for_country
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Rates::get_tax_rates
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Rates::fetch_remote_tax_rates
+	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_tax_rate_for_country
+	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_tax_rates
+	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::fetch_remote_tax_rates
 	 */
 	public function testGetTaxRatesForCountryFalse() {
 		$rates = new Rates();
@@ -158,9 +158,9 @@ class RatesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Rates::get_tax_rates
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Rates::fetch_remote_tax_rates
+	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_tax_rates
+	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::fetch_remote_tax_rates
 	 */
 	public function testGetTaxRatesFalse() {
 		$rates = new Rates();

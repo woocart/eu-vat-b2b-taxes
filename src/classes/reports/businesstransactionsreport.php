@@ -1,6 +1,6 @@
 <?php
 
-namespace Niteo\WooCart\AdvancedTaxes\Reports {
+namespace Niteo\WooCart\EUVatTaxes\Reports {
 
 	use \WC_Admin_Report;
 
@@ -32,7 +32,7 @@ namespace Niteo\WooCart\AdvancedTaxes\Reports {
 				class="export_csv"
 				data-export="table"
 			>
-				<?php esc_html_e( 'Export CSV', 'advanced-taxes-woocommerce' ); ?>
+				<?php esc_html_e( 'Export CSV', 'eu-vat-b2b-taxes' ); ?>
 			</a>
 			<?php
 		}
@@ -42,9 +42,9 @@ namespace Niteo\WooCart\AdvancedTaxes\Reports {
 		 */
 		public function output_report() {
 			$ranges = array(
-				'year'       => esc_html__( 'Year', 'advanced-taxes-woocommerce' ),
-				'last_month' => esc_html__( 'Last month', 'advanced-taxes-woocommerce' ),
-				'month'      => esc_html__( 'This month', 'advanced-taxes-woocommerce' ),
+				'year'       => esc_html__( 'Year', 'eu-vat-b2b-taxes' ),
+				'last_month' => esc_html__( 'Last month', 'eu-vat-b2b-taxes' ),
+				'month'      => esc_html__( 'This month', 'eu-vat-b2b-taxes' ),
 			);
 
 			$current_range = ! empty( $_GET['range'] ) ? sanitize_text_field( $_GET['range'] ) : 'month';
@@ -109,11 +109,11 @@ namespace Niteo\WooCart\AdvancedTaxes\Reports {
 			<table class="widefat">
 				<thead>
 					<tr>
-						<th><strong><?php esc_html_e( 'Country', 'advanced-taxes-woocommerce' ); ?></strong></th>
-						<th><strong><?php esc_html_e( 'Date', 'advanced-taxes-woocommerce' ); ?></strong></th>
-						<th><strong><?php esc_html_e( 'Order Number', 'advanced-taxes-woocommerce' ); ?></strong></th>
-						<th><strong><?php esc_html_e( 'Tax ID', 'advanced-taxes-woocommerce' ); ?></strong></th>
-						<th><strong><?php esc_html_e( 'Amount Sales', 'advanced-taxes-woocommerce' ); ?></strong></th>
+						<th><strong><?php esc_html_e( 'Country', 'eu-vat-b2b-taxes' ); ?></strong></th>
+						<th><strong><?php esc_html_e( 'Date', 'eu-vat-b2b-taxes' ); ?></strong></th>
+						<th><strong><?php esc_html_e( 'Order Number', 'eu-vat-b2b-taxes' ); ?></strong></th>
+						<th><strong><?php esc_html_e( 'Tax ID', 'eu-vat-b2b-taxes' ); ?></strong></th>
+						<th><strong><?php esc_html_e( 'Amount Sales', 'eu-vat-b2b-taxes' ); ?></strong></th>
 					</tr>
 				</thead>
 				<tbody>

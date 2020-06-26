@@ -1,5 +1,5 @@
 VERSION := 1.3.1
-PLUGINSLUG := advanced-taxes-woocommerce
+PLUGINSLUG := eu-vat-b2b-taxes
 SRCPATH := $(shell pwd)/src
 
 bin/linux/amd64/github-release:

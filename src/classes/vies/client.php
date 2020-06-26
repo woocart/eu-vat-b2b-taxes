@@ -1,6 +1,6 @@
 <?php
 
-namespace Niteo\WooCart\AdvancedTaxes\Vies {
+namespace Niteo\WooCart\EUVatTaxes\Vies {
 
 	use Exception;
 	use SoapClient;
@@ -14,26 +14,20 @@ namespace Niteo\WooCart\AdvancedTaxes\Vies {
 	class Client {
 
 		/**
-		 * URL to WSDL.
-		 *
 		 * @var string
 		 */
 		private $wsdl = 'http://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl';
 
 		/**
-		 * SOAP client.
-		 *
 		 * @var \SoapClient
 		 */
 		private $soapClient;
 
 		/**
-		 * SOAP classmap.
-		 *
 		 * @var array
 		 */
 		private $classmap = array(
-			'checkVatResponse' => 'Niteo\WooCart\AdvancedTaxes\Vies\Response',
+			'checkVatResponse' => 'Niteo\WooCart\EUVatTaxes\Vies\Response',
 		);
 
 		/**
@@ -53,7 +47,7 @@ namespace Niteo\WooCart\AdvancedTaxes\Vies {
 		 * @param string $countryCode Country code
 		 * @param string $vatNumber VAT number
 		 *
-		 * @return Niteo\WooCart\AdvancedTaxes\Vies\Response
+		 * @return Niteo\WooCart\EUVatTaxes\Vies\Response
 		 * @throws Exception
 		 */
 		public function checkVat( $countryCode, $vatNumber ) {
@@ -80,7 +74,7 @@ namespace Niteo\WooCart\AdvancedTaxes\Vies {
 					$this->wsdl,
 					array(
 						'classmap'   => $this->classmap,
-						'user_agent' => 'Mozilla/5.0 (compatible; Advanced Taxes for WooCommerce Plugin; +https://shop.mywoocart.com)',
+						'user_agent' => 'Mozilla/5.0 (compatible; EU VAT & B2B Taxes for WooCommerce Plugin; +https://woocart.com)',
 						'exceptions' => true,
 					)
 				);

@@ -2,10 +2,10 @@
 /**
  * Tests the admin class.
  *
- * @package advanced-taxes-woocommerce
+ * @package eu-vat-b2b-taxes
  */
 
-use Niteo\WooCart\AdvancedTaxes\Admin;
+use Niteo\WooCart\EUVatTaxes\Admin;
 use PHPUnit\Framework\TestCase;
 
 class AdminTest extends TestCase {
@@ -24,7 +24,7 @@ class AdminTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Admin::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::__construct
 	 */
 	public function testConstructor() {
 		$admin = new Admin();
@@ -36,8 +36,8 @@ class AdminTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Admin::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Admin::init
+	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::init
 	 */
 	public function testInit() {
 		$admin = new Admin();
@@ -57,8 +57,8 @@ class AdminTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Admin::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Admin::settings
+	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::settings
 	 */
 	public function testSettings() {
 		$admin = new Admin();
@@ -67,8 +67,8 @@ class AdminTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Admin::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Admin::scripts
+	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::scripts
 	 */
 	public function testScripts() {
 		$admin = new Admin();
@@ -96,11 +96,11 @@ class AdminTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Admin::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Admin::ajax_digital_tax_rates
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Rates::get_tax_rates
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Rates::fetch_remote_tax_rates
+	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::ajax_digital_tax_rates
+	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_tax_rates
+	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::fetch_remote_tax_rates
 	 */
 	public function testAjaxDigitalTaxRates() {
 		$admin = new Admin();
@@ -154,7 +154,7 @@ class AdminTest extends TestCase {
 			)
 		);
 
-		$mock = \Mockery::mock( '\Niteo\WooCart\AdvancedTaxes\Rates' );
+		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Rates' );
 		$mock->shouldReceive( 'get_tax_rates' )
 				->andReturn(
 					array(
@@ -167,11 +167,11 @@ class AdminTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Admin::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Admin::ajax_distance_tax_rates
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Rates::get_tax_rates
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Rates::fetch_remote_tax_rates
+	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::ajax_distance_tax_rates
+	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_tax_rates
+	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::fetch_remote_tax_rates
 	 */
 	public function testAjaxDistanceTaxRates() {
 		$admin = new Admin();
@@ -238,7 +238,7 @@ class AdminTest extends TestCase {
 			'GB',
 		);
 
-		$mock = \Mockery::mock( '\Niteo\WooCart\AdvancedTaxes\Rates' );
+		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Rates' );
 		$mock->shouldReceive( 'get_tax_rates' )
 				->andReturn(
 					array(
@@ -251,11 +251,11 @@ class AdminTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Admin::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Admin::ajax_tax_id_check
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::isValid
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::isValidCountryCode
+	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::ajax_tax_id_check
+	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::isValid
+	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::isValidCountryCode
 	 */
 	public function testAjaxTaxIdCheck() {
 		$admin = new Admin();
@@ -275,7 +275,7 @@ class AdminTest extends TestCase {
 
 		$_POST['business_id'] = 'EU123456789';
 
-		$mock = \Mockery::mock( '\Niteo\WooCart\AdvancedTaxes\Vies' );
+		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Vies' );
 		$mock->shouldReceive( 'isValid' )
 				 ->with( $_POST['business_id'] )
 				 ->andReturn( true );

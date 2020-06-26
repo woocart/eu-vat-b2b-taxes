@@ -8,9 +8,9 @@
  * @since      1.0.0
  */
 
-namespace Niteo\WooCart\AdvancedTaxes {
+namespace Niteo\WooCart\EUVatTaxes {
 
-	use Niteo\WooCart\AdvancedTaxes\Vies;
+	use Niteo\WooCart\EUVatTaxes\Vies;
 
 	/**
 	 * Class for all the WP admin panel magic.
@@ -47,47 +47,47 @@ namespace Niteo\WooCart\AdvancedTaxes {
 			$tax_options = array(
 				array(
 					'id'    => 'wc_euvat_options',
-					'title' => esc_html__( 'Tax Handling for B2B', 'advanced-taxes-woocommerce' ),
+					'title' => esc_html__( 'Tax Handling for B2B', 'eu-vat-b2b-taxes' ),
 					'type'  => 'title',
-					'desc'  => esc_html__( 'Customize settings if you sell to companies. Defaults are ticked checkboxes.', 'advanced-taxes-woocommerce' ),
+					'desc'  => esc_html__( 'Customize settings if you sell to companies. Defaults are ticked checkboxes.', 'eu-vat-b2b-taxes' ),
 				),
 				array(
 					'id'      => 'wc_b2b_sales',
-					'title'   => esc_html__( 'B2B sales (adds fields Company Name and Tax ID)', 'advanced-taxes-woocommerce' ),
+					'title'   => esc_html__( 'B2B sales (adds fields Company Name and Tax ID)', 'eu-vat-b2b-taxes' ),
 					'type'    => 'select',
 					'options' => array(
-						'none'  => esc_html__( 'disabled', 'advanced-taxes-woocommerce' ),
-						'eu'    => esc_html__( 'EU store', 'advanced-taxes-woocommerce' ),
-						'noneu' => esc_html__( 'Non-EU store', 'advanced-taxes-woocommerce' ),
+						'none'  => esc_html__( 'disabled', 'eu-vat-b2b-taxes' ),
+						'eu'    => esc_html__( 'EU store', 'eu-vat-b2b-taxes' ),
+						'noneu' => esc_html__( 'Non-EU store', 'eu-vat-b2b-taxes' ),
 					),
 					'default' => 'none',
 				),
 				array(
 					'id'      => 'wc_tax_id_required',
-					'title'   => esc_html__( 'Tax ID field required for B2B', 'advanced-taxes-woocommerce' ),
+					'title'   => esc_html__( 'Tax ID field required for B2B', 'eu-vat-b2b-taxes' ),
 					'type'    => 'checkbox',
-					'desc'    => esc_html__( 'Tax ID required', 'advanced-taxes-woocommerce' ),
+					'desc'    => esc_html__( 'Tax ID required', 'eu-vat-b2b-taxes' ),
 					'default' => 'yes',
 				),
 				array(
 					'id'      => 'wc_tax_home_country',
-					'title'   => esc_html__( 'B2B sales in the home country', 'advanced-taxes-woocommerce' ),
+					'title'   => esc_html__( 'B2B sales in the home country', 'eu-vat-b2b-taxes' ),
 					'type'    => 'checkbox',
-					'desc'    => esc_html__( 'Charge Tax', 'advanced-taxes-woocommerce' ),
+					'desc'    => esc_html__( 'Charge Tax', 'eu-vat-b2b-taxes' ),
 					'default' => 'yes',
 				),
 				array(
 					'id'      => 'wc_tax_eu_with_vatid',
-					'title'   => esc_html__( 'B2B sales in the EU when VIES/VAT ID is provided', 'advanced-taxes-woocommerce' ),
+					'title'   => esc_html__( 'B2B sales in the EU when VIES/VAT ID is provided', 'eu-vat-b2b-taxes' ),
 					'type'    => 'checkbox',
-					'desc'    => esc_html__( 'Do not charge Tax', 'advanced-taxes-woocommerce' ),
+					'desc'    => esc_html__( 'Do not charge Tax', 'eu-vat-b2b-taxes' ),
 					'default' => 'yes',
 				),
 				array(
 					'id'      => 'wc_tax_charge_vat',
-					'title'   => esc_html__( 'B2B sales outside the country', 'advanced-taxes-woocommerce' ),
+					'title'   => esc_html__( 'B2B sales outside the country', 'eu-vat-b2b-taxes' ),
 					'type'    => 'checkbox',
-					'desc'    => esc_html__( 'Do not charge Tax', 'advanced-taxes-woocommerce' ),
+					'desc'    => esc_html__( 'Do not charge Tax', 'eu-vat-b2b-taxes' ),
 					'default' => 'yes',
 				),
 				array(
@@ -96,22 +96,22 @@ namespace Niteo\WooCart\AdvancedTaxes {
 				),
 				array(
 					'id'    => 'wc_euvat_digital_goods',
-					'title' => esc_html__( 'EU Tax Handling - Digital Goods (B2C)', 'advanced-taxes-woocommerce' ),
+					'title' => esc_html__( 'EU Tax Handling - Digital Goods (B2C)', 'eu-vat-b2b-taxes' ),
 					'type'  => 'title',
-					'desc'  => esc_html__( 'If you sell digital goods in/to EU, you need to charge the customer\'s country Tax. Automatically validates the customer IP against their billing address, and prompts the customer to self-declare their address if they do not match. Applies only to digital goods and services sold to consumers (B2C).', 'advanced-taxes-woocommerce' ),
+					'desc'  => esc_html__( 'If you sell digital goods in/to EU, you need to charge the customer\'s country Tax. Automatically validates the customer IP against their billing address, and prompts the customer to self-declare their address if they do not match. Applies only to digital goods and services sold to consumers (B2C).', 'eu-vat-b2b-taxes' ),
 				),
 				array(
 					'id'      => 'wc_vat_digital_goods_enable',
-					'title'   => esc_html__( 'EU Tax Handling for Digital Goods', 'advanced-taxes-woocommerce' ),
+					'title'   => esc_html__( 'EU Tax Handling for Digital Goods', 'eu-vat-b2b-taxes' ),
 					'type'    => 'checkbox',
-					'desc'    => esc_html__( 'Enable', 'advanced-taxes-woocommerce' ),
+					'desc'    => esc_html__( 'Enable', 'eu-vat-b2b-taxes' ),
 					'default' => 'no',
 				),
 				array(
 					'id'      => 'wc_vat_digital_goods_rates',
 					'title'   => esc_html__( 'Import tax rates for all EU countries and create tax class Digital Goods' ),
 					'type'    => 'button',
-					'default' => esc_html__( 'Import Taxes', 'advanced-taxes-woocommerce' ),
+					'default' => esc_html__( 'Import Taxes', 'eu-vat-b2b-taxes' ),
 					'class'   => 'button-secondary import-digital-tax-rates',
 				),
 				array(
@@ -120,27 +120,27 @@ namespace Niteo\WooCart\AdvancedTaxes {
 				),
 				array(
 					'id'    => 'wc_euvat_distance_selling',
-					'title' => esc_html__( 'EU Tax Handling - Distance Selling (B2C)', 'advanced-taxes-woocommerce' ),
+					'title' => esc_html__( 'EU Tax Handling - Distance Selling (B2C)', 'eu-vat-b2b-taxes' ),
 					'type'  => 'title',
-					'desc'  => sprintf( esc_html__( 'You need to register for EU Tax ID in countries where you reach %1$sDistance Selling EU Tax thresholds%2$s. Add countries where you are registered and the customers will be charged the local VAT. Applies only to products sold to consumers (B2C).', 'advanced-taxes-woocommerce' ), '<a href="https://www.vatlive.com/eu-vat-rules/distance-selling/distance-selling-eu-vat-thresholds/" target="_blank">', '</a>' ),
+					'desc'  => sprintf( esc_html__( 'You need to register for EU Tax ID in countries where you reach %1$sDistance Selling EU Tax thresholds%2$s. Add countries where you are registered and the customers will be charged the local VAT. Applies only to products sold to consumers (B2C).', 'eu-vat-b2b-taxes' ), '<a href="https://www.vatlive.com/eu-vat-rules/distance-selling/distance-selling-eu-vat-thresholds/" target="_blank">', '</a>' ),
 				),
 				array(
 					'id'      => 'wc_vat_distance_selling_enable',
-					'title'   => esc_html__( 'EU VAT Handling for Distance Selling', 'advanced-taxes-woocommerce' ),
+					'title'   => esc_html__( 'EU VAT Handling for Distance Selling', 'eu-vat-b2b-taxes' ),
 					'type'    => 'checkbox',
-					'desc'    => esc_html__( 'Enable', 'advanced-taxes-woocommerce' ),
+					'desc'    => esc_html__( 'Enable', 'eu-vat-b2b-taxes' ),
 					'default' => 'no',
 				),
 				array(
 					'id'    => 'wc_vat_distance_selling_countries',
-					'title' => esc_html__( 'Select countries for which you would like to import tax rates.', 'advanced-taxes-woocommerce' ),
+					'title' => esc_html__( 'Select countries for which you would like to import tax rates.', 'eu-vat-b2b-taxes' ),
 					'type'  => 'multi_select_countries',
 				),
 				array(
 					'id'      => 'wc_vat_distance_selling_rates',
-					'title'   => esc_html__( 'Import tax rates for specific EU countries', 'advanced-taxes-woocommerce' ),
+					'title'   => esc_html__( 'Import tax rates for specific EU countries', 'eu-vat-b2b-taxes' ),
 					'type'    => 'button',
-					'default' => esc_html__( 'Import Taxes', 'advanced-taxes-woocommerce' ),
+					'default' => esc_html__( 'Import Taxes', 'eu-vat-b2b-taxes' ),
 					'class'   => 'button-secondary import-distance-tax-rates',
 				),
 				array(
@@ -193,7 +193,7 @@ namespace Niteo\WooCart\AdvancedTaxes {
 			// CSRF protection
 			check_ajax_referer( '__wc_euvat_nonce', 'nonce' );
 
-			$tax_name = esc_html__( 'Digital Goods', 'advanced-taxes-woocommerce' );
+			$tax_name = esc_html__( 'Digital Goods', 'eu-vat-b2b-taxes' );
 			$tax_slug = 'digital-goods';
 
 			// Add taxes to DB
@@ -210,7 +210,7 @@ namespace Niteo\WooCart\AdvancedTaxes {
 			// CSRF protection
 			check_ajax_referer( '__wc_euvat_nonce', 'nonce' );
 
-			$tax_name = esc_html__( 'Distance Selling', 'advanced-taxes-woocommerce' );
+			$tax_name = esc_html__( 'Distance Selling', 'eu-vat-b2b-taxes' );
 			$tax_slug = 'distance-selling';
 
 			// Add taxes to DB
@@ -268,7 +268,7 @@ namespace Niteo\WooCart\AdvancedTaxes {
 			// Response which we will be sending back to the page
 			$response = array(
 				'status'  => 'error',
-				'message' => esc_html__( 'Nothing has been added or updated in the database.', 'advanced-taxes-woocommerce' ),
+				'message' => esc_html__( 'Nothing has been added or updated in the database.', 'eu-vat-b2b-taxes' ),
 			);
 
 			// Adding tax rates to the table
@@ -351,16 +351,16 @@ namespace Niteo\WooCart\AdvancedTaxes {
 		 * @codeCoverageIgnore
 		 */
 		public function order_meta( $order ) {
-			$b2b_sale        = get_post_meta( $order->get_id(), 'b2b_sale', true ) ? esc_html__( 'Yes', 'advanced-taxes-woocommerce' ) : esc_html__( 'No', 'advanced-taxes-woocommerce' );
+			$b2b_sale        = get_post_meta( $order->get_id(), 'b2b_sale', true ) ? esc_html__( 'Yes', 'eu-vat-b2b-taxes' ) : esc_html__( 'No', 'eu-vat-b2b-taxes' );
 			$business_tax_id = esc_html( get_post_meta( $order->get_id(), 'business_tax_id', true ) );
 
 			if ( empty( $business_tax_id ) ) {
-				$business_tax_id = esc_html__( 'None', 'advanced-taxes-woocommerce' );
+				$business_tax_id = esc_html__( 'None', 'eu-vat-b2b-taxes' );
 			}
 
-			echo '<p><strong>' . esc_html__( 'B2B Sale', 'advanced-taxes-woocommerce' ) . ':</strong><br/>' . $b2b_sale . '</p>';
-			echo '<p><strong>' . esc_html__( 'Business Tax ID', 'advanced-taxes-woocommerce' ) . ':</strong><br/>' . $business_tax_id . '</p>';
-			echo '<p><button id="bth-vat-check" class="button button-primary" data-value="' . $business_tax_id . '">' . esc_html__( 'Check VAT ID', 'advanced-taxes-woocommerce' ) . '</button>';
+			echo '<p><strong>' . esc_html__( 'B2B Sale', 'eu-vat-b2b-taxes' ) . ':</strong><br/>' . $b2b_sale . '</p>';
+			echo '<p><strong>' . esc_html__( 'Business Tax ID', 'eu-vat-b2b-taxes' ) . ':</strong><br/>' . $business_tax_id . '</p>';
+			echo '<p><button id="bth-vat-check" class="button button-primary" data-value="' . $business_tax_id . '">' . esc_html__( 'Check VAT ID', 'eu-vat-b2b-taxes' ) . '</button>';
 			echo '<div id="btn-vat-response"></div>';
 		}
 
@@ -381,13 +381,13 @@ namespace Niteo\WooCart\AdvancedTaxes {
 				$bool      = $validator->isValid( $business_id, true );
 
 				if ( $bool ) {
-					wp_send_json_success( esc_html__( 'The TAX ID has been verified correctly and is marked as valid.', 'advanced-taxes-woocommerce' ) );
+					wp_send_json_success( esc_html__( 'The TAX ID has been verified correctly and is marked as valid.', 'eu-vat-b2b-taxes' ) );
 				}
 
-				wp_send_json_error( esc_html__( 'The Tax ID has been verified correctly and is marked as invalid.', 'advanced-taxes-woocommerce' ) );
+				wp_send_json_error( esc_html__( 'The Tax ID has been verified correctly and is marked as invalid.', 'eu-vat-b2b-taxes' ) );
 			}
 
-			wp_send_json_error( esc_html__( 'The Tax ID has been verified correctly and is marked as invalid.', 'advanced-taxes-woocommerce' ) );
+			wp_send_json_error( esc_html__( 'The Tax ID has been verified correctly and is marked as invalid.', 'eu-vat-b2b-taxes' ) );
 		}
 
 	}
