@@ -31,10 +31,6 @@
 			req_data.countries = $( 'select[name="wc_vat_distance_selling_countries[]"]' ).val();
 		}
 
-		if (req_type == 'tax_id_check') {
-			req_data.business_id = trigger.attr( 'data-value' );
-		}
-
 		$.ajax(
 			{
 				type: 'POST',
@@ -49,19 +45,10 @@
 				// Unblock button
 				trigger.prop( 'disabled', false );
 
-				console.log( data );
-
+				// Refresh on a success response
 				if (data.status == 'success') {
-					if (req_type == 'tax_id_check') {
-						$( '#btn-vat-response' ).css( { 'color':'#2d882d' } ).html( data.data );
-					} else {
-						// Refreshes options to latest values
-						window.location.href = window.location.href;
-					}
-				} else {
-					if (req_type == 'tax_id_check') {
-						$( '#btn-vat-response' ).css( { 'color':'#ff0000' } ).html( data.data );
-					}
+					// Refreshes options to latest values
+					window.location.href = window.location.href;
 				}
 			}
 		);
@@ -226,15 +213,6 @@
 		function(e) {
 			e.preventDefault();
 			euVatAjax( 'distance_taxes', $( this ) );
-		}
-	);
-
-	// Tax ID checker
-	$( '#wc-euvat-check' ).on(
-		'click',
-		function(e) {
-			e.preventDefault();
-			euVatAjax( 'tax_id_check', $( this ) );
 		}
 	);
 })( jQuery );
