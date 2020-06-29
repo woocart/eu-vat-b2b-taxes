@@ -34,6 +34,13 @@ namespace Niteo\WooCart\EUVatTaxes {
 		 * Class constructor.
 		 */
 		public function __construct() {
+			add_action( 'init', array( $this, 'init' ) );
+		}
+
+		/**
+		 * Set URL & path to plugin directory.
+		 */
+		public function init() {
 			self::$plugin_url  = plugin_dir_url( dirname( __FILE__ ) );
 			self::$plugin_path = plugin_dir_path( dirname( __FILE__ ) );
 		}

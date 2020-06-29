@@ -20,12 +20,12 @@ namespace Niteo\WooCart\EUVatTaxes {
 		/**
 		 * @var array
 		 */
-		private $rates = array();
+		public $rates = array();
 
 		/**
 		 * @var array
 		 */
-		private $known_rates;
+		public $known_rates;
 
 		/**
 		 * @var string
@@ -50,43 +50,45 @@ namespace Niteo\WooCart\EUVatTaxes {
 		public function init() {
 			global $pagenow;
 
+			// Check for tax settings and tab
+			if ( 'admin.php' !== $pagenow ) {
+				return;
+			}
+
+			if ( ! isset( $_REQUEST['page'] ) ) {
+				return;
+			}
+
+			if ( ! isset( $_REQUEST['tab'] ) ) {
+				return;
+			}
+
 			$this->known_rates = array(
 				'standard_rate' => esc_html__( 'Standard Rate', 'eu-vat-b2b-taxes' ),
 				'reduced_rate'  => esc_html__( 'Reduced Rate', 'eu-vat-b2b-taxes' ),
 			);
 
-			// Check for tax settings and tab
-			if ( 'admin.php' == $pagenow ) {
-				if ( ! isset( $_REQUEST['page'] ) ) {
-					return;
-				}
+			$current_page = sanitize_text_field( $_REQUEST['page'] );
 
-				if ( ! isset( $_REQUEST['tab'] ) ) {
-					return;
-				}
+			// Should be on WooCommerce settings page
+			if ( 'woocommerce_settings' == $current_page || 'wc-settings' == $current_page ) {
+				$tab = sanitize_text_field( $_REQUEST['tab'] );
 
-				$current_page = sanitize_text_field( $_REQUEST['page'] );
+				if ( 'tax' == $tab ) {
+					// Set standard rate
+					$this->which_rate = 'standard_rate';
 
-				// Should be on WooCommerce settings page
-				if ( 'woocommerce_settings' == $current_page || 'wc-settings' == $current_page ) {
-					$tab = sanitize_text_field( $_REQUEST['tab'] );
+					if ( isset( $_REQUEST['section'] ) ) {
+						$section = sanitize_text_field( $_REQUEST['section'] );
 
-					if ( 'tax' == $tab ) {
-						// Set standard rate
-						$this->which_rate = 'standard_rate';
-
-						if ( isset( $_REQUEST['section'] ) ) {
-							$section = sanitize_text_field( $_REQUEST['section'] );
-
-							// Reduced rate if on a different tab
-							if ( 'reduced-rate' == $section ) {
-								$this->which_rate = 'reduced_rate';
-							}
+						// Reduced rate if on a different tab
+						if ( 'reduced-rate' == $section ) {
+							$this->which_rate = 'reduced_rate';
 						}
-
-						// Add tax rates data to footer
-						add_action( 'admin_footer', array( &$this, 'footer' ) );
 					}
+
+					// Add tax rates data to footer
+					add_action( 'admin_footer', array( &$this, 'footer' ) );
 				}
 			}
 		}
@@ -173,16 +175,16 @@ namespace Niteo\WooCart\EUVatTaxes {
 		 * Fetch tax rates from remote URL.
 		 */
 		public function fetch_tax_rates() {
-			$get = file_get_contents( Config::$plugin_path . $this->source, true );
+			try {
+				$get = file_get_contents( $this->get_file_path(), true );
 
-			// Decode the JSON file so that we have an array of tax rates
-			if ( $get ) {
+				// Decode the JSON file so that we have an array of tax rates
 				$rates = json_decode( $get, true );
 
 				return $rates['rates'];
+			} catch( \Exception $e ) {
+				return false;
 			}
-
-			return false;
 		}
 
 		/**
@@ -192,17 +194,20 @@ namespace Niteo\WooCart\EUVatTaxes {
 		 */
 		public function get_tax_code( $country ) {
 			// Deal with exceptions
-			switch ( $country ) {
-				case 'GR':
-					$country = 'EL';
-					break;
-				case 'IM':
-				case 'GB':
-					$country = 'UK';
-					break;
-				case 'MC':
-					$country = 'FR';
-					break;
+			if ( 'GR' === $country ) {
+				return 'EL';
+			}
+
+			if ( 'IM' === $country ) {
+				return 'UK';
+			}
+
+			if ( 'GB' === $country ) {
+				return 'UK';
+			}
+
+			if ( 'MC' === $country ) {
+				return 'FR';
 			}
 
 			return $country;
@@ -213,13 +218,12 @@ namespace Niteo\WooCart\EUVatTaxes {
 		 */
 		public function get_iso_code( $country ) {
 			// Deal with exceptions
-			switch ( $country ) {
-				case 'EL':
-					$country = 'GR';
-					break;
-				case 'UK':
-					$country = 'GB';
-					break;
+			if ( 'EL' === $country ) {
+				return 'GR';
+			}
+
+			if ( 'UK' === $country ) {
+				return 'GB';
 			}
 
 			return $country;
@@ -256,6 +260,13 @@ namespace Niteo\WooCart\EUVatTaxes {
 			}
 
 			return $rates[ $country_code ][ $rate ];
+		}
+
+		/**
+		 * Returns path to the JSON file
+		 */
+		public function get_file_path() {
+			return Config::$plugin_path . $this->source;
 		}
 
 	}

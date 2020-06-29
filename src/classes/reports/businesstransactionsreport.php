@@ -8,6 +8,7 @@ namespace Niteo\WooCart\EUVatTaxes\Reports {
 	 * Reports class for our custom tax reports.
 	 *
 	 * @since 1.0.0
+	 * @codeCoverageIgnore
 	 */
 	class Business_Transactions_Report extends WC_Admin_Report {
 

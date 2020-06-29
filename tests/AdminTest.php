@@ -488,6 +488,20 @@ class AdminTest extends TestCase {
 
 	/**
 	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::vies
+	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::__construct
+	 */
+	public function testVies() {
+		$admin = new Admin();
+
+		$this->assertInstanceOf(
+			'\Niteo\WooCart\EUVatTaxes\Vies',
+			$admin->vies()
+		);
+	}
+
+	/**
+	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::__construct
 	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::rates
 	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
 	 */

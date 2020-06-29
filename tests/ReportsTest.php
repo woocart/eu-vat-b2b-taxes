@@ -47,7 +47,7 @@ class ReportsTest extends TestCase {
 				'title'       => esc_html__( 'Tax Collected By Country', 'eu-vat-b2b-taxes' ),
 				'description' => '',
 				'hide_title'  => true,
-				'callback'    => array( 'Niteo\WooCart\EUVatTaxes\Reports', 'taxes_by_country' ),
+				'callback'    => array( $reports, 'taxes_by_country' ),
 			),
 		);
 
@@ -56,7 +56,7 @@ class ReportsTest extends TestCase {
 				'title'       => esc_html__( 'B2B Transactions', 'eu-vat-b2b-taxes' ),
 				'description' => '',
 				'hide_title'  => true,
-				'callback'    => array( 'Niteo\WooCart\EUVatTaxes\Reports', 'business_orders' ),
+				'callback'    => array( $reports, 'business_orders' ),
 			),
 		);
 
