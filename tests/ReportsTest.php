@@ -78,7 +78,7 @@ class ReportsTest extends TestCase {
 	 */
 	public function testTaxesByCountry() {
 		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Reports' )->makePartial();
-		
+
 		$reports = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Taxes_Report_By_Country' );
 		$reports->shouldReceive( 'output_report' )->andReturn( true );
 
@@ -93,7 +93,7 @@ class ReportsTest extends TestCase {
 	 */
 	public function testBusinessOrders() {
 		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Reports' )->makePartial();
-		
+
 		$reports = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Business_Transactions_Report' );
 		$reports->shouldReceive( 'output_report' )->andReturn( true );
 

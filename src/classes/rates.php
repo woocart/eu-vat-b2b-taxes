@@ -182,7 +182,7 @@ namespace Niteo\WooCart\EUVatTaxes {
 				$rates = json_decode( $get, true );
 
 				return $rates['rates'];
-			} catch( \Exception $e ) {
+			} catch ( \Exception $e ) {
 				return false;
 			}
 		}

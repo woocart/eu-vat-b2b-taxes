@@ -43,7 +43,7 @@ class RatesTest extends TestCase {
 		global $pagenow;
 
 		$pagenow = 'post.php';
-		$rates = new Rates();
+		$rates   = new Rates();
 
 		$this->assertNull(
 			$rates->init()
@@ -58,7 +58,7 @@ class RatesTest extends TestCase {
 		global $pagenow;
 
 		$pagenow = 'admin.php';
-		$rates = new Rates();
+		$rates   = new Rates();
 
 		$this->assertNull(
 			$rates->init()
@@ -72,9 +72,9 @@ class RatesTest extends TestCase {
 	public function testInitNoTab() {
 		global $pagenow;
 
-		$pagenow = 'admin.php';
+		$pagenow          = 'admin.php';
 		$_REQUEST['page'] = 'wc-settings';
-		$rates = new Rates();
+		$rates            = new Rates();
 
 		$this->assertNull(
 			$rates->init()
@@ -90,9 +90,9 @@ class RatesTest extends TestCase {
 
 		$rates = new Rates();
 
-		$pagenow             = 'admin.php';
-		$_REQUEST['tab']     = 'tax';
-		$_REQUEST['page']    = 'wc-settings';
+		$pagenow          = 'admin.php';
+		$_REQUEST['tab']  = 'tax';
+		$_REQUEST['page'] = 'wc-settings';
 
 		\WP_Mock::expectActionAdded( 'admin_footer', array( $rates, 'footer' ) );
 		\WP_Mock::userFunction(
@@ -149,14 +149,14 @@ class RatesTest extends TestCase {
 		\WP_Mock::userFunction(
 			'wp_enqueue_script',
 			array(
-				'times' => 2,
+				'times'  => 2,
 				'return' => true,
 			)
 		);
 		\WP_Mock::userFunction(
 			'wp_enqueue_style',
 			array(
-				'times' => 1,
+				'times'  => 1,
 				'return' => true,
 			)
 		);
@@ -181,24 +181,24 @@ class RatesTest extends TestCase {
 	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_tax_rates
 	 */
 	public function testGetTaxRatesPresent() {
-		$rates = new Rates();
+		$rates        = new Rates();
 		$rates->rates = array(
-			'DE' => [
-				'standard_rate' => '20.00'
-			],
-			'SI' => [
-				'standard_rate' => '18.00'
-			]
+			'DE' => array(
+				'standard_rate' => '20.00',
+			),
+			'SI' => array(
+				'standard_rate' => '18.00',
+			),
 		);
 
 		$this->assertEquals(
 			array(
-				'DE' => [
-					'standard_rate' => '20.00'
-				],
-				'SI' => [
-					'standard_rate' => '18.00'
-				]
+				'DE' => array(
+					'standard_rate' => '20.00',
+				),
+				'SI' => array(
+					'standard_rate' => '18.00',
+				),
 			),
 			$rates->get_tax_rates()
 		);
@@ -212,16 +212,16 @@ class RatesTest extends TestCase {
 	public function testGetTaxRatesNotPresent() {
 		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Rates' )->makePartial();
 		$mock->shouldReceive( 'fetch_tax_rates' )
-				 ->andReturn(
-						array(
-							'DE' => [
-								'standard_rate' => '20.00'
-							],
-							'SI' => [
-								'standard_rate' => '18.00'
-							]
-						)
-				 );
+				->andReturn(
+					array(
+						'DE' => array(
+							'standard_rate' => '20.00',
+						),
+						'SI' => array(
+							'standard_rate' => '18.00',
+						),
+					)
+				);
 		\WP_Mock::userFunction(
 			'get_site_transient',
 			array(
@@ -237,12 +237,12 @@ class RatesTest extends TestCase {
 
 		$this->assertEquals(
 			array(
-				'DE' => [
-					'standard_rate' => '20.00'
-				],
-				'SI' => [
-					'standard_rate' => '18.00'
-				]
+				'DE' => array(
+					'standard_rate' => '20.00',
+				),
+				'SI' => array(
+					'standard_rate' => '18.00',
+				),
 			),
 			$mock->get_tax_rates()
 		);
@@ -256,16 +256,16 @@ class RatesTest extends TestCase {
 	public function testGetTaxRatesFranceMonaco() {
 		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Rates' )->makePartial();
 		$mock->shouldReceive( 'fetch_tax_rates' )
-				 ->andReturn(
-						array(
-							'GB' => [
-								'standard_rate' => '20.00'
-							],
-							'FR' => [
-								'standard_rate' => '18.00'
-							]
-						)
-				 );
+				->andReturn(
+					array(
+						'GB' => array(
+							'standard_rate' => '20.00',
+						),
+						'FR' => array(
+							'standard_rate' => '18.00',
+						),
+					)
+				);
 		\WP_Mock::userFunction(
 			'get_site_transient',
 			array(
@@ -281,19 +281,19 @@ class RatesTest extends TestCase {
 
 		$this->assertEquals(
 			array(
-				'GB' => [
-					'standard_rate' => '20.00'
-				],
-				'FR' => [
-					'standard_rate' => '18.00'
-				],
-				'MC' => [
-					'standard_rate' => '18.00'
-				],
-				'IM' => [
+				'GB' => array(
 					'standard_rate' => '20.00',
-					'country' => 'Isle of Man'
-				]
+				),
+				'FR' => array(
+					'standard_rate' => '18.00',
+				),
+				'MC' => array(
+					'standard_rate' => '18.00',
+				),
+				'IM' => array(
+					'standard_rate' => '20.00',
+					'country'       => 'Isle of Man',
+				),
 			),
 			$mock->get_tax_rates()
 		);
@@ -416,12 +416,12 @@ class RatesTest extends TestCase {
 	public function testGetTaxRatesForCountryNoCountryCode() {
 		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Rates' )->makePartial();
 		$mock->shouldReceive( 'get_tax_rates' )
-				 ->andReturn(
-					 array(
-						'SI' => [
-							'standard_rate' => '18.00'
-						]
-					 )
+				->andReturn(
+					array(
+						'SI' => array(
+							'standard_rate' => '18.00',
+						),
+					)
 				);
 
 		$this->assertFalse( $mock->get_tax_rate_for_country( 'ABC' ) );
@@ -436,12 +436,12 @@ class RatesTest extends TestCase {
 	public function testGetTaxRatesForCountryNoStandardRate() {
 		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Rates' )->makePartial();
 		$mock->shouldReceive( 'get_tax_rates' )
-				 ->andReturn(
-					 array(
-						'SI' => [
-							'reduced_rate' => '18.00'
-						]
-					 )
+				->andReturn(
+					array(
+						'SI' => array(
+							'reduced_rate' => '18.00',
+						),
+					)
 				);
 
 		$this->assertFalse( $mock->get_tax_rate_for_country( 'SI' ) );
@@ -456,17 +456,18 @@ class RatesTest extends TestCase {
 	public function testGetTaxRatesForCountryStandardRate() {
 		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Rates' )->makePartial();
 		$mock->shouldReceive( 'get_tax_rates' )
-				 ->andReturn(
-					 array(
-						'SI' => [
-							'standard_rate' => '18.00'
-						]
-					 )
+				->andReturn(
+					array(
+						'SI' => array(
+							'standard_rate' => '18.00',
+						),
+					)
 				);
 
 		$this->assertEquals(
 			'18.00',
-			$mock->get_tax_rate_for_country( 'SI' ) );
+			$mock->get_tax_rate_for_country( 'SI' )
+		);
 	}
 
 	/**
@@ -491,21 +492,21 @@ class RatesTest extends TestCase {
 		$this->assertEquals(
 			array(
 				'AT' => array(
-					'country' => 'Austria',
-					'standard_rate' => 20,
-					'reduced_rate' => 10,
-					'reduced_rate_alt' => 13,
+					'country'            => 'Austria',
+					'standard_rate'      => 20,
+					'reduced_rate'       => 10,
+					'reduced_rate_alt'   => 13,
 					'super_reduced_rate' => false,
-					'parking_rate' => 12
+					'parking_rate'       => 12,
 				),
 				'BE' => array(
-					'country' => 'Belgium',
-					'standard_rate' => 21,
-					'reduced_rate' => 12,
-					'reduced_rate_alt' => 6,
+					'country'            => 'Belgium',
+					'standard_rate'      => 21,
+					'reduced_rate'       => 12,
+					'reduced_rate_alt'   => 6,
 					'super_reduced_rate' => false,
-					'parking_rate' => 12
-				)
+					'parking_rate'       => 12,
+				),
 			),
 			$mock->fetch_tax_rates()
 		);

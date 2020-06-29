@@ -78,7 +78,7 @@ class AdminTest extends TestCase {
 	public function testScriptsOrderPage() {
 		global $post;
 		$post = (object) array(
-			'post_type' => 'shop_order'
+			'post_type' => 'shop_order',
 		);
 
 		$admin = new Admin();
@@ -174,7 +174,7 @@ class AdminTest extends TestCase {
 		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Admin' )->makePartial();
 		$mock->shouldReceive( 'add_html' )->andReturn( true );
 
-		$order = new class {
+		$order = new class() {
 			function get_id() {
 				return true;
 			}
@@ -222,13 +222,13 @@ class AdminTest extends TestCase {
 		\WP_Mock::userFunction(
 			'sanitize_text_field',
 			array(
-				'times' => 2,
+				'times'  => 2,
 				'return' => true,
 			)
 		);
 
 		$_POST['business_id'] = 'XX000000';
-		$_POST['order_id'] = '100';
+		$_POST['order_id']    = '100';
 
 		\WP_Mock::userFunction(
 			'update_post_meta',
@@ -266,13 +266,13 @@ class AdminTest extends TestCase {
 		\WP_Mock::userFunction(
 			'sanitize_text_field',
 			array(
-				'times' => 2,
+				'times'  => 2,
 				'return' => true,
 			)
 		);
 
 		$_POST['business_id'] = 'SI9999999';
-		$_POST['order_id'] = '100';
+		$_POST['order_id']    = '100';
 
 		$vies = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Vies' );
 		$vies->shouldReceive( 'isValid' )->andReturn( true );
@@ -305,7 +305,7 @@ class AdminTest extends TestCase {
 	 */
 	public function testAddTaxesToDbDigital() {
 		global $wpdb;
-		$wpdb = new class {
+		$wpdb = new class() {
 			public $prefix = 'wp_';
 
 			function prepare() {
@@ -319,17 +319,17 @@ class AdminTest extends TestCase {
 			}
 		};
 
-		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Admin' )->makePartial();
+		$mock  = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Admin' )->makePartial();
 		$rates = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Rates' );
 		$rates->shouldReceive( 'get_tax_rates' )
 					->andReturn(
 						array(
-							'DE' => [
-								'standard_rate' => '20.0'
-							],
-							'SI' => [
-								'standard_rate' => '30.0'
-							],
+							'DE' => array(
+								'standard_rate' => '20.0',
+							),
+							'SI' => array(
+								'standard_rate' => '30.0',
+							),
 						)
 					);
 		$mock->shouldReceive( 'rates' )->andReturn( $rates );
@@ -348,7 +348,7 @@ class AdminTest extends TestCase {
 	public function testAddTaxesToDbDistance() {
 		global $wpdb;
 
-		$wpdb = new class {
+		$wpdb = new class() {
 			public $prefix = 'wp_';
 
 			function prepare() {
@@ -365,7 +365,6 @@ class AdminTest extends TestCase {
 			}
 		};
 
-		
 		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Admin' )->makePartial();
 
 		\WP_Mock::userFunction(
@@ -379,22 +378,23 @@ class AdminTest extends TestCase {
 		$rates->shouldReceive( 'get_tax_rates' )
 					->andReturn(
 						array(
-							'DE' => [
-								'standard_rate' => '20.0'
-							],
-							'SI' => [
-								'standard_rate' => '30.0'
-							],
+							'DE' => array(
+								'standard_rate' => '20.0',
+							),
+							'SI' => array(
+								'standard_rate' => '30.0',
+							),
 						)
 					);
 		$mock->shouldReceive( 'rates' )->andReturn( $rates );
-		$mock->shouldReceive( 'get_countries' )->andReturn( [ 'DE', 'SI' ] );
+		$mock->shouldReceive( 'get_countries' )->andReturn( array( 'DE', 'SI' ) );
 
 		$this->assertEquals(
 			array(
-				'status' => 'success',
-				'message' => '2 tax entries have been updated'
-			), $mock->add_taxes_to_db( 'Distance Selling', 'distance-selling' )
+				'status'  => 'success',
+				'message' => '2 tax entries have been updated',
+			),
+			$mock->add_taxes_to_db( 'Distance Selling', 'distance-selling' )
 		);
 	}
 
@@ -410,7 +410,7 @@ class AdminTest extends TestCase {
 	public function testAddTaxesToDbDistanceNoCountries() {
 		global $wpdb;
 
-		$wpdb = new class {
+		$wpdb = new class() {
 			public $prefix = 'wp_';
 
 			function prepare() {
@@ -427,7 +427,6 @@ class AdminTest extends TestCase {
 			}
 		};
 
-		
 		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Admin' )->makePartial();
 
 		\WP_Mock::userFunction(
@@ -441,22 +440,23 @@ class AdminTest extends TestCase {
 		$rates->shouldReceive( 'get_tax_rates' )
 					->andReturn(
 						array(
-							'DE' => [
-								'standard_rate' => '20.0'
-							],
-							'SI' => [
-								'standard_rate' => '30.0'
-							],
+							'DE' => array(
+								'standard_rate' => '20.0',
+							),
+							'SI' => array(
+								'standard_rate' => '30.0',
+							),
 						)
 					);
 		$mock->shouldReceive( 'rates' )->andReturn( $rates );
-		$mock->shouldReceive( 'get_countries' )->andReturn( [ 'FR', 'BE' ] );
+		$mock->shouldReceive( 'get_countries' )->andReturn( array( 'FR', 'BE' ) );
 
 		$this->assertEquals(
 			array(
-				'status' => 'success',
-				'message' => '0 tax entries have been updated'
-			), $mock->add_taxes_to_db( 'Distance Selling', 'distance-selling' )
+				'status'  => 'success',
+				'message' => '0 tax entries have been updated',
+			),
+			$mock->add_taxes_to_db( 'Distance Selling', 'distance-selling' )
 		);
 	}
 
@@ -467,21 +467,21 @@ class AdminTest extends TestCase {
 	public function testGetCountries() {
 		$admin = new Admin();
 
-		$_POST['countries'] = [
+		$_POST['countries'] = array(
 			'DE',
-			'SI'
-		];
+			'SI',
+		);
 
 		\WP_Mock::userFunction(
 			'sanitize_text_field',
 			array(
-				'times' => 2,
+				'times'  => 2,
 				'return' => 'SANITIZED_VALUE',
 			)
 		);
 
 		$this->assertEquals(
-			[ 'SANITIZED_VALUE', 'SANITIZED_VALUE' ],
+			array( 'SANITIZED_VALUE', 'SANITIZED_VALUE' ),
 			$admin->get_countries()
 		);
 	}
