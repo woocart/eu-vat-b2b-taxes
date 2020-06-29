@@ -24,7 +24,7 @@
 				// Unblock button
 				trigger.prop( 'disabled', false );
 
-				if (data.status == 'success') {
+				if (data.success) {
 					$( '#wc-euvat-response' ).css( { 'color':'#2d882d' } ).html( data.data );
 				} else {
 					$( '#wc-euvat-response' ).css( { 'color':'#ff0000' } ).html( data.data );

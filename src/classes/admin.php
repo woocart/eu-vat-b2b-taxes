@@ -27,7 +27,7 @@ namespace Niteo\WooCart\EUVatTaxes {
 		}
 
 		/**
-		 * Initialize on `admin_init` hook.
+		 * Initialize on `init` hook.
 		 */
 		public function init() {
 			if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
@@ -289,8 +289,8 @@ namespace Niteo\WooCart\EUVatTaxes {
 
 			// Specific settings for `distance-selling`
 			if ( 'distance-selling' === $slug ) {
-				$countries = array_map( 'sanitize_text_field', $_POST['countries'] );
-				$countries = json_decode( json_encode( $countries ), ARRAY_A );
+				$countries = $this->get_countries();
+				$countries = json_decode( json_encode( $countries ), true );
 
 				// Update countries cause we refresh the page after AJAX call
 				// And, we don't want to lose the option set for importing taxes for the specific countries
@@ -298,7 +298,7 @@ namespace Niteo\WooCart\EUVatTaxes {
 			}
 
 			// Fetch tax rates
-			$rates = new Rates();
+			$rates = $this->rates();
 			$data  = $rates->get_tax_rates();
 
 			// Response which we will be sending back to the page
@@ -384,7 +384,6 @@ namespace Niteo\WooCart\EUVatTaxes {
 		 *
 		 * @param object $order Order object for getting post meta information
 		 * @return void
-		 * @codeCoverageIgnore
 		 */
 		public function order_meta( $order ) {
 			$order_id        = absint( $order->get_id() );
@@ -403,6 +402,7 @@ namespace Niteo\WooCart\EUVatTaxes {
 		 * @param string $business_tax_id Tax ID to be used for verification
 		 * @param string $business_valid Determines whether verification has already been done
 		 * @param int    $order_id Order ID which has the B2B sale data
+		 * @codeCoverageIgnore
 		 */
 		public function add_html( $b2b_sale, $business_tax_id, $business_valid, $order_id ) {
 			$b2b_sale_text = ( $b2b_sale ) ? esc_html__( 'Yes', 'eu-vat-b2b-taxes' ) : esc_html__( 'No', 'eu-vat-b2b-taxes' );
@@ -452,7 +452,7 @@ namespace Niteo\WooCart\EUVatTaxes {
 			if ( ! empty( $business_id ) && ! empty( $order_id ) ) {
 				// Doing Tax ID check over here
 				// We are using Vies class for validating our request
-				$validator = new Vies();
+				$validator = $this->vies();
 				$check     = $validator->isValid( $business_id, true );
 
 				if ( $check ) {
@@ -467,6 +467,27 @@ namespace Niteo\WooCart\EUVatTaxes {
 			}
 
 			wp_send_json_error( esc_html__( 'Unable to verify Tax ID because of the missing data.', 'eu-vat-b2b-taxes' ) );
+		}
+
+		/**
+		 * Returns POST data for multi-select countries.
+		 */
+		public function get_countries() {
+			return array_map( 'sanitize_text_field', $_POST['countries'] );
+		}
+
+		/**
+		 * Initiate the Vies class for Tax ID check.
+		 */
+		public function vies() {
+			return new Vies();
+		}
+
+		/**
+		 * Initiate the Rates class to fetch tax rates.
+		 */
+		public function rates() {
+			return new Rates();
 		}
 
 	}
