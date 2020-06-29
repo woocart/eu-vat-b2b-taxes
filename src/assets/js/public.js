@@ -1,20 +1,24 @@
 (function($) {
 	'use strict';
 
-	$(document).on('change', '#business_check', function() {
-		var business_check,
+	$( document ).on(
+		'change',
+		'#business_check',
+		function() {
+			var business_check,
 				business_tax_label,
 				business_tax_id;
 
-		business_check     = $('#business_check:checked').length > 0;
-		business_tax_label = $('#business_tax_id');
-		business_tax_id    = business_tax_label.closest('p');
+			business_check     = $( '#business_check:checked' ).length > 0;
+			business_tax_label = $( '#business_tax_id' );
+			business_tax_id    = business_tax_label.closest( 'p' );
 
-		if (business_check) {
-			business_tax_id.removeClass('validate-required').addClass('validate-required').fadeIn();
-			business_tax_id.find('.optional').hide();
-		} else {
-			business_tax_id.removeClass('validate-required').fadeOut();
+			if (business_check) {
+				business_tax_id.removeClass( 'validate-required' ).addClass( 'validate-required' ).fadeIn();
+				business_tax_id.find( '.optional' ).hide();
+			} else {
+				business_tax_id.removeClass( 'validate-required' ).fadeOut();
+			}
 		}
-	});
-})(jQuery);
+	);
+})( jQuery );

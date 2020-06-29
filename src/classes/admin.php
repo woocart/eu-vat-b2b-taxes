@@ -56,7 +56,7 @@ namespace Niteo\WooCart\EUVatTaxes {
 
 					// Add data to be passed to an array
 					$localize = array(
-						'nonce' => wp_create_nonce( '__wc_euvat_nonce' )
+						'nonce' => wp_create_nonce( '__wc_euvat_nonce' ),
 					);
 
 					// Pass data to JS
@@ -72,7 +72,7 @@ namespace Niteo\WooCart\EUVatTaxes {
 		/**
 		 * Add custom settings to the `woocommerce` tax options page.
 		 *
-		 * @param array $settings Tax settings to be extended
+		 * @param array  $settings Tax settings to be extended
 		 * @param string $current_section Name of the current section
 		 * @return array
 		 */
@@ -387,10 +387,10 @@ namespace Niteo\WooCart\EUVatTaxes {
 		 * @codeCoverageIgnore
 		 */
 		public function order_meta( $order ) {
-			$order_id 				= absint( $order->get_id() );
-			$b2b_sale        	= (bool) ( get_post_meta( $order_id, 'b2b_sale', true ) );
-			$business_tax_id 	= sanitize_text_field( get_post_meta( $order_id, 'business_tax_id', true ) );
-			$business_valid 	= sanitize_text_field( get_post_meta( $order_id, 'business_tax_validation', true ) );
+			$order_id        = absint( $order->get_id() );
+			$b2b_sale        = (bool) ( get_post_meta( $order_id, 'b2b_sale', true ) );
+			$business_tax_id = sanitize_text_field( get_post_meta( $order_id, 'business_tax_id', true ) );
+			$business_valid  = sanitize_text_field( get_post_meta( $order_id, 'business_tax_validation', true ) );
 
 			// Add HTML for Business ID
 			$this->add_html( $b2b_sale, $business_tax_id, $business_valid, $order_id );
@@ -399,10 +399,10 @@ namespace Niteo\WooCart\EUVatTaxes {
 		/**
 		 * Adds HTML to order meta.
 		 *
-		 * @param bool $b2b_sale Whether the sale is B2B or not
+		 * @param bool   $b2b_sale Whether the sale is B2B or not
 		 * @param string $business_tax_id Tax ID to be used for verification
 		 * @param string $business_valid Determines whether verification has already been done
-		 * @param int $order_id Order ID which has the B2B sale data
+		 * @param int    $order_id Order ID which has the B2B sale data
 		 */
 		public function add_html( $b2b_sale, $business_tax_id, $business_valid, $order_id ) {
 			$b2b_sale_text = ( $b2b_sale ) ? esc_html__( 'Yes', 'eu-vat-b2b-taxes' ) : esc_html__( 'No', 'eu-vat-b2b-taxes' );
@@ -446,14 +446,14 @@ namespace Niteo\WooCart\EUVatTaxes {
 			check_ajax_referer( '__wc_euvat_nonce', 'nonce' );
 
 			// Business Tax ID & Order ID
-			$business_id 	= sanitize_text_field( $_POST['business_id'] );
-			$order_id 		= sanitize_text_field( $_POST['order_id'] );
+			$business_id = sanitize_text_field( $_POST['business_id'] );
+			$order_id    = sanitize_text_field( $_POST['order_id'] );
 
 			if ( ! empty( $business_id ) && ! empty( $order_id ) ) {
 				// Doing Tax ID check over here
 				// We are using Vies class for validating our request
-				$validator 	= new Vies();
-				$check 			= $validator->isValid( $business_id, true );
+				$validator = new Vies();
+				$check     = $validator->isValid( $business_id, true );
 
 				if ( $check ) {
 					// Update post meta and send response
