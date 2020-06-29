@@ -1,5 +1,5 @@
-VERSION := 1.3.1
-PLUGINSLUG := advanced-taxes-woocommerce
+VERSION := 1.5.0
+PLUGINSLUG := eu-vat-b2b-taxes
 SRCPATH := $(shell pwd)/src
 
 bin/linux/amd64/github-release:
@@ -82,7 +82,7 @@ i18n: src/vendor
 	wp i18n make-pot src src/i18n/$(PLUGINSLUG).pot
 
 cover: vendor
-	bin/coverage-check clover.xml 65
+	bin/coverage-check clover.xml 85
 
 clean:
 	rm -rf vendor/ bin src/vendor/

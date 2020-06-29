@@ -1,6 +1,6 @@
 {
-  "name": "advanced-taxes-woocommerce",
-  "description": "Advanced Taxes for WooCommerce is a plugin for WooCommerce stores that simplifies the complex part of taxation for B2B and B2C selling.",
+  "name": "eu-vat-b2b-taxes",
+  "description": "Plugin which helps with configuring complex tax variations when selling in or into the EU.",
   "keywords": [
     "WordPress",
     "plugin"
@@ -14,9 +14,9 @@
   },
   "autoload": {
     "psr-4": {
-      "Niteo\\WooCart\\AdvancedTaxes\\": "classes",
-      "Niteo\\WooCart\\AdvancedTaxes\\Reports\\": "classes/reports",
-      "Niteo\\WooCart\\AdvancedTaxes\\Vies\\": "classes/vies"
+      "Niteo\\WooCart\\EUVatTaxes\\": "classes",
+      "Niteo\\WooCart\\EUVatTaxes\\Reports\\": "classes/reports",
+      "Niteo\\WooCart\\EUVatTaxes\\Vies\\": "classes/vies"
     }
   }
 }

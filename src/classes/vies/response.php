@@ -1,6 +1,6 @@
 <?php
 
-namespace Niteo\WooCart\AdvancedTaxes\Vies {
+namespace Niteo\WooCart\EUVatTaxes\Vies {
 
 	/**
 	 * Class that serves response to the client.

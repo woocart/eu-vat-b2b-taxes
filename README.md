@@ -1,6 +1,6 @@
 # EU VAT & B2B Taxes for WooCommerce
 
-![](https://github.com/woocart/advanced-taxes/workflows/Tests/badge.svg)
+![](https://github.com/woocart/eu-vat-b2b-taxes/workflows/Tests/badge.svg)
 
 This plugin helps with configuring complex tax variations when selling in or into the EU.
 

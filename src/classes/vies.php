@@ -1,8 +1,16 @@
 <?php
+/**
+ * Handles validation of Tax identification number.
+ *
+ * @category   Plugins
+ * @package    WordPress
+ * @subpackage eu-vat-b2b-taxes
+ * @since      1.0.0
+ */
 
-namespace Niteo\WooCart\AdvancedTaxes {
+namespace Niteo\WooCart\EUVatTaxes {
 
-	use Niteo\WooCart\AdvancedTaxes\Vies\Client;
+	use Niteo\WooCart\EUVatTaxes\Vies\Client;
 
 	/**
 	 * Validate a VAT identification number (VATIN)

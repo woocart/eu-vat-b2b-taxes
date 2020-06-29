@@ -1,8 +1,14 @@
 <?php
+/**
+ * User facing plugin view.
+ *
+ * @category   Plugins
+ * @package    WordPress
+ * @subpackage eu-vat-b2b-taxes
+ * @since      1.0.0
+ */
 
-namespace Niteo\WooCart\AdvancedTaxes {
-
-	use Niteo\WooCart\AdvancedTaxes\Vies;
+namespace Niteo\WooCart\EUVatTaxes {
 
 	/**
 	 * User class where we calculate taxes and get stuff done.
@@ -33,33 +39,29 @@ namespace Niteo\WooCart\AdvancedTaxes {
 		 * Add styles and scripts for the frontend.
 		 */
 		public function scripts() {
-			global $plugin_url, $version;
+			wp_enqueue_script( 'euvat-public', Config::$plugin_url . 'assets/js/public.js', array( 'jquery' ), Config::VERSION, true );
+			wp_enqueue_style( 'euvat-public', Config::$plugin_url . 'assets/css/public.css', '', Config::VERSION );
 
-			wp_enqueue_script( 'advanced-taxes-public', $plugin_url . 'assets/js/public.js', array( 'jquery' ), $version, true );
-			wp_enqueue_style( 'advanced-taxes-public', $plugin_url . 'assets/css/public.css', '', $version );
-
-			/**
-		   * Localization
-		   */
-			$localization = array(
+			// Pass data to JS
+			$localize = array(
 				'ajaxurl' => admin_url( 'admin-ajax.php' ),
-				'nonce'   => wp_create_nonce( '__atw_nonce' ),
+				'nonce'   => wp_create_nonce( '__wc_euvat_nonce' ),
 			);
 
-			wp_localize_script( 'advanced-taxes-public', 'atw_localize', $localization );
+			wp_localize_script( 'euvat-public', 'atw_localize', $localize );
 		}
 
 		/**
 		 * Add custom fields to the checkout page.
 		 */
 		public function checkout_fields( $fields ) {
-			$b2b_sales = esc_html( get_option( 'b2b_sales' ) );
+			$b2b_sales = esc_html( get_option( 'wc_b2b_sales' ) );
 
 			// Show conditionally :)
 			if ( 'none' !== $b2b_sales ) {
 				// Check for business status.
 				$fields['business_check'] = array(
-					'label'    => esc_html__( 'Are you making this purchase as a Business entity?', 'advanced-taxes-woocommerce' ),
+					'label'    => esc_html__( 'Are you making this purchase as a Business entity?', 'eu-vat-b2b-taxes' ),
 					'type'     => 'checkbox',
 					'required' => false,
 					'class'    => array( 'better-tax-business-check', 'update_totals_on_change' ),
@@ -69,7 +71,7 @@ namespace Niteo\WooCart\AdvancedTaxes {
 
 					// Ask for VAT ID.
 					$fields['business_tax_id'] = array(
-						'label'    => esc_html__( 'Business Tax ID', 'advanced-taxes-woocommerce' ),
+						'label'    => esc_html__( 'Business Tax ID', 'eu-vat-b2b-taxes' ),
 						'type'     => 'text',
 						'required' => false,
 						'class'    => array( 'form-row-wide', 'better-tax-vat-id', 'better-tax-hidden', 'address-field' ),
@@ -104,16 +106,19 @@ namespace Niteo\WooCart\AdvancedTaxes {
 			// Customer billing details.
 			$country = $new_data['billing_country'];
 
+			// Set vat_exempt to false
+			$this->set_vat_exempt( false );
+
 			// For B2B
 			if ( isset( $new_data['business_check'] ) && ! empty( $new_data['business_check'] ) ) {
 				// Grab tax settings.
-				$b2b_sales = esc_html( get_option( 'b2b_sales' ) );
+				$b2b_sales = esc_html( get_option( 'wc_b2b_sales' ) );
 
 				// We will continue only if B2B sales are not disabled.
 				if ( 'none' !== $b2b_sales ) {
-					$b2b_home_tax    = esc_html( get_option( 'tax_home_country' ) );
-					$b2b_eu_tax_id   = esc_html( get_option( 'tax_eu_with_vatid' ) );
-					$b2b_tax_outside = esc_html( get_option( 'tax_charge_vat' ) );
+					$b2b_home_tax    = esc_html( get_option( 'wc_tax_home_country' ) );
+					$b2b_eu_tax_id   = esc_html( get_option( 'wc_tax_eu_with_vatid' ) );
+					$b2b_tax_outside = esc_html( get_option( 'wc_tax_charge_vat' ) );
 					$base_location   = wc_get_base_location()['country'];
 
 					/**
@@ -133,13 +138,14 @@ namespace Niteo\WooCart\AdvancedTaxes {
 					// Check if `business_tax_id` is provided and the option to not charge tax is turned on. We will return empty taxes if the first statement is true.
 					if ( isset( $new_data['business_tax_id'] ) && ! empty( $new_data['business_tax_id'] ) ) {
 						if ( 'yes' === $b2b_eu_tax_id ) {
-							// Doing Tax ID check over here.
-							// We are using Vies class for validating our request.
+							// Doing Tax ID check over here
+							// We are using Vies class for validating our request
 							$validator = new Vies();
 							$bool      = $validator->isValid( $new_data['business_tax_id'], true );
 
 							if ( $bool ) {
-									add_filter( 'woocommerce_calc_tax', array( &$this, 'return_tax' ), PHP_INT_MAX, 5 );
+								$this->set_vat_exempt( true );
+								return;
 							}
 						}
 					}
@@ -155,19 +161,19 @@ namespace Niteo\WooCart\AdvancedTaxes {
 
 					// For digital goods.
 					if ( 'digital-goods' === $tax_class ) {
-						if ( 'no' === get_option( 'vat_digital_goods_enable' ) ) {
+						if ( 'no' === get_option( 'wc_vat_digital_goods_enable' ) ) {
 							$item['data']->set_tax_class( null );
 						}
 					}
 
 					// For distance selling.
 					if ( 'distance-selling' === $tax_class ) {
-						if ( 'no' === get_option( 'vat_distance_selling_enable' ) ) {
+						if ( 'no' === get_option( 'wc_euvat_distance_selling' ) ) {
 							// Remove `distance-selling-rate` from the tax list.
 							$item['data']->set_tax_class( null );
 						} else {
 							// Fetch digital selling countries where the taxes will be levied by the shop.
-							$ds_countries = esc_html( get_option( 'vat_distance_selling_countries' ) );
+							$ds_countries = get_option( 'wc_vat_distance_selling_countries' );
 
 							// If the customer country is not in the list, then continue as we are not going to charge in that case.
 							if ( ! in_array( $country, $ds_countries ) ) {
@@ -189,8 +195,8 @@ namespace Niteo\WooCart\AdvancedTaxes {
 		public function checkout_validation( $data, $errors ) {
 			if ( isset( $_POST['business_check'] ) ) {
 				if ( ! isset( $_POST['business_tax_id'] ) || empty( $_POST['business_tax_id'] ) ) {
-					if ( 'yes' === get_option( 'tax_id_required' ) ) {
-						$errors->add( 'billing', esc_html__( 'Business Tax ID is a required field.', 'advanced-taxes-woocommerce' ) );
+					if ( 'yes' === get_option( 'wc_tax_id_required' ) ) {
+						$errors->add( 'billing', sprintf( esc_html__( '%1$sBusiness Tax ID%2$s is a required field.', 'eu-vat-b2b-taxes' ), '<strong>', '</strong>' ) );
 					}
 				}
 			}
@@ -214,6 +220,15 @@ namespace Niteo\WooCart\AdvancedTaxes {
 			if ( ! empty( $business_tax_id ) ) {
 				update_post_meta( $order_id, 'business_tax_id', $business_tax_id );
 			}
+		}
+
+		/**
+		 * Sets VAT exempt for the customer (only for B2B transactions).
+		 *
+		 * @param bool $status Whether to enable or disable VAT exempt
+		 */
+		public function set_vat_exempt( $status ) {
+			return WC()->customer->set_is_vat_exempt( $status );
 		}
 
 	}

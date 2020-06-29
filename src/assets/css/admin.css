@@ -1,0 +1,16 @@
+/**
+ * ..02 Application
+ */
+#wc-euvat-description {
+  vertical-align: middle;
+  padding: 0 8px;
+}
+.wc-message-success {
+  color: #2d882d;
+}
+.wc-message-error {
+  color: #ff0000;
+}
+.wc-message-notice {
+  color: #b0b0b0;
+}

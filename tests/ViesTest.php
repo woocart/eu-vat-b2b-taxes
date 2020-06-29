@@ -2,12 +2,12 @@
 /**
  * Tests the vies class.
  *
- * @package advanced-taxes-woocommerce
+ * @package eu-vat-b2b-taxes
  */
 
-use Niteo\WooCart\AdvancedTaxes\Vies;
-use Niteo\WooCart\AdvancedTaxes\Vies\Client;
-use Niteo\WooCart\AdvancedTaxes\Vies\Response;
+use Niteo\WooCart\EUVatTaxes\Vies;
+use Niteo\WooCart\EUVatTaxes\Vies\Client;
+use Niteo\WooCart\EUVatTaxes\Vies\Response;
 use PHPUnit\Framework\TestCase;
 
 class ViesTest extends TestCase {
@@ -47,9 +47,9 @@ class ViesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::isValid
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::isValidCountryCode
+	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::isValid
+	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::isValidCountryCode
 	 * @dataProvider getValidVatIds
 	 */
 	public function testValid( $value ) {
@@ -57,9 +57,9 @@ class ViesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::isValid
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::isValidCountryCode
+	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::isValid
+	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::isValidCountryCode
 	 * @dataProvider getInvalidVatIds
 	 */
 	public function testInvalid( $value ) {
@@ -67,10 +67,10 @@ class ViesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::isValid
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::getViesClient
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::isValidCountryCode
+	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::isValid
+	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::getViesClient
+	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::isValidCountryCode
 	 */
 	public function testValidWithVies() {
 		$client = $this->getClientMock();
@@ -84,10 +84,10 @@ class ViesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::isValid
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::getViesClient
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::isValidCountryCode
+	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::isValid
+	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::getViesClient
+	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::isValidCountryCode
 	 */
 	public function testInvalidWithVies() {
 		$client = $this->getClientMock();
@@ -197,19 +197,19 @@ class ViesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies\Client
+	 * @covers \Niteo\WooCart\EUVatTaxes\Vies\Client
 	 */
 	private function getClientMock() {
-		return $this->getMockBuilder( '\Niteo\WooCart\AdvancedTaxes\Vies\Client' )
+		return $this->getMockBuilder( '\Niteo\WooCart\EUVatTaxes\Vies\Client' )
 		->disableOriginalConstructor()
 		->getMock();
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies\Response
+	 * @covers \Niteo\WooCart\EUVatTaxes\Vies\Response
 	 */
 	private function getResponseMock( $valid ) {
-		$mock = $this->getMockBuilder( '\Niteo\WooCart\AdvancedTaxes\Vies\Response' )->getMock();
+		$mock = $this->getMockBuilder( '\Niteo\WooCart\EUVatTaxes\Vies\Response' )->getMock();
 
 		$mock->expects( $this->any() )
 		 ->method( 'isValid' )
@@ -219,14 +219,14 @@ class ViesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies\Client::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::getViesClient
+	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\Vies\Client::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::getViesClient
 	 */
 	public function testGetViesClient() {
 		$vies = new Vies();
 
-		$this->assertInstanceOf( '\\Niteo\\WooCart\\AdvancedTaxes\\Vies\\Client', $this->invokeMethod( $vies, 'getViesClient' ) );
+		$this->assertInstanceOf( '\\Niteo\\WooCart\\EUVatTaxes\\Vies\\Client', $this->invokeMethod( $vies, 'getViesClient' ) );
 	}
 
 }

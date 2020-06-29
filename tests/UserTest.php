@@ -2,11 +2,11 @@
 /**
  * Tests the user class.
  *
- * @package advanced-taxes-woocommerce
+ * @package eu-vat-b2b-taxes
  */
 
-use Niteo\WooCart\AdvancedTaxes\UserView;
-use Niteo\WooCart\AdvancedTaxes\Vies;
+use Niteo\WooCart\EUVatTaxes\UserView;
+use Niteo\WooCart\EUVatTaxes\Vies;
 use PHPUnit\Framework\TestCase;
 
 class UserViewTest extends TestCase {
@@ -25,7 +25,7 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
 	 */
 	public function testConstructor() {
 		$user = new UserView();
@@ -37,8 +37,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::init
+	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::init
 	 */
 	public function testInit() {
 		$user = new UserView();
@@ -74,8 +74,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::scripts
+	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::scripts
 	 */
 	public function testScripts() {
 		$user = new UserView();
@@ -97,8 +97,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::checkout_fields
+	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::checkout_fields
 	 */
 	public function testCheckoutFields() {
 		$user = new UserView();
@@ -114,8 +114,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::checkout_fields
+	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::checkout_fields
 	 */
 	public function testCheckoutFieldsNotEmpty() {
 		$user = new UserView();
@@ -131,8 +131,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::return_tax
+	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::return_tax
 	 */
 	public function testReturnTax() {
 		$user = new UserView();
@@ -141,8 +141,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::checkout_validation
+	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::checkout_validation
 	 */
 	public function testCheckoutValidation() {
 		$user = new UserView();
@@ -158,15 +158,15 @@ class UserViewTest extends TestCase {
 
 		$mock = \Mockery::mock( '\WP_Error' );
 		$mock->shouldReceive( 'add' )
-			 ->with( 'billing', 'Business Tax ID is a required field.' )
+			 ->with( 'billing', '<strong>Business Tax ID</strong> is a required field.' )
 			 ->andReturns( true );
 
 		$user->checkout_validation( '', $mock );
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::update_order_meta
+	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::update_order_meta
 	 */
 	public function testUpdateOrderMeta() {
 		$user = new UserView();
@@ -191,40 +191,44 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::calculate_tax
+	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::calculate_tax
+	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::set_vat_exempt
 	 */
 	public function testCalculateTaxb2bNone() {
-		$user = new UserView();
+		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\UserView' )->makePartial();
+		$mock->shouldReceive( 'set_vat_exempt' )->andReturn( true );
 
 		\WP_Mock::userFunction(
 			'get_option',
 			array(
 				'args'   => array(
-					'b2b_sales',
+					'wc_b2b_sales',
 				),
 				'return' => 'none',
 			)
 		);
 
-		$user->calculate_tax( 'billing_country=India&business_check=1' );
+		$mock->calculate_tax( 'billing_country=India&business_check=1' );
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::calculate_tax
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::isValid
-	 * @covers \Niteo\WooCart\AdvancedTaxes\Vies::isValidCountryCode
+	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::calculate_tax
+	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::set_vat_exempt
+	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::isValid
+	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::isValidCountryCode
 	 */
 	public function testCalculateTaxb2bNotNone() {
-		$user = new UserView();
+		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\UserView' )->makePartial();
+		$mock->shouldReceive( 'set_vat_exempt' )->andReturn( true );
 
 		\WP_Mock::userFunction(
 			'get_option',
 			array(
 				'args'   => array(
-					'b2b_sales',
+					'wc_b2b_sales',
 				),
 				'return' => 'not_none',
 			)
@@ -233,7 +237,7 @@ class UserViewTest extends TestCase {
 			'get_option',
 			array(
 				'args'   => array(
-					'tax_home_country',
+					'wc_tax_home_country',
 				),
 				'return' => 'no',
 			)
@@ -242,7 +246,7 @@ class UserViewTest extends TestCase {
 			'get_option',
 			array(
 				'args'   => array(
-					'tax_charge_vat',
+					'wc_tax_charge_vat',
 				),
 				'return' => 'yes',
 			)
@@ -251,7 +255,7 @@ class UserViewTest extends TestCase {
 			'get_option',
 			array(
 				'args'   => array(
-					'tax_eu_with_vatid',
+					'wc_tax_eu_with_vatid',
 				),
 				'return' => 'yes',
 			)
@@ -265,25 +269,27 @@ class UserViewTest extends TestCase {
 			)
 		);
 
-		$mock = \Mockery::mock( '\Niteo\WooCart\AdvancedTaxes\Vies' );
-		$mock->shouldReceive( 'isValid' )
+		$vies = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Vies' );
+		$vies->shouldReceive( 'isValid' )
 				->andReturn( true );
 
-		$user->calculate_tax( 'billing_country=India&business_check=1&business_tax_id=VAT_ID' );
+		$mock->calculate_tax( 'billing_country=India&business_check=1&business_tax_id=VAT_ID' );
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\AdvancedTaxes\UserView::calculate_tax
+	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::calculate_tax
+	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::set_vat_exempt
 	 */
 	public function testCalculateTaxb2bNotNoneDiffCountry() {
-		$user = new UserView();
+		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\UserView' )->makePartial();
+		$mock->shouldReceive( 'set_vat_exempt' )->andReturn( true );
 
 		\WP_Mock::userFunction(
 			'get_option',
 			array(
 				'args'   => array(
-					'b2b_sales',
+					'wc_b2b_sales',
 				),
 				'return' => 'not_none',
 			)
@@ -292,7 +298,7 @@ class UserViewTest extends TestCase {
 			'get_option',
 			array(
 				'args'   => array(
-					'tax_home_country',
+					'wc_tax_home_country',
 				),
 				'return' => 'no',
 			)
@@ -301,7 +307,7 @@ class UserViewTest extends TestCase {
 			'get_option',
 			array(
 				'args'   => array(
-					'tax_charge_vat',
+					'wc_tax_charge_vat',
 				),
 				'return' => 'yes',
 			)
@@ -310,7 +316,7 @@ class UserViewTest extends TestCase {
 			'get_option',
 			array(
 				'args'   => array(
-					'tax_eu_with_vatid',
+					'wc_tax_eu_with_vatid',
 				),
 				'return' => 'yes',
 			)
@@ -324,7 +330,7 @@ class UserViewTest extends TestCase {
 			)
 		);
 
-		$user->calculate_tax( 'billing_country=Spain&business_check=1' );
+		$mock->calculate_tax( 'billing_country=Spain&business_check=1' );
 	}
 
 }
