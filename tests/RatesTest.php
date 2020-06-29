@@ -149,7 +149,7 @@ class RatesTest extends TestCase {
 		\WP_Mock::userFunction(
 			'wp_enqueue_script',
 			array(
-				'times'  => 2,
+				'times'  => 1,
 				'return' => true,
 			)
 		);
