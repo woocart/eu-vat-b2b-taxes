@@ -312,9 +312,9 @@ class AdminTest extends TestCase {
 				return true;
 			}
 			function get_row() {
-				return [
-					'tax_rate_id' => 100
-				];
+				return array(
+					'tax_rate_id' => 100,
+				);
 			}
 			function update() {
 				return true;
@@ -337,8 +337,8 @@ class AdminTest extends TestCase {
 		$mock->shouldReceive( 'rates' )->andReturn( $rates );
 		$this->assertEquals(
 			array(
-				'status' => 'success',
-				'message' => '2 tax entries have been updated'
+				'status'  => 'success',
+				'message' => '2 tax entries have been updated',
 			),
 			$mock->add_taxes_to_db( 'Digital Goods', 'digital-goods' )
 		);
