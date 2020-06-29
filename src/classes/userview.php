@@ -88,7 +88,6 @@ namespace Niteo\WooCart\EUVatTaxes {
 		 * @return array
 		 */
 		public function return_tax( $taxes, $price, $rates, $price_includes_tax = false, $deprecated = false ) {
-			file_put_contents( 'taxes.txt', $price );
 			return array();
 		}
 
@@ -108,7 +107,7 @@ namespace Niteo\WooCart\EUVatTaxes {
 			$country = $new_data['billing_country'];
 
 			// Set vat_exempt to false
-			WC()->customer->set_is_vat_exempt( false );
+			$this->set_vat_exempt( false );
 
 			// For B2B
 			if ( isset( $new_data['business_check'] ) && ! empty( $new_data['business_check'] ) ) {
@@ -145,7 +144,7 @@ namespace Niteo\WooCart\EUVatTaxes {
 							$bool      = $validator->isValid( $new_data['business_tax_id'], true );
 
 							if ( $bool ) {
-								WC()->customer->set_is_vat_exempt( true );
+								$this->set_vat_exempt( true );
 								return;
 							}
 						}
@@ -221,6 +220,15 @@ namespace Niteo\WooCart\EUVatTaxes {
 			if ( ! empty( $business_tax_id ) ) {
 				update_post_meta( $order_id, 'business_tax_id', $business_tax_id );
 			}
+		}
+
+		/**
+		 * Sets VAT exempt for the customer (only for B2B transactions).
+		 *
+		 * @param bool $status Whether to enable or disable VAT exempt
+		 */
+		public function set_vat_exempt( $status ) {
+			return WC()->customer->set_is_vat_exempt( $status );
 		}
 
 	}
