@@ -97,7 +97,6 @@ namespace Niteo\WooCart\EUVatTaxes {
 		 * Fetches tax rates and passes it to JS for processing.
 		 */
 		public function footer() {
-			wp_enqueue_script( 'euvat-vendors', Config::$plugin_url . 'assets/js/vendors.js', array(), Config::VERSION, true );
 			wp_enqueue_script( 'euvat-admin', Config::$plugin_url . 'assets/js/admin.js', array( 'jquery' ), Config::VERSION, true );
 			wp_enqueue_style( 'euvat-admin', Config::$plugin_url . 'assets/css/admin.css', array(), Config::VERSION );
 
