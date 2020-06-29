@@ -71,4 +71,60 @@ class ReportsTest extends TestCase {
 		);
 	}
 
+	/**
+	 * @covers \Niteo\WooCart\EUVatTaxes\Reports::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\Reports::taxes_by_country
+	 * @covers \Niteo\WooCart\EUVatTaxes\Reports\Taxes_Report_By_Country::output_report
+	 */
+	public function testTaxesByCountry() {
+		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Reports' )->makePartial();
+		
+		$reports = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Taxes_Report_By_Country' );
+		$reports->shouldReceive( 'output_report' )->andReturn( true );
+
+		$mock->shouldReceive( 'taxes_report' )->andReturn( $reports );
+		$mock->taxes_by_country();
+	}
+
+	/**
+	 * @covers \Niteo\WooCart\EUVatTaxes\Reports::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\Reports::business_orders
+	 * @covers \Niteo\WooCart\EUVatTaxes\Reports\Business_Transactions_Report::output_report
+	 */
+	public function testBusinessOrders() {
+		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Reports' )->makePartial();
+		
+		$reports = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Business_Transactions_Report' );
+		$reports->shouldReceive( 'output_report' )->andReturn( true );
+
+		$mock->shouldReceive( 'business_transactions' )->andReturn( $reports );
+		$mock->business_orders();
+	}
+
+	/**
+	 * @covers \Niteo\WooCart\EUVatTaxes\Reports::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\Reports::taxes_report
+	 */
+	public function testTaxesReport() {
+		$reports = new Reports();
+
+		$this->assertInstanceOf(
+			'\Niteo\WooCart\EUVatTaxes\Reports\Taxes_Report_By_Country',
+			$reports->taxes_report()
+		);
+	}
+
+	/**
+	 * @covers \Niteo\WooCart\EUVatTaxes\Reports::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\Reports::business_transactions
+	 */
+	public function testBusinessTransactions() {
+		$reports = new Reports();
+
+		$this->assertInstanceOf(
+			'\Niteo\WooCart\EUVatTaxes\Reports\Business_Transactions_Report',
+			$reports->business_transactions()
+		);
+	}
+
 }

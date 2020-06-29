@@ -55,7 +55,7 @@ namespace Niteo\WooCart\EUVatTaxes {
 		 * EU Tax collected by country.
 		 */
 		public function taxes_by_country() {
-			$report = new Taxes_Report_By_Country();
+			$report = $this->taxes_report();
 			$report->output_report();
 		}
 
@@ -63,8 +63,22 @@ namespace Niteo\WooCart\EUVatTaxes {
 		 * B2B transaction orders.
 		 */
 		public function business_orders() {
-			$report = new Business_Transactions_Report();
+			$report = $this->business_transactions();
 			$report->output_report();
+		}
+
+		/**
+		 * Returns Taxes_Report_By_Country class
+		 */
+		public function taxes_report() {
+			return new Taxes_Report_By_Country();
+		}
+
+		/**
+		 * Returns Taxes_Report_By_Country class
+		 */
+		public function business_transactions() {
+			return new Business_Transactions_Report();
 		}
 
 	}
