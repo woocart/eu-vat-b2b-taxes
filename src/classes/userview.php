@@ -55,7 +55,7 @@ namespace Niteo\WooCart\EUVatTaxes {
 		 * Add custom fields to the checkout page.
 		 */
 		public function checkout_fields( $fields ) {
-			$b2b_sales = esc_html( get_option( 'b2b_sales' ) );
+			$b2b_sales = esc_html( get_option( 'wc_b2b_sales' ) );
 
 			// Show conditionally :)
 			if ( 'none' !== $b2b_sales ) {
@@ -109,13 +109,13 @@ namespace Niteo\WooCart\EUVatTaxes {
 			// For B2B
 			if ( isset( $new_data['business_check'] ) && ! empty( $new_data['business_check'] ) ) {
 				// Grab tax settings.
-				$b2b_sales = esc_html( get_option( 'b2b_sales' ) );
+				$b2b_sales = esc_html( get_option( 'wc_b2b_sales' ) );
 
 				// We will continue only if B2B sales are not disabled.
 				if ( 'none' !== $b2b_sales ) {
-					$b2b_home_tax    = esc_html( get_option( 'tax_home_country' ) );
-					$b2b_eu_tax_id   = esc_html( get_option( 'tax_eu_with_vatid' ) );
-					$b2b_tax_outside = esc_html( get_option( 'tax_charge_vat' ) );
+					$b2b_home_tax    = esc_html( get_option( 'wc_tax_home_country' ) );
+					$b2b_eu_tax_id   = esc_html( get_option( 'wc_tax_eu_with_vatid' ) );
+					$b2b_tax_outside = esc_html( get_option( 'wc_tax_charge_vat' ) );
 					$base_location   = wc_get_base_location()['country'];
 
 					/**
@@ -141,7 +141,7 @@ namespace Niteo\WooCart\EUVatTaxes {
 							$bool      = $validator->isValid( $new_data['business_tax_id'], true );
 
 							if ( $bool ) {
-									add_filter( 'woocommerce_calc_tax', array( &$this, 'return_tax' ), PHP_INT_MAX, 5 );
+								add_filter( 'woocommerce_calc_tax', array( &$this, 'return_tax' ), PHP_INT_MAX, 5 );
 							}
 						}
 					}
@@ -157,19 +157,19 @@ namespace Niteo\WooCart\EUVatTaxes {
 
 					// For digital goods.
 					if ( 'digital-goods' === $tax_class ) {
-						if ( 'no' === get_option( 'vat_digital_goods_enable' ) ) {
+						if ( 'no' === get_option( 'wc_vat_digital_goods_enable' ) ) {
 							$item['data']->set_tax_class( null );
 						}
 					}
 
 					// For distance selling.
 					if ( 'distance-selling' === $tax_class ) {
-						if ( 'no' === get_option( 'vat_distance_selling_enable' ) ) {
+						if ( 'no' === get_option( 'wc_euvat_distance_selling' ) ) {
 							// Remove `distance-selling-rate` from the tax list.
 							$item['data']->set_tax_class( null );
 						} else {
 							// Fetch digital selling countries where the taxes will be levied by the shop.
-							$ds_countries = esc_html( get_option( 'vat_distance_selling_countries' ) );
+							$ds_countries = esc_html( get_option( 'wc_vat_distance_selling_countries' ) );
 
 							// If the customer country is not in the list, then continue as we are not going to charge in that case.
 							if ( ! in_array( $country, $ds_countries ) ) {
@@ -191,8 +191,8 @@ namespace Niteo\WooCart\EUVatTaxes {
 		public function checkout_validation( $data, $errors ) {
 			if ( isset( $_POST['business_check'] ) ) {
 				if ( ! isset( $_POST['business_tax_id'] ) || empty( $_POST['business_tax_id'] ) ) {
-					if ( 'yes' === get_option( 'tax_id_required' ) ) {
-						$errors->add( 'billing', esc_html__( 'Business Tax ID is a required field.', 'eu-vat-b2b-taxes' ) );
+					if ( 'yes' === get_option( 'wc_tax_id_required' ) ) {
+						$errors->add( 'billing', sprintf( esc_html__( '%1$sBusiness Tax ID%2$s is a required field.', 'eu-vat-b2b-taxes' ), '<strong>', '</strong>' ) );
 					}
 				}
 			}

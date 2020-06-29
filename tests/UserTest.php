@@ -158,7 +158,7 @@ class UserViewTest extends TestCase {
 
 		$mock = \Mockery::mock( '\WP_Error' );
 		$mock->shouldReceive( 'add' )
-			 ->with( 'billing', 'Business Tax ID is a required field.' )
+			 ->with( 'billing', '<strong>Business Tax ID</strong> is a required field.' )
 			 ->andReturns( true );
 
 		$user->checkout_validation( '', $mock );
@@ -201,7 +201,7 @@ class UserViewTest extends TestCase {
 			'get_option',
 			array(
 				'args'   => array(
-					'b2b_sales',
+					'wc_b2b_sales',
 				),
 				'return' => 'none',
 			)
@@ -224,7 +224,7 @@ class UserViewTest extends TestCase {
 			'get_option',
 			array(
 				'args'   => array(
-					'b2b_sales',
+					'wc_b2b_sales',
 				),
 				'return' => 'not_none',
 			)
@@ -233,7 +233,7 @@ class UserViewTest extends TestCase {
 			'get_option',
 			array(
 				'args'   => array(
-					'tax_home_country',
+					'wc_tax_home_country',
 				),
 				'return' => 'no',
 			)
@@ -242,7 +242,7 @@ class UserViewTest extends TestCase {
 			'get_option',
 			array(
 				'args'   => array(
-					'tax_charge_vat',
+					'wc_tax_charge_vat',
 				),
 				'return' => 'yes',
 			)
@@ -251,7 +251,7 @@ class UserViewTest extends TestCase {
 			'get_option',
 			array(
 				'args'   => array(
-					'tax_eu_with_vatid',
+					'wc_tax_eu_with_vatid',
 				),
 				'return' => 'yes',
 			)
@@ -283,7 +283,7 @@ class UserViewTest extends TestCase {
 			'get_option',
 			array(
 				'args'   => array(
-					'b2b_sales',
+					'wc_b2b_sales',
 				),
 				'return' => 'not_none',
 			)
@@ -292,7 +292,7 @@ class UserViewTest extends TestCase {
 			'get_option',
 			array(
 				'args'   => array(
-					'tax_home_country',
+					'wc_tax_home_country',
 				),
 				'return' => 'no',
 			)
@@ -301,7 +301,7 @@ class UserViewTest extends TestCase {
 			'get_option',
 			array(
 				'args'   => array(
-					'tax_charge_vat',
+					'wc_tax_charge_vat',
 				),
 				'return' => 'yes',
 			)
@@ -310,7 +310,7 @@ class UserViewTest extends TestCase {
 			'get_option',
 			array(
 				'args'   => array(
-					'tax_eu_with_vatid',
+					'wc_tax_eu_with_vatid',
 				),
 				'return' => 'yes',
 			)
