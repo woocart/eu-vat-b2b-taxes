@@ -88,6 +88,7 @@ namespace Niteo\WooCart\EUVatTaxes {
 		 * @return array
 		 */
 		public function return_tax( $taxes, $price, $rates, $price_includes_tax = false, $deprecated = false ) {
+			file_put_contents( 'taxes.txt', $price );
 			return array();
 		}
 
@@ -105,6 +106,9 @@ namespace Niteo\WooCart\EUVatTaxes {
 
 			// Customer billing details.
 			$country = $new_data['billing_country'];
+
+			// Set vat_exempt to false
+			WC()->customer->set_is_vat_exempt( false );
 
 			// For B2B
 			if ( isset( $new_data['business_check'] ) && ! empty( $new_data['business_check'] ) ) {
@@ -141,7 +145,8 @@ namespace Niteo\WooCart\EUVatTaxes {
 							$bool      = $validator->isValid( $new_data['business_tax_id'], true );
 
 							if ( $bool ) {
-								add_filter( 'woocommerce_calc_tax', array( &$this, 'return_tax' ), PHP_INT_MAX, 5 );
+								WC()->customer->set_is_vat_exempt( true );
+								return;
 							}
 						}
 					}
@@ -169,7 +174,7 @@ namespace Niteo\WooCart\EUVatTaxes {
 							$item['data']->set_tax_class( null );
 						} else {
 							// Fetch digital selling countries where the taxes will be levied by the shop.
-							$ds_countries = esc_html( get_option( 'wc_vat_distance_selling_countries' ) );
+							$ds_countries = get_option( 'wc_vat_distance_selling_countries' );
 
 							// If the customer country is not in the list, then continue as we are not going to charge in that case.
 							if ( ! in_array( $country, $ds_countries ) ) {
