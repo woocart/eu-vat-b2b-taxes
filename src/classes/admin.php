@@ -23,7 +23,7 @@ namespace Niteo\WooCart\EUVatTaxes {
 		 * Class constructor.
 		 */
 		public function __construct() {
-			add_action( 'init', array( &$this, 'init' ) );
+			add_action( 'init', array( $this, 'init' ) );
 		}
 
 		/**
@@ -31,13 +31,13 @@ namespace Niteo\WooCart\EUVatTaxes {
 		 */
 		public function init() {
 			if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
-				add_filter( 'woocommerce_get_settings_tax', array( &$this, 'settings' ), PHP_INT_MAX, 2 );
+				add_filter( 'woocommerce_get_settings_tax', array( $this, 'settings' ), PHP_INT_MAX, 2 );
 				add_action( 'admin_enqueue_scripts', array( $this, 'scripts' ) );
-				add_action( 'woocommerce_admin_field_button', array( &$this, 'button_field' ) );
-				add_action( 'wp_ajax_add_digital_taxes', array( &$this, 'ajax_digital_tax_rates' ) );
-				add_action( 'wp_ajax_add_distance_taxes', array( &$this, 'ajax_distance_tax_rates' ) );
-				add_action( 'wp_ajax_add_tax_id_check', array( &$this, 'ajax_tax_id_check' ) );
-				add_action( 'woocommerce_admin_order_data_after_billing_address', array( &$this, 'order_meta' ) );
+				add_action( 'woocommerce_admin_field_button', array( $this, 'button_field' ) );
+				add_action( 'wp_ajax_add_digital_taxes', array( $this, 'ajax_digital_tax_rates' ) );
+				add_action( 'wp_ajax_add_distance_taxes', array( $this, 'ajax_distance_tax_rates' ) );
+				add_action( 'wp_ajax_add_tax_id_check', array( $this, 'ajax_tax_id_check' ) );
+				add_action( 'woocommerce_admin_order_data_after_billing_address', array( $this, 'order_meta' ) );
 			}
 		}
 

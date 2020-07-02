@@ -24,7 +24,7 @@ namespace Niteo\WooCart\EUVatTaxes {
 		 * Class constructor.
 		 */
 		public function __construct() {
-			add_filter( 'woocommerce_admin_reports', array( &$this, 'tabs' ), 10, 1 );
+			add_filter( 'woocommerce_admin_reports', array( $this, 'tabs' ), 10, 1 );
 		}
 
 		/**

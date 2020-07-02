@@ -34,14 +34,11 @@ namespace Niteo\WooCart\EUVatTaxes {
 			// Run on plugin activation
 			register_activation_hook( __FILE__, array( $config, 'activation_check' ) );
 
-			// Check for compatible environment
-			if ( $config->is_environment_compatible() && $config->is_plugin_compatible() ) {
-				// Load rest of the modules
-				new Admin();
-				new Rates();
-				new UserView();
-				new Reports();
-			}
+			// Load rest of the modules
+			new Admin();
+			new Rates();
+			new UserView();
+			new Reports();
 		}
 
 	}
