@@ -407,23 +407,16 @@ namespace Niteo\WooCart\EUVatTaxes {
 		}
 
 		/**
-		 * Returns POST data for multi-select countries.
-		 */
-		public function get_countries() {
-			return array_map( 'sanitize_text_field', $_POST['countries'] );
-		}
-
-		/**
 		 * Initiate the Vies class for Tax ID check.
 		 */
-		public function vies() {
+		public function vies() : Vies {
 			return new Vies();
 		}
 
 		/**
 		 * Initiate the Rates class to fetch tax rates.
 		 */
-		public function rates() {
+		public function rates() : Rates {
 			return new Rates();
 		}
 

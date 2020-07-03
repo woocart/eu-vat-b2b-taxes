@@ -53,7 +53,6 @@ class AdminTest extends TestCase {
 		\WP_Mock::expectActionAdded( 'admin_enqueue_scripts', array( $admin, 'scripts' ) );
 		\WP_Mock::expectActionAdded( 'woocommerce_admin_field_button', array( $admin, 'button_field' ) );
 		\WP_Mock::expectActionAdded( 'wp_ajax_add_digital_taxes', array( $admin, 'ajax_digital_tax_rates' ) );
-		\WP_Mock::expectActionAdded( 'wp_ajax_add_distance_taxes', array( $admin, 'ajax_distance_tax_rates' ) );
 		\WP_Mock::expectActionAdded( 'wp_ajax_add_tax_id_check', array( $admin, 'ajax_tax_id_check' ) );
 		\WP_Mock::expectActionAdded( 'woocommerce_admin_order_data_after_billing_address', array( $admin, 'order_meta' ) );
 
@@ -320,7 +319,6 @@ class AdminTest extends TestCase {
 	/**
 	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::__construct
 	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::add_taxes_to_db
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::get_countries
 	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::rates
 	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
 	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_tax_rates
@@ -368,102 +366,13 @@ class AdminTest extends TestCase {
 						)
 					);
 		$mock->shouldReceive( 'rates' )->andReturn( $rates );
-		$mock->shouldReceive( 'get_countries' )->andReturn( array( 'DE', 'SI' ) );
 
 		$this->assertEquals(
 			array(
 				'status'  => 'success',
 				'message' => '2 tax entries have been updated',
 			),
-			$mock->add_taxes_to_db( 'Distance Selling', 'distance-selling' )
-		);
-	}
-
-	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::add_taxes_to_db
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::get_countries
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::rates
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_tax_rates
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::fetch_tax_rates
-	 */
-	public function testAddTaxesToDbDistanceNoCountries() {
-		global $wpdb;
-
-		$wpdb = new class() {
-			public $prefix = 'wp_';
-
-			function prepare() {
-				return true;
-			}
-			function get_row() {
-				return false;
-			}
-			function update() {
-				return true;
-			}
-			function insert() {
-				return true;
-			}
-		};
-
-		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Admin' )->makePartial();
-
-		\WP_Mock::userFunction(
-			'update_option',
-			array(
-				'return' => true,
-			)
-		);
-
-		$rates = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Rates' );
-		$rates->shouldReceive( 'get_tax_rates' )
-					->andReturn(
-						array(
-							'DE' => array(
-								'standard_rate' => '20.0',
-							),
-							'SI' => array(
-								'standard_rate' => '30.0',
-							),
-						)
-					);
-		$mock->shouldReceive( 'rates' )->andReturn( $rates );
-		$mock->shouldReceive( 'get_countries' )->andReturn( array( 'FR', 'BE' ) );
-
-		$this->assertEquals(
-			array(
-				'status'  => 'success',
-				'message' => '0 tax entries have been updated',
-			),
-			$mock->add_taxes_to_db( 'Distance Selling', 'distance-selling' )
-		);
-	}
-
-	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::get_countries
-	 */
-	public function testGetCountries() {
-		$admin = new Admin();
-
-		$_POST['countries'] = array(
-			'DE',
-			'SI',
-		);
-
-		\WP_Mock::userFunction(
-			'sanitize_text_field',
-			array(
-				'times'  => 2,
-				'return' => 'SANITIZED_VALUE',
-			)
-		);
-
-		$this->assertEquals(
-			array( 'SANITIZED_VALUE', 'SANITIZED_VALUE' ),
-			$admin->get_countries()
+			$mock->add_taxes_to_db( 'Digital Goods', 'digital-goods' )
 		);
 	}
 

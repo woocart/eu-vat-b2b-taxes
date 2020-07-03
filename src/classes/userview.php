@@ -259,7 +259,7 @@ namespace Niteo\WooCart\EUVatTaxes {
 			}
 
 			// All conditions seem to be fine, so we need to check for VAT validation
-			$validator = new Vies();
+			$validator = $this->vies();
 			$is_valid  = $validator->isValid( $fields['business_tax_id'], true );
 
 			// If we are able to verify the ID, remove taxes
@@ -331,11 +331,11 @@ namespace Niteo\WooCart\EUVatTaxes {
 				return;
 			}
 
-			if ( ! isset( $_POST['business_check'] ) ) {
+			if ( ! isset( $data['business_check'] ) ) {
 				return;
 			}
 
-			if ( ! empty( $_POST['business_tax_id'] ) ) {
+			if ( ! empty( $data['business_tax_id'] ) ) {
 				return;
 			}
 
@@ -366,11 +366,19 @@ namespace Niteo\WooCart\EUVatTaxes {
 		}
 
 		/**
+		 * Initiate the Vies class for Tax ID check.
+		 */
+		public function vies() : Vies {
+			return new Vies();
+		}
+
+		/**
 		 * Return tax rate for user's country for `digital-goods` tax class.
 		 *
 		 * @return array
+		 * @codeCoverageIgnore
 		 */
-		private function get_digital_tax_rate_for_user() : array {
+		protected function get_digital_tax_rate_for_user() : array {
 			return \WC_Tax::get_rates( 'digital-goods' );
 		}
 

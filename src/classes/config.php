@@ -33,7 +33,7 @@ namespace Niteo\WooCart\EUVatTaxes {
 		/**
 		 * @var string
 		 */
-		public const MINIMUM_PHP_VERSION = '5.6';
+		public const MINIMUM_PHP_VERSION = '7.2';
 
 		/**
 		 * @var string

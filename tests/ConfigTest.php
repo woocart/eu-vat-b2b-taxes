@@ -131,12 +131,12 @@ class ConfigTest extends TestCase {
 	 * @covers \Niteo\WooCart\EUVatTaxes\Config::admin_notices
 	 */
 	public function testAdminNotices() {
-		$config = new Config();
+		$config          = new Config();
 		$config->notices = array(
 			'notice1' => array(
 				'class'   => 'class1',
 				'message' => 'message1',
-			)
+			),
 		);
 
 		\WP_Mock::userFunction(
