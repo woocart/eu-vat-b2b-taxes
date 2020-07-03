@@ -58,7 +58,7 @@ namespace Niteo\WooCart\EUVatTaxes {
 		/**
 		 * @var array
 		 */
-		private $notices = array();
+		public $notices = array();
 
 		/**
 		 * Class constructor.
@@ -82,9 +82,9 @@ namespace Niteo\WooCart\EUVatTaxes {
 		 * Checks the environment on loading WordPress, just in case the environment changes after activation.
 		 */
 		public function check_environment() {
-			if ( ! $this->is_environment_compatible() && is_plugin_active( self::PLUGIN_BASE ) ) {
+			if ( ! $this->is_environment_compatible() && is_plugin_active( $this->get_plugin_base() ) ) {
 				$this->deactivate_plugin();
-				$this->add_admin_notice( 'bad_environment', 'error', self::PLUGIN_NAME . ' has been deactivated. ' . $this->get_environment_message() );
+				$this->add_admin_notice( 'bad_environment', 'error', $this->get_plugin_name() . ' has been deactivated. ' . $this->get_environment_message() );
 			}
 		}
 
@@ -99,8 +99,8 @@ namespace Niteo\WooCart\EUVatTaxes {
 					'error',
 					sprintf(
 						'%s requires WordPress version %s or higher. Please %supdate WordPress &raquo;%s',
-						'<strong>' . self::PLUGIN_NAME . '</strong>',
-						self::MINIMUM_WP_VERSION,
+						'<strong>' . $this->get_plugin_name() . '</strong>',
+						$this->get_wp_version(),
 						'<a href="' . esc_url( admin_url( 'update-core.php' ) ) . '">',
 						'</a>'
 					)
@@ -114,11 +114,11 @@ namespace Niteo\WooCart\EUVatTaxes {
 					'error',
 					sprintf(
 						'%1$s requires WooCommerce version %2$s or higher. Please %3$supdate WooCommerce%4$s to the latest version, or %5$sdownload the minimum required version &raquo;%6$s',
-						'<strong>' . self::PLUGIN_NAME . '</strong>',
-						self::MINIMUM_WC_VERSION,
+						'<strong>' . $this->get_plugin_name() . '</strong>',
+						$this->get_wc_version(),
 						'<a href="' . esc_url( admin_url( 'update-core.php' ) ) . '">',
 						'</a>',
-						'<a href="' . esc_url( 'https://downloads.wordpress.org/plugin/woocommerce.' . self::MINIMUM_WC_VERSION . '.zip' ) . '">',
+						'<a href="' . esc_url( 'https://downloads.wordpress.org/plugin/woocommerce.' . $this->get_wc_version() . '.zip' ) . '">',
 						'</a>'
 					)
 				);
@@ -130,13 +130,9 @@ namespace Niteo\WooCart\EUVatTaxes {
 		 */
 		public function admin_notices() {
 			foreach ( (array) $this->notices as $notice_key => $notice ) {
-				?>
-
-				<div class="<?php echo esc_attr( $notice['class'] ); ?>">
-					<p><?php echo wp_kses( $notice['message'], array( 'a' => array( 'href' => array() ) ) ); ?></p>
-				</div>
-
-				<?php
+				echo '<div class="' . esc_attr( $notice['class'] ) . '">';
+				echo '<p>' . wp_kses( $notice['message'], array( 'a' => array( 'href' => array() ) ) ) . '</p>';
+				echo '</div>';
 			}
 		}
 
@@ -160,7 +156,7 @@ namespace Niteo\WooCart\EUVatTaxes {
 		 * @return bool
 		 */
 		public function is_environment_compatible() {
-			return version_compare( PHP_VERSION, self::MINIMUM_PHP_VERSION, '>=' );
+			return version_compare( PHP_VERSION, $this->get_php_version(), '>=' );
 		}
 
 		/**
@@ -171,7 +167,7 @@ namespace Niteo\WooCart\EUVatTaxes {
 		public function get_environment_message() {
 			return sprintf(
 				esc_html__( 'The minimum PHP version required for this plugin is %1$s. You are running %2$s.', 'eu-vat-b2b-taxes' ),
-				self::MINIMUM_PHP_VERSION,
+				$this->get_php_version(),
 				PHP_VERSION
 			);
 		}
@@ -190,12 +186,12 @@ namespace Niteo\WooCart\EUVatTaxes {
 		 *
 		 * @return bool
 		 */
-		private function is_wp_compatible() {
-			if ( ! self::MINIMUM_WP_VERSION ) {
+		public function is_wp_compatible() {
+			if ( ! $this->get_wp_version() ) {
 				return true;
 			}
 
-			return version_compare( get_bloginfo( 'version' ), self::MINIMUM_WP_VERSION, '>=' );
+			return version_compare( get_bloginfo( 'version' ), $this->get_wp_version(), '>=' );
 		}
 
 		/**
@@ -203,23 +199,58 @@ namespace Niteo\WooCart\EUVatTaxes {
 		 *
 		 * @return bool
 		 */
-		private function is_wc_compatible() {
-			if ( ! self::MINIMUM_WC_VERSION ) {
+		public function is_wc_compatible() {
+			if ( ! $this->get_wc_version() ) {
 				return true;
 			}
 
-			return defined( 'WC_VERSION' ) && version_compare( WC_VERSION, self::MINIMUM_WC_VERSION, '>=' );
+			return defined( 'WC_VERSION' ) && version_compare( WC_VERSION, $this->get_wc_version(), '>=' );
 		}
 
 		/**
 		 * Deactivates the plugin.
 		 */
 		protected function deactivate_plugin() {
-			deactivate_plugins( self::PLUGIN_BASE );
+			deactivate_plugins( $this->get_plugin_base() );
 
 			if ( isset( $_GET['activate'] ) ) {
 				unset( $_GET['activate'] );
 			}
+		}
+
+		/**
+		 * Returns PLUGIN_NAME.
+		 */
+		public function get_plugin_name() {
+			return self::PLUGIN_NAME;
+		}
+
+		/**
+		 * Returns PLUGIN_BASE.
+		 */
+		public function get_plugin_base() {
+			return self::PLUGIN_BASE;
+		}
+
+		/**
+		 * Returns MINIMUM_PHP_VERSION.
+		 */
+		public function get_php_version() {
+			return self::MINIMUM_PHP_VERSION;
+		}
+
+		/**
+		 * Returns MINIMUM_WP_VERSION.
+		 */
+		public function get_wp_version() {
+			return self::MINIMUM_WP_VERSION;
+		}
+
+		/**
+		 * Returns MINIMUM_WC_VERSION.
+		 */
+		public function get_wc_version() {
+			return self::MINIMUM_WC_VERSION;
 		}
 
 	}
