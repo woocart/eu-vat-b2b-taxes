@@ -140,33 +140,6 @@ class AdminTest extends TestCase {
 
 	/**
 	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::ajax_distance_tax_rates
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::add_taxes_to_db
-	 */
-	public function testAjaxDistanceTaxRates() {
-		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Admin' )
-						->makePartial();
-		$mock->shouldReceive( 'add_taxes_to_db' )
-				 ->andReturn( true );
-
-		\WP_Mock::userFunction(
-			'check_ajax_referer',
-			array(
-				'return' => true,
-			)
-		);
-		\WP_Mock::userFunction(
-			'wp_send_json',
-			array(
-				'return' => true,
-			)
-		);
-
-		$mock->ajax_distance_tax_rates();
-	}
-
-	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::__construct
 	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::order_meta
 	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::add_html
 	 */
