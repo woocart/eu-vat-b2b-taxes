@@ -208,17 +208,6 @@ namespace Niteo\WooCart\EUVatTaxes {
 		}
 
 		/**
-		 * Deactivates the plugin.
-		 */
-		protected function deactivate_plugin() {
-			deactivate_plugins( $this->get_plugin_base() );
-
-			if ( isset( $_GET['activate'] ) ) {
-				unset( $_GET['activate'] );
-			}
-		}
-
-		/**
 		 * Returns PLUGIN_NAME.
 		 */
 		public function get_plugin_name() {
@@ -251,6 +240,17 @@ namespace Niteo\WooCart\EUVatTaxes {
 		 */
 		public function get_wc_version() {
 			return self::MINIMUM_WC_VERSION;
+		}
+
+		/**
+		 * Deactivates the plugin.
+		 */
+		protected function deactivate_plugin() {
+			deactivate_plugins( $this->get_plugin_base() );
+
+			if ( isset( $_GET['activate'] ) ) {
+				unset( $_GET['activate'] );
+			}
 		}
 
 	}

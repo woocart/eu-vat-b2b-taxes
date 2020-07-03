@@ -6,7 +6,6 @@
  */
 
 use Niteo\WooCart\EUVatTaxes\UserView;
-use Niteo\WooCart\EUVatTaxes\Vies;
 use PHPUnit\Framework\TestCase;
 
 class UserViewTest extends TestCase {
@@ -657,5 +656,16 @@ class UserViewTest extends TestCase {
 		$this->assertInstanceOf( '\Niteo\WooCart\EUVatTaxes\Vies', $user->vies() );
 	}
 
+	/**
+	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
+	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::get_digital_tax_rate_for_user
+	 */
+	public function testGetDigitalTaxRate() {
+		$user = new UserView();
+		$wc   = \Mockery::mock( 'alias:\WC_Tax' );
+		$wc->shouldReceive( 'get_rates' )->andReturn( array() );
+
+		$this->assertEquals( array(), $user->get_digital_tax_rate_for_user() );
+	}
 
 }

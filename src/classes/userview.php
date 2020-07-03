@@ -376,9 +376,8 @@ namespace Niteo\WooCart\EUVatTaxes {
 		 * Return tax rate for user's country for `digital-goods` tax class.
 		 *
 		 * @return array
-		 * @codeCoverageIgnore
 		 */
-		protected function get_digital_tax_rate_for_user() : array {
+		public function get_digital_tax_rate_for_user() : array {
 			return \WC_Tax::get_rates( 'digital-goods' );
 		}
 
