@@ -33,6 +33,26 @@ namespace Niteo\WooCart\EUVatTaxes {
 		public $b2b_tax_id_required;
 
 		/**
+		 * @var string
+		 */
+		public $b2b_charge_tax_home_country;
+
+		/**
+		 * @var string
+		 */
+		public $b2b_no_tax_valid_vies;
+
+		/**
+		 * @var string
+		 */
+		public $b2b_no_tax_outside_country;
+
+		/**
+		 * @var string
+		 */
+		public $store_country;
+
+		/**
 		 * Class constructor.
 		 */
 		public function __construct() {
@@ -44,9 +64,13 @@ namespace Niteo\WooCart\EUVatTaxes {
 		 */
 		public function init() : void {
 			// Get user settings for the plugin
-			$this->enable_digital_tax = sanitize_text_field( get_option( 'wc_vat_digital_goods_enable', 'no' ) );
-			$this->b2b_sales_status = sanitize_text_field( get_option( 'wc_b2b_sales', 'none' ) );
-			$this->b2b_tax_id_required = sanitize_text_field( get_option( 'wc_tax_id_required', 'no' ) );
+			$this->enable_digital_tax          = sanitize_text_field( get_option( 'wc_vat_digital_goods_enable', 'no' ) );
+			$this->b2b_sales_status            = sanitize_text_field( get_option( 'wc_b2b_sales', 'none' ) );
+			$this->b2b_tax_id_required         = sanitize_text_field( get_option( 'wc_tax_id_required', 'yes' ) );
+			$this->b2b_charge_tax_home_country = sanitize_text_field( get_option( 'wc_tax_home_country', 'yes' ) );
+			$this->b2b_no_tax_valid_vies       = sanitize_text_field( get_option( 'wc_tax_eu_with_vatid', 'yes' ) );
+			$this->b2b_no_tax_outside_country  = sanitize_text_field( get_option( 'wc_tax_charge_vat', 'yes' ) );
+			$this->store_country               = sanitize_text_field( get_option( 'woocommerce_default_country' ) );
 
 			// Assign Hooks & Filters
 			add_filter( 'woocommerce_billing_fields', array( $this, 'checkout_fields' ) );
@@ -54,6 +78,7 @@ namespace Niteo\WooCart\EUVatTaxes {
 			add_filter( 'woocommerce_product_get_tax_status', array( $this, 'digital_goods_verify' ), PHP_INT_MAX, 2 );
 
 			add_action( 'wp_enqueue_scripts', array( $this, 'scripts' ) );
+			add_action( 'woocommerce_checkout_update_order_review', array( $this, 'b2b_taxes' ), PHP_INT_MAX );
 			add_action( 'woocommerce_after_checkout_validation', array( $this, 'checkout_validation' ), PHP_INT_MAX, 2 );
 			add_action( 'woocommerce_checkout_update_order_meta', array( $this, 'update_order_meta' ) );
 		}
@@ -125,7 +150,7 @@ namespace Niteo\WooCart\EUVatTaxes {
 			if ( ! $product->get_virtual() && ! $product->get_downloadable() ) {
 				return $tax_class;
 			}
-			
+
 			return 'digital-goods';
 		}
 
@@ -159,6 +184,143 @@ namespace Niteo\WooCart\EUVatTaxes {
 		}
 
 		/**
+		 * Verifies the existence of the `digital-goods` tax class.
+		 * If not present, removes tax from the products.
+		 *
+		 * @param string $data Checkout data to be checked against
+		 *
+		 * @return void
+		 */
+		public function b2b_taxes( string $data ) : void {
+			// Check if b2b sales are enabled
+			if ( 'none' === $this->b2b_sales_status ) {
+				return;
+			}
+
+			// Convert data from string to associative array
+			parse_str( $data, $fields );
+
+			// For B2B
+			if ( ! isset( $fields['business_check'] ) ) {
+				return;
+			}
+
+			if ( empty( $fields['business_check'] ) ) {
+				return;
+			}
+
+			/**
+			 * There are two possible scenarios.
+			 *
+			 * 1. B2B sales in the home country (which means buyer's country == store base country)
+			 * 2. B2B sales outside the country
+			 */
+
+			// Customer billing country
+			$country = $fields['billing_country'];
+
+			// First scenario
+			// B2B sales in the home country
+			if ( $country === $this->store_country ) {
+				$this->validate_b2b_sales_home_country( $fields );
+			}
+
+			// Second scenario
+			// B2B sales outside the home country
+			if ( $country !== $this->store_country ) {
+				$this->validate_b2b_sales_outside_home_country();
+			}
+		}
+
+		/**
+		 * Validating B2B sales when the buyer's home country and store's base
+		 * country are same.
+		 *
+		 * @param array $fields Checkout fields array
+		 * @return void
+		 */
+		public function validate_b2b_sales_home_country( array $fields ) : void {
+			// Check for Tax ID
+			if ( 'no' === $this->b2b_charge_tax_home_country ) {
+				add_filter( 'woocommerce_product_get_tax_class', array( $this, 'zero_rate_tax' ), PHP_INT_MAX, 2 );
+				add_filter( 'woocommerce_product_get_tax_status', array( $this, 'zero_rate_tax_verify' ), PHP_INT_MAX, 2 );
+				return;
+			}
+
+			// We are here, which means the option to charge tax is set to 'yes'
+			// So, by default WC will charge tax
+			// Checking for the last option in this scenario for VAT ID
+			if ( 'no' === $this->b2b_no_tax_valid_vies ) {
+				return;
+			}
+
+			if ( empty( $fields['business_tax_id'] ) ) {
+				return;
+			}
+
+			// All conditions seem to be fine, so we need to check for VAT validation
+			$validator = new Vies();
+			$is_valid  = $validator->isValid( $fields['business_tax_id'], true );
+
+			// If we are able to verify the ID, remove taxes
+			if ( (bool) $is_valid ) {
+				add_filter( 'woocommerce_product_get_tax_class', array( $this, 'zero_rate_tax' ), PHP_INT_MAX, 2 );
+				add_filter( 'woocommerce_product_get_tax_status', array( $this, 'zero_rate_tax_verify' ), PHP_INT_MAX, 2 );
+				return;
+			}
+
+			// Else, just let the defaults happen
+			return;
+		}
+
+		/**
+		 * Validating B2B sales when the buyer's home country and store's base
+		 * country are NOT same.
+		 *
+		 * @return void
+		 */
+		public function validate_b2b_sales_outside_home_country() {
+			if ( 'no' === $this->b2b_no_tax_outside_country ) {
+				return;
+			}
+
+			// We have set to no taxes for B2B sales outside country
+			add_filter( 'woocommerce_product_get_tax_class', array( $this, 'zero_rate_tax' ), PHP_INT_MAX, 2 );
+			add_filter( 'woocommerce_product_get_tax_status', array( $this, 'zero_rate_tax_verify' ), PHP_INT_MAX, 2 );
+			return;
+		}
+
+		/**
+		 * For removing tax from products.
+		 *
+		 * @param string $tax_class Tax class assigned to the product
+		 * @param object $product Object containing product information
+		 *
+		 * @return string
+		 */
+		public function zero_rate_tax( string $tax_class, object $product ) : string {
+			return 'Zero rate';
+		}
+
+		/**
+		 * Verifies the existence of the `Zero rate` tax class.
+		 * If present, removes tax from the products.
+		 *
+		 * @param string $tax_status Tax status assigned to the product
+		 * @param object $product Object containing product information
+		 *
+		 * @return string
+		 */
+		public function zero_rate_tax_verify( string $tax_status, object $product ) : string {
+			// If `Zero rate` class is present, change tax_status to `none`
+			if ( 'Zero rate' === $product->get_tax_class() ) {
+				return 'none';
+			}
+
+			return $tax_status;
+		}
+
+		/**
 		 * Add custom validation for the business tax ID field which is set to optional but we enforce it as required if the purchase is being made as a business entity.
 		 *
 		 * @param  array    $data An array of posted data.
@@ -172,7 +334,7 @@ namespace Niteo\WooCart\EUVatTaxes {
 			if ( ! isset( $_POST['business_check'] ) ) {
 				return;
 			}
-			
+
 			if ( ! empty( $_POST['business_tax_id'] ) ) {
 				return;
 			}
@@ -191,7 +353,7 @@ namespace Niteo\WooCart\EUVatTaxes {
 				return;
 			}
 
-			$business_check = sanitize_text_field( $_POST['business_check'] );
+			$business_check  = sanitize_text_field( $_POST['business_check'] );
 			$business_tax_id = sanitize_text_field( $_POST['business_tax_id'] );
 
 			if ( ! empty( $business_check ) ) {
