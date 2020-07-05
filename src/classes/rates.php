@@ -111,7 +111,7 @@ namespace Niteo\WooCart\EUVatTaxes {
 				'name_text'          => esc_html__( 'Name', 'eu-vat-b2b-taxes' ),
 				'use_rate_text'      => esc_html__( 'Use rates', 'eu-vat-b2b-taxes' ),
 				'name_desc_text'     => esc_html__( 'The description that will be used when using the button for mass adding/updating of EU rates', 'eu-vat-b2b-taxes' ),
-				'name_value_text'    => esc_html__( 'Tax', 'eu-vat-b2b-taxes' ),
+				'name_value_text'    => esc_html__( 'Standard Tax', 'eu-vat-b2b-taxes' ),
 				'grab_tax_text'      => esc_html__( 'Grab all the EU Tax rates at the click of a button.', 'eu-vat-b2b-taxes' ),
 				'known_rates_key'    => implode( '", "', array_keys( $this->known_rates ) ),
 				'known_rates_values' => implode( '", "', array_values( $this->known_rates ) ),

@@ -5,11 +5,16 @@
  * @package eu-vat-b2b-taxes
  */
 
+namespace Niteo\WooCart\EUVatTaxes;
+
 use Niteo\WooCart\EUVatTaxes\Admin;
 use PHPUnit\Framework\TestCase;
 
-class AdminTest extends TestCase {
+function class_exists( $class ) {
+	return true;
+}
 
+class AdminTest extends TestCase {
 	function setUp() {
 		\WP_Mock::setUsePatchwork( true );
 		\WP_Mock::setUp();
