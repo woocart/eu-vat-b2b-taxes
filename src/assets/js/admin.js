@@ -27,10 +27,6 @@
 			nonce: wc_euvat_l10n.nonce
 		};
 
-		if (req_type == 'distance_taxes') {
-			req_data.countries = $( 'select[name="wc_vat_distance_selling_countries[]"]' ).val();
-		}
-
 		$.ajax(
 			{
 				type: 'POST',
@@ -198,21 +194,12 @@
 		}
 	);
 
-	// Import taxes for Digital Goods & Distance Selling
+	// Import taxes for Digital Goods
 	$( '.import-digital-tax-rates' ).on(
 		'click',
 		function(e) {
 			e.preventDefault();
 			euVatAjax( 'digital_taxes', $( this ) );
-		}
-	);
-
-	// Distance selling
-	$( '.import-distance-tax-rates' ).on(
-		'click',
-		function(e) {
-			e.preventDefault();
-			euVatAjax( 'distance_taxes', $( this ) );
 		}
 	);
 })( jQuery );

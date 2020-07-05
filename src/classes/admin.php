@@ -23,7 +23,7 @@ namespace Niteo\WooCart\EUVatTaxes {
 		 * Class constructor.
 		 */
 		public function __construct() {
-			add_action( 'init', array( &$this, 'init' ) );
+			add_action( 'init', array( $this, 'init' ) );
 		}
 
 		/**
@@ -31,13 +31,12 @@ namespace Niteo\WooCart\EUVatTaxes {
 		 */
 		public function init() {
 			if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
-				add_filter( 'woocommerce_get_settings_tax', array( &$this, 'settings' ), PHP_INT_MAX, 2 );
+				add_filter( 'woocommerce_get_settings_tax', array( $this, 'settings' ), PHP_INT_MAX, 2 );
 				add_action( 'admin_enqueue_scripts', array( $this, 'scripts' ) );
-				add_action( 'woocommerce_admin_field_button', array( &$this, 'button_field' ) );
-				add_action( 'wp_ajax_add_digital_taxes', array( &$this, 'ajax_digital_tax_rates' ) );
-				add_action( 'wp_ajax_add_distance_taxes', array( &$this, 'ajax_distance_tax_rates' ) );
-				add_action( 'wp_ajax_add_tax_id_check', array( &$this, 'ajax_tax_id_check' ) );
-				add_action( 'woocommerce_admin_order_data_after_billing_address', array( &$this, 'order_meta' ) );
+				add_action( 'woocommerce_admin_field_button', array( $this, 'button_field' ) );
+				add_action( 'wp_ajax_add_digital_taxes', array( $this, 'ajax_digital_tax_rates' ) );
+				add_action( 'wp_ajax_add_tax_id_check', array( $this, 'ajax_tax_id_check' ) );
+				add_action( 'woocommerce_admin_order_data_after_billing_address', array( $this, 'order_meta' ) );
 			}
 		}
 
@@ -151,35 +150,6 @@ namespace Niteo\WooCart\EUVatTaxes {
 					'type' => 'sectionend',
 					'id'   => 'wc_euvat_digital_goods',
 				),
-				array(
-					'id'    => 'wc_euvat_distance_selling',
-					'title' => esc_html__( 'EU Tax Handling - Distance Selling (B2C)', 'eu-vat-b2b-taxes' ),
-					'type'  => 'title',
-					'desc'  => sprintf( esc_html__( 'You need to register for EU Tax ID in countries where you reach %1$sDistance Selling EU Tax thresholds%2$s. Add countries where you are registered and the customers will be charged the local VAT. Applies only to products sold to consumers (B2C).', 'eu-vat-b2b-taxes' ), '<a href="https://www.vatlive.com/eu-vat-rules/distance-selling/distance-selling-eu-vat-thresholds/" target="_blank">', '</a>' ),
-				),
-				array(
-					'id'      => 'wc_vat_distance_selling_enable',
-					'title'   => esc_html__( 'EU VAT Handling for Distance Selling', 'eu-vat-b2b-taxes' ),
-					'type'    => 'checkbox',
-					'desc'    => esc_html__( 'Enable', 'eu-vat-b2b-taxes' ),
-					'default' => 'no',
-				),
-				array(
-					'id'    => 'wc_vat_distance_selling_countries',
-					'title' => esc_html__( 'Select countries for which you would like to import tax rates.', 'eu-vat-b2b-taxes' ),
-					'type'  => 'multi_select_countries',
-				),
-				array(
-					'id'      => 'wc_vat_distance_selling_rates',
-					'title'   => esc_html__( 'Import tax rates for specific EU countries', 'eu-vat-b2b-taxes' ),
-					'type'    => 'button',
-					'default' => esc_html__( 'Import Taxes', 'eu-vat-b2b-taxes' ),
-					'class'   => 'button-secondary import-distance-tax-rates',
-				),
-				array(
-					'type' => 'sectionend',
-					'id'   => 'wc_euvat_distance_selling',
-				),
 			);
 
 			return array_merge( $settings, $tax_options );
@@ -239,23 +209,6 @@ namespace Niteo\WooCart\EUVatTaxes {
 		}
 
 		/**
-		 * AJAX request for importing distance selling tax rates.
-		 */
-		public function ajax_distance_tax_rates() {
-			// CSRF protection
-			check_ajax_referer( '__wc_euvat_nonce', 'nonce' );
-
-			$tax_name = esc_html__( 'Distance Selling', 'eu-vat-b2b-taxes' );
-			$tax_slug = 'distance-selling';
-
-			// Add taxes to DB
-			$response = $this->add_taxes_to_db( $tax_name, $tax_slug );
-
-			// Return response to JS
-			wp_send_json( $response );
-		}
-
-		/**
 		 * Add tax rates to DB.
 		 *
 		 * @param string $name Name used to define tax rates
@@ -287,16 +240,6 @@ namespace Niteo\WooCart\EUVatTaxes {
 				);
 			}
 
-			// Specific settings for `distance-selling`
-			if ( 'distance-selling' === $slug ) {
-				$countries = $this->get_countries();
-				$countries = json_decode( json_encode( $countries ), true );
-
-				// Update countries cause we refresh the page after AJAX call
-				// And, we don't want to lose the option set for importing taxes for the specific countries
-				update_option( 'wc_vat_distance_selling_countries', $countries );
-			}
-
 			// Fetch tax rates
 			$rates = $this->rates();
 			$data  = $rates->get_tax_rates();
@@ -313,12 +256,6 @@ namespace Niteo\WooCart\EUVatTaxes {
 				$i = 0;
 
 				foreach ( $data as $key => $value ) {
-					if ( 'distance-selling' === $slug && $countries ) {
-						if ( ! in_array( $key, $countries ) ) {
-							continue;
-						}
-					}
-
 					$query  = $wpdb->prepare(
 						"SELECT * FROM {$wpdb->prefix}woocommerce_tax_rates WHERE tax_rate_country = %s AND tax_rate_class = %s",
 						$key,
@@ -470,23 +407,16 @@ namespace Niteo\WooCart\EUVatTaxes {
 		}
 
 		/**
-		 * Returns POST data for multi-select countries.
-		 */
-		public function get_countries() {
-			return array_map( 'sanitize_text_field', $_POST['countries'] );
-		}
-
-		/**
 		 * Initiate the Vies class for Tax ID check.
 		 */
-		public function vies() {
+		public function vies() : Vies {
 			return new Vies();
 		}
 
 		/**
 		 * Initiate the Rates class to fetch tax rates.
 		 */
-		public function rates() {
+		public function rates() : Rates {
 			return new Rates();
 		}
 

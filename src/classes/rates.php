@@ -88,7 +88,7 @@ namespace Niteo\WooCart\EUVatTaxes {
 					}
 
 					// Add tax rates data to footer
-					add_action( 'admin_footer', array( &$this, 'footer' ) );
+					add_action( 'admin_footer', array( $this, 'footer' ) );
 				}
 			}
 		}
