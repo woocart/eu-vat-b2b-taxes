@@ -30,7 +30,7 @@ namespace Niteo\WooCart\EUVatTaxes {
 		 * Initialize on `init` hook.
 		 */
 		public function init() {
-			if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+			if ( class_exists( 'WooCommerce' ) ) {
 				add_filter( 'woocommerce_get_settings_tax', array( $this, 'settings' ), PHP_INT_MAX, 2 );
 				add_action( 'admin_enqueue_scripts', array( $this, 'scripts' ) );
 				add_action( 'woocommerce_admin_field_button', array( $this, 'button_field' ) );

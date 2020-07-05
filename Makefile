@@ -1,4 +1,4 @@
-VERSION := 1.5.0
+VERSION := 1.6.0
 PLUGINSLUG := eu-vat-b2b-taxes
 SRCPATH := $(shell pwd)/src
 
@@ -82,7 +82,7 @@ i18n: src/vendor
 	wp i18n make-pot src src/i18n/$(PLUGINSLUG).pot
 
 cover: vendor
-	bin/coverage-check clover.xml 85
+	bin/coverage-check clover.xml 94
 
 clean:
 	rm -rf vendor/ bin src/vendor/

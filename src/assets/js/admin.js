@@ -148,7 +148,9 @@
 			$( 'table.wc_tax_rates' ).on(
 				'click',
 				'.wc-euvat-updaterates',
-				function() {
+				function(e) {
+					e.preventDefault();
+
 					var which_rate,
 						rate,
 						reduced_rate,
@@ -159,6 +161,9 @@
 					if (typeof which_rate == 'undefined' || which_rate == '') {
 						which_rate = wc_euvat_l10n.which_rate;
 					}
+
+					// Disable button
+					$( this ).addClass( 'disabled' );
 
 					$.each(
 						rates,
@@ -178,6 +183,9 @@
 							addRow( iso, rate.toString(), name )
 						}
 					);
+
+					// Unblock button
+					$( this ).removeClass( 'disabled' );
 
 					return false;
 				}
