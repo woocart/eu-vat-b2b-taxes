@@ -163,7 +163,7 @@
 					}
 
 					// Disable button
-					$( this ).addClass( 'disabled' );
+					$( this  ).addClass( 'disabled' );
 
 					$.each(
 						rates,
@@ -185,7 +185,7 @@
 					);
 
 					// Unblock button
-					$( this ).removeClass( 'disabled' );
+					$( this  ).removeClass( 'disabled' );
 
 					return false;
 				}
