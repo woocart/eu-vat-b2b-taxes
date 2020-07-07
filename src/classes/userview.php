@@ -335,6 +335,10 @@ namespace Niteo\WooCart\EUVatTaxes {
 				return;
 			}
 
+			if ( empty( $data['business_check'] ) ) {
+				return;
+			}
+
 			if ( ! empty( $data['business_tax_id'] ) ) {
 				return;
 			}
