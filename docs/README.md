@@ -2,9 +2,9 @@
 
 The plugin adds three sections to the default Tax menu in WooCommerce:
 
-- Tax Handling for B2B
-- EU Tax Handling - Digital Goods (B2C)
-- EU Tax Handling - Distance Selling (B2C)
+- EU VAT Handling for B2B
+- EU VAT Handling for Digital Goods (B2C)
+- EU VAT Handling for Distance Selling (B2C)
 
 Make sure you have your country's standard, reduced and zero rates entered in WooCommerce settings. This is not handled by the plugin. We also recommend using Shop base address for tax calculation.
 
@@ -15,15 +15,15 @@ Please keep in mind you or your accountant need to do the VAT reporting to the E
 
 ## Plugin Settings
 
-### Tax Handling for B2B
+### EU VAT Handling for B2B
 
 This section handles taxes for B2B (Business to Business). Let's have a look at the options for B2B tax handling offered by the plugin and how it affects tax calculation for the customer.
 
 <img src="images/tax-b2b.png" alt="Tax Handling for B2B">
 
-- **B2B Sales** - Enable this option (for either EU Store or Non-EU Store) to add a checkbox for businesses to the checkout form. When the visitor clicks the option in the checkout form, an additional Tax ID field opens for entering the Business Tax ID. 
+- **B2B Sales** - Enable this option (for either EU Store or Non-EU Store) to add a checkbox for businesses to the checkout form. When the visitor clicks the option in the checkout form, an additional VAT ID field opens for entering the Business VAT ID. 
 
-- **Tax ID field required for B2B** - Enabling this option makes it mandatory for all B2B customers to provide a Business Tax ID. By default, it is required.
+- **Tax ID field required for B2B** - Enabling this option makes it mandatory for all B2B customers to provide a Business VAT ID. By default, it is required.
 
 - **B2B sales in the home country** - Whether B2B sales in the home country are taxed or not. By default, it is charged.
 
@@ -31,7 +31,7 @@ This section handles taxes for B2B (Business to Business). Let's have a look at 
 
 - **B2B sales outside the country** - Whether B2B sales outside the home country and EU are taxed or not. For example: selling from Germany to the USA. By default, it is not charged.
 
-### Digital Goods (B2C - EU)
+### EU VAT Handling for Digital Goods (B2C - EU)
 
 This part of the plugin handles taxes for [Digital Goods](https://quaderno.io/resources/eu-vat-guide/) for consumers when selling to the EU. This option has no impact on the B2B transactions.
 
@@ -39,13 +39,13 @@ This part of the plugin handles taxes for [Digital Goods](https://quaderno.io/re
 
 For this to work properly, you need to go through two steps.
 
-- **EU Tax Handling for Digital Goods** - Click to enable Digital Goods tax. Use the next option to import tax rates.
+- **EU Tax Handling for Digital Goods** - Click to enable Digital Goods tax. Use the next option to import tax rates and create tax class.
 
 - **Import tax rates for all EU countries and create tax class Digital Goods** - Click to import standard VAT rates for all EU countries and create a tax class Digital Goods. You must assign this tax class to all digital goods in your store. Digital goods are charged the customer's country tax rate.
 
-### Distance Selling (B2C - EU)
+### EU VAT Handling for Distance Selling (B2C)
 
-This part of the plugin handles taxes for Digital Selling for Consumers. As a store owner, you will need to register for EU VAT ID in countries where you reach [Distance Selling EU Tax thresholds](https://www.vatlive.com/eu-vat-rules/distance-selling/distance-selling-eu-vat-thresholds/). This option has no impact on the B2B transactions.
+This part of the plugin handles EU VAT for Digital Selling for Consumers. As a store owner, you will need to register for EU VAT ID in countries where you reach [Distance Selling EU Tax thresholds](https://www.vatlive.com/eu-vat-rules/distance-selling/distance-selling-eu-vat-thresholds/). This option has no impact on the B2B transactions.
 
 <img src="images/tax-b2c-distance.png" alt="Distance Selling (B2C)">
 
