@@ -4,7 +4,6 @@ The plugin adds three sections to the default Tax menu in WooCommerce:
 
 - EU VAT Handling for B2B
 - EU VAT Handling for Digital Goods (B2C)
-- EU VAT Handling for Distance Selling (B2C)
 
 Make sure you have your country's standard, reduced and zero rates entered in WooCommerce settings. This is not handled by the plugin. We also recommend using Shop base address for tax calculation.
 
@@ -43,18 +42,5 @@ For this to work properly, you need to go through two steps.
 
 - **Import tax rates for all EU countries and create tax class Digital Goods** - Click to import standard VAT rates for all EU countries and create a tax class Digital Goods. You must assign this tax class to all digital goods in your store. Digital goods are charged the customer's country tax rate.
 
-### EU VAT Handling for Distance Selling (B2C)
-
-This part of the plugin handles EU VAT for Digital Selling for Consumers. As a store owner, you will need to register for EU VAT ID in countries where you reach [Distance Selling EU Tax thresholds](https://www.vatlive.com/eu-vat-rules/distance-selling/distance-selling-eu-vat-thresholds/). This option has no impact on the B2B transactions.
-
-<img src="images/tax-b2c-distance.png" alt="Distance Selling (B2C)">
-
-For this to work properly, you need to go through three steps.
-
-- **Enable EU VAT Handling for Distance Selling** - Enable to collect local taxes in specific countries. Choose the countries for this category in the next option.
-
-- **Select countries for which you would like to import tax rates** - Add countries whose tax rates you would like to import.
-
-- **Import tax rates for specific EU countries** - Click to import tax rates for all EU countries selected in the above option.
 
 ## Reports
