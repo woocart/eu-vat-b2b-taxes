@@ -48,4 +48,4 @@ For this to work properly, you need to go through two steps.
 There are two reports added to the Reports page.
 
 - **Reports > Orders > B2B Transactions** - Lists all B2B transactions.
-- **Reports > Orders > Tax Collected By Country** - Lists the total tax collected by country for easier reporting to an accountant and/or tax authorities.
+- **Reports > Taxes > Tax Collected By Country** - Lists the total tax collected by country for easier reporting to an accountant and/or tax authorities.
