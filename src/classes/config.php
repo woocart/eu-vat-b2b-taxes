@@ -28,7 +28,7 @@ namespace Niteo\WooCart\EUVatTaxes {
 		/**
 		 * @var string
 		 */
-		public const VERSION = '@##VERSION##@';
+		public const VERSION = '1.6.1';
 
 		/**
 		 * @var string

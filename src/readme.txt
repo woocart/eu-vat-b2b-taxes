@@ -2,13 +2,13 @@
 Contributors: woocart
 Tags: woocart, woocommerce, taxes, vat
 Requires at least: 4.8
-Tested up to: 5.3.2
-Stable tag: 1.3.0
+Tested up to: 5.4.2
+Stable tag: 1.6.1
 Requires PHP: 5.6
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-EU VAT & B2B Taxes for WooCommerce
+EU VAT & B2B Taxes for WooCommerce plugin helps with configuring complex tax variations when selling in or into the EU.
 
 == Description ==
 
@@ -28,9 +28,21 @@ https://github.com/woocart/eu-vat-b2b-taxes
 
 == Screenshots ==
 
+1. Plugin settings
+2. One-click import for taxes
+3. Report for B2B transactions
+4. Report for "Tax collected by country"
 
 == Changelog ==
+= 1.6.1 =
+* Minor bug fixes
 
+= 1.6.0 =
+* Re-write plugin from scratch
+* Support for WooCommerce v4.2.0 and onwards
+
+= 1.0 =
+First release of the plugin
 
 == Upgrade Notice ==
 
