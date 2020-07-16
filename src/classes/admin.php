@@ -79,13 +79,13 @@ namespace Niteo\WooCart\EUVatTaxes {
 			$tax_options = array(
 				array(
 					'id'    => 'wc_euvat_options',
-					'title' => esc_html__( 'Tax Handling for B2B', 'eu-vat-b2b-taxes' ),
+					'title' => esc_html__( 'EU VAT Handling for B2B', 'eu-vat-b2b-taxes' ),
 					'type'  => 'title',
 					'desc'  => esc_html__( 'Customize settings if you sell to companies. Defaults are ticked checkboxes.', 'eu-vat-b2b-taxes' ),
 				),
 				array(
 					'id'      => 'wc_b2b_sales',
-					'title'   => esc_html__( 'B2B sales (adds fields Company Name and Tax ID)', 'eu-vat-b2b-taxes' ),
+					'title'   => esc_html__( 'B2B sales (adds fields Company Name and VAT ID)', 'eu-vat-b2b-taxes' ),
 					'type'    => 'select',
 					'options' => array(
 						'none'  => esc_html__( 'disabled', 'eu-vat-b2b-taxes' ),
@@ -96,9 +96,9 @@ namespace Niteo\WooCart\EUVatTaxes {
 				),
 				array(
 					'id'      => 'wc_tax_id_required',
-					'title'   => esc_html__( 'Tax ID field required for B2B', 'eu-vat-b2b-taxes' ),
+					'title'   => esc_html__( 'VAT ID field required for B2B', 'eu-vat-b2b-taxes' ),
 					'type'    => 'checkbox',
-					'desc'    => esc_html__( 'Tax ID required', 'eu-vat-b2b-taxes' ),
+					'desc'    => esc_html__( 'VAT ID required', 'eu-vat-b2b-taxes' ),
 					'default' => 'yes',
 				),
 				array(
@@ -117,7 +117,7 @@ namespace Niteo\WooCart\EUVatTaxes {
 				),
 				array(
 					'id'      => 'wc_tax_charge_vat',
-					'title'   => esc_html__( 'B2B sales outside the country', 'eu-vat-b2b-taxes' ),
+					'title'   => esc_html__( 'B2B sales outside the EU', 'eu-vat-b2b-taxes' ),
 					'type'    => 'checkbox',
 					'desc'    => esc_html__( 'Do not charge Tax', 'eu-vat-b2b-taxes' ),
 					'default' => 'yes',
@@ -128,13 +128,13 @@ namespace Niteo\WooCart\EUVatTaxes {
 				),
 				array(
 					'id'    => 'wc_euvat_digital_goods',
-					'title' => esc_html__( 'EU Tax Handling - Digital Goods (B2C)', 'eu-vat-b2b-taxes' ),
+					'title' => esc_html__( 'EU VAT Handling for Digital Goods (B2C)', 'eu-vat-b2b-taxes' ),
 					'type'  => 'title',
 					'desc'  => esc_html__( 'If you sell digital goods in/to EU, you need to charge the customer\'s country Tax. Automatically validates the customer IP against their billing address, and prompts the customer to self-declare their address if they do not match. Applies only to digital goods and services sold to consumers (B2C).', 'eu-vat-b2b-taxes' ),
 				),
 				array(
 					'id'      => 'wc_vat_digital_goods_enable',
-					'title'   => esc_html__( 'EU Tax Handling for Digital Goods', 'eu-vat-b2b-taxes' ),
+					'title'   => esc_html__( 'EU VAT Handling for Digital Goods', 'eu-vat-b2b-taxes' ),
 					'type'    => 'checkbox',
 					'desc'    => esc_html__( 'Enable', 'eu-vat-b2b-taxes' ),
 					'default' => 'no',
@@ -143,7 +143,7 @@ namespace Niteo\WooCart\EUVatTaxes {
 					'id'      => 'wc_vat_digital_goods_rates',
 					'title'   => esc_html__( 'Import tax rates for all EU countries and create tax class Digital Goods' ),
 					'type'    => 'button',
-					'default' => esc_html__( 'Import Taxes', 'eu-vat-b2b-taxes' ),
+					'default' => esc_html__( 'Import & Create', 'eu-vat-b2b-taxes' ),
 					'class'   => 'button-secondary import-digital-tax-rates',
 				),
 				array(
