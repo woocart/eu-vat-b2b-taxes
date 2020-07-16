@@ -28,13 +28,8 @@ namespace Niteo\WooCart\EUVatTaxes {
 		 * Class constructor.
 		 */
 		public function __construct() {
-			// Initialize plugin configuration
-			$config = new Config();
-
-			// Run on plugin activation
-			register_activation_hook( __FILE__, array( $config, 'activation_check' ) );
-
-			// Load rest of the modules
+			// Initialize modules
+			new Config();
 			new Admin();
 			new Rates();
 			new UserView();
