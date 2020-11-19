@@ -1,4 +1,4 @@
-# EU VAT & B2B Taxes for WooCommerce
+# WooCommerce EU VAT Plugin
 
 ![](https://github.com/woocart/eu-vat-b2b-taxes/workflows/Tests/badge.svg)
 
