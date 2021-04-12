@@ -5,17 +5,25 @@
  * @package eu-vat-b2b-taxes
  */
 
+namespace Niteo\WooCart\EUVatTaxes;
+
 use Niteo\WooCart\EUVatTaxes\Reports;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Tests Reports class functions in isolation.
+ *
+ * @package Niteo\WooCart\EUVatTaxes
+ * @coversDefaultClass \Niteo\WooCart\EUVatTaxes\Reports
+ */
 class ReportsTest extends TestCase {
 
-	function setUp() {
+	function setUp() : void {
 		\WP_Mock::setUsePatchwork( true );
 		\WP_Mock::setUp();
 	}
 
-	function tearDown() {
+	function tearDown() : void {
 		$this->addToAssertionCount(
 			\Mockery::getContainer()->mockery_getExpectationCount()
 		);
@@ -24,7 +32,7 @@ class ReportsTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Reports::__construct
+	 * @covers ::__construct
 	 */
 	public function testConstructor() {
 		$reports = new Reports();
@@ -36,8 +44,8 @@ class ReportsTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Reports::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Reports::tabs
+	 * @covers ::__construct
+	 * @covers ::tabs
 	 */
 	public function testTabs() {
 		$reports = new Reports();
@@ -72,14 +80,14 @@ class ReportsTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Reports::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Reports::taxes_by_country
-	 * @covers \Niteo\WooCart\EUVatTaxes\Reports\Taxes_Report_By_Country::output_report
+	 * @covers ::__construct
+	 * @covers ::taxes_by_country
+	 * @covers \Niteo\WooCart\EUVatTaxes\Reports\TaxesReportByCountry::output_report
 	 */
 	public function testTaxesByCountry() {
 		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Reports' )->makePartial();
 
-		$reports = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Taxes_Report_By_Country' );
+		$reports = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\TaxesReportByCountry' );
 		$reports->shouldReceive( 'output_report' )->andReturn( true );
 
 		$mock->shouldReceive( 'taxes_report' )->andReturn( $reports );
@@ -87,14 +95,14 @@ class ReportsTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Reports::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Reports::business_orders
-	 * @covers \Niteo\WooCart\EUVatTaxes\Reports\Business_Transactions_Report::output_report
+	 * @covers ::__construct
+	 * @covers ::business_orders
+	 * @covers \Niteo\WooCart\EUVatTaxes\Reports\BusinessTransactionsReport::output_report
 	 */
 	public function testBusinessOrders() {
 		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Reports' )->makePartial();
 
-		$reports = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Business_Transactions_Report' );
+		$reports = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\BusinessTransactionsReport' );
 		$reports->shouldReceive( 'output_report' )->andReturn( true );
 
 		$mock->shouldReceive( 'business_transactions' )->andReturn( $reports );
@@ -102,27 +110,27 @@ class ReportsTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Reports::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Reports::taxes_report
+	 * @covers ::__construct
+	 * @covers ::taxes_report
 	 */
 	public function testTaxesReport() {
 		$reports = new Reports();
 
 		$this->assertInstanceOf(
-			'\Niteo\WooCart\EUVatTaxes\Reports\Taxes_Report_By_Country',
+			'\Niteo\WooCart\EUVatTaxes\Reports\TaxesReportByCountry',
 			$reports->taxes_report()
 		);
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Reports::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Reports::business_transactions
+	 * @covers ::__construct
+	 * @covers ::business_transactions
 	 */
 	public function testBusinessTransactions() {
 		$reports = new Reports();
 
 		$this->assertInstanceOf(
-			'\Niteo\WooCart\EUVatTaxes\Reports\Business_Transactions_Report',
+			'\Niteo\WooCart\EUVatTaxes\Reports\BusinessTransactionsReport',
 			$reports->business_transactions()
 		);
 	}

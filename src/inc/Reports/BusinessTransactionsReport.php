@@ -10,7 +10,7 @@ namespace Niteo\WooCart\EUVatTaxes\Reports {
 	 * @since 1.0.0
 	 * @codeCoverageIgnore
 	 */
-	class Taxes_Report_By_Country extends WC_Admin_Report {
+	class BusinessTransactionsReport extends WC_Admin_Report {
 
 		/**
 		 * Get the legend for the main chart sidebar.
@@ -71,9 +71,8 @@ namespace Niteo\WooCart\EUVatTaxes\Reports {
 			$query_data = array(
 				'ID'               => array(
 					'type'     => 'post_data',
-					'function' => 'COUNT',
-					'name'     => 'total_orders',
-					'distinct' => true,
+					'function' => '',
+					'name'     => 'post_id',
 				),
 				'_billing_country' => array(
 					'type'     => 'meta',
@@ -82,13 +81,18 @@ namespace Niteo\WooCart\EUVatTaxes\Reports {
 				),
 				'_order_total'     => array(
 					'type'     => 'meta',
-					'function' => 'SUM',
+					'function' => '',
 					'name'     => 'order_total',
 				),
-				'_order_tax'       => array(
+				'business_tax_id'  => array(
 					'type'     => 'meta',
-					'function' => 'SUM',
-					'name'     => 'tax_total',
+					'function' => '',
+					'name'     => 'tax_id',
+				),
+				'post_date_gmt'    => array(
+					'type'     => 'post_data',
+					'function' => '',
+					'name'     => 'order_date',
 				),
 			);
 
@@ -96,7 +100,6 @@ namespace Niteo\WooCart\EUVatTaxes\Reports {
 				array(
 					'data'                => $query_data,
 					'query_type'          => 'get_results',
-					'group_by'            => 'country',
 					'filter_range'        => true,
 					'order_types'         => array_merge( wc_get_order_types( 'sales-reports' ), array( 'shop_order_refund' ) ),
 					'order_status'        => array( 'completed', 'processing', 'on-hold' ),
@@ -108,18 +111,20 @@ namespace Niteo\WooCart\EUVatTaxes\Reports {
 				<thead>
 					<tr>
 						<th><strong><?php esc_html_e( 'Country', 'eu-vat-b2b-taxes' ); ?></strong></th>
-						<th><strong><?php esc_html_e( 'Number Of Transactions', 'eu-vat-b2b-taxes' ); ?></strong></th>
-						<th><strong><?php esc_html_e( 'Total Taxable Sales', 'eu-vat-b2b-taxes' ); ?></strong></th>
-						<th><strong><?php esc_html_e( 'Total Tax Collected', 'eu-vat-b2b-taxes' ); ?></strong></th>
+						<th><strong><?php esc_html_e( 'Date', 'eu-vat-b2b-taxes' ); ?></strong></th>
+						<th><strong><?php esc_html_e( 'Order Number', 'eu-vat-b2b-taxes' ); ?></strong></th>
+						<th><strong><?php esc_html_e( 'Tax ID', 'eu-vat-b2b-taxes' ); ?></strong></th>
+						<th><strong><?php esc_html_e( 'Amount Sales', 'eu-vat-b2b-taxes' ); ?></strong></th>
 					</tr>
 				</thead>
 				<tbody>
 					<?php foreach ( $tax_row_orders as $tax_row ) { ?>
 					<tr>
 						<td><?php echo WC()->countries->countries[ $tax_row->country ]; ?> (<?php echo $tax_row->country; ?>)</td>
-						<td><?php echo $tax_row->total_orders; ?></td>
+						<td><?php echo $tax_row->order_date; ?></td>
+						<td><?php echo $tax_row->post_id; ?></td>
+						<td><?php echo $tax_row->tax_id; ?></td>
 						<td><?php echo wc_price( $tax_row->order_total ); ?></td>
-						<td><?php echo wc_price( $tax_row->tax_total ); ?></td>
 					</tr>
 					<?php } ?>
 				</tbody>

@@ -10,8 +10,8 @@
 
 namespace Niteo\WooCart\EUVatTaxes {
 
-	use Niteo\WooCart\EUVatTaxes\Reports\Taxes_Report_By_Country;
-	use Niteo\WooCart\EUVatTaxes\Reports\Business_Transactions_Report;
+	use Niteo\WooCart\EUVatTaxes\Reports\TaxesReportByCountry;
+	use Niteo\WooCart\EUVatTaxes\Reports\BusinessTransactionsReport;
 
 	/**
 	 * Reports class for our custom tax reports.
@@ -68,17 +68,17 @@ namespace Niteo\WooCart\EUVatTaxes {
 		}
 
 		/**
-		 * Returns Taxes_Report_By_Country class
+		 * Returns TaxesReportByCountry class
 		 */
 		public function taxes_report() {
-			return new Taxes_Report_By_Country();
+			return new TaxesReportByCountry();
 		}
 
 		/**
-		 * Returns Taxes_Report_By_Country class
+		 * Returns TaxesReportByCountry class
 		 */
 		public function business_transactions() {
-			return new Business_Transactions_Report();
+			return new BusinessTransactionsReport();
 		}
 
 	}

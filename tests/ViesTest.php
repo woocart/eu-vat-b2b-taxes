@@ -5,23 +5,31 @@
  * @package eu-vat-b2b-taxes
  */
 
+namespace Niteo\WooCart\EUVatTaxes;
+
 use Niteo\WooCart\EUVatTaxes\Vies;
 use Niteo\WooCart\EUVatTaxes\Vies\Client;
 use Niteo\WooCart\EUVatTaxes\Vies\Response;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Tests Vies class functions in isolation.
+ *
+ * @package Niteo\WooCart\EUVatTaxes
+ * @coversDefaultClass \Niteo\WooCart\EUVatTaxes\Vies
+ */
 class ViesTest extends TestCase {
 
 	private $validator;
 
-	function setUp() {
+	function setUp() : void {
 		\WP_Mock::setUsePatchwork( true );
 		\WP_Mock::setUp();
 
 		$this->validator = new Vies();
 	}
 
-	function tearDown() {
+	function tearDown() : void {
 		$this->addToAssertionCount(
 			\Mockery::getContainer()->mockery_getExpectationCount()
 		);
@@ -47,9 +55,9 @@ class ViesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::isValid
-	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::isValidCountryCode
+	 * @covers ::__construct
+	 * @covers ::isValid
+	 * @covers ::isValidCountryCode
 	 * @dataProvider getValidVatIds
 	 */
 	public function testValid( $value ) {
@@ -57,9 +65,9 @@ class ViesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::isValid
-	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::isValidCountryCode
+	 * @covers ::__construct
+	 * @covers ::isValid
+	 * @covers ::isValidCountryCode
 	 * @dataProvider getInvalidVatIds
 	 */
 	public function testInvalid( $value ) {
@@ -67,10 +75,10 @@ class ViesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::isValid
-	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::getViesClient
-	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::isValidCountryCode
+	 * @covers ::__construct
+	 * @covers ::isValid
+	 * @covers ::getViesClient
+	 * @covers ::isValidCountryCode
 	 */
 	public function testValidWithVies() {
 		$client = $this->getClientMock();
@@ -84,10 +92,10 @@ class ViesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::isValid
-	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::getViesClient
-	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::isValidCountryCode
+	 * @covers ::__construct
+	 * @covers ::isValid
+	 * @covers ::getViesClient
+	 * @covers ::isValidCountryCode
 	 */
 	public function testInvalidWithVies() {
 		$client = $this->getClientMock();
@@ -219,9 +227,9 @@ class ViesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::__construct
+	 * @covers ::__construct
 	 * @covers \Niteo\WooCart\EUVatTaxes\Vies\Client::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::getViesClient
+	 * @covers ::getViesClient
 	 */
 	public function testGetViesClient() {
 		$vies = new Vies();
