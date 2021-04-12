@@ -5,17 +5,25 @@
  * @package eu-vat-b2b-taxes
  */
 
+namespace Niteo\WooCart\EUVatTaxes;
+
 use Niteo\WooCart\EUVatTaxes\UserView;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Tests UserView class functions in isolation.
+ *
+ * @package Niteo\WooCart\EUVatTaxes
+ * @coversDefaultClass \Niteo\WooCart\EUVatTaxes\UserView
+ */
 class UserViewTest extends TestCase {
 
-	function setUp() {
+	function setUp() : void {
 		\WP_Mock::setUsePatchwork( true );
 		\WP_Mock::setUp();
 	}
 
-	function tearDown() {
+	function tearDown() : void {
 		$this->addToAssertionCount(
 			\Mockery::getContainer()->mockery_getExpectationCount()
 		);
@@ -24,7 +32,7 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
+	 * @covers ::__construct
 	 */
 	public function testConstructor() {
 		$user = new UserView();
@@ -36,8 +44,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::init
+	 * @covers ::__construct
+	 * @covers ::init
 	 */
 	public function testInit() {
 		$user = new UserView();
@@ -71,8 +79,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::scripts
+	 * @covers ::__construct
+	 * @covers ::scripts
 	 */
 	public function testScripts() {
 		$user = new UserView();
@@ -112,8 +120,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::checkout_fields
+	 * @covers ::__construct
+	 * @covers ::checkout_fields
 	 */
 	public function testCheckoutFieldsB2bNone() {
 		$user = new UserView();
@@ -138,8 +146,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::checkout_fields
+	 * @covers ::__construct
+	 * @covers ::checkout_fields
 	 */
 	public function testCheckoutFieldsB2bNotNone() {
 		$user = new UserView();
@@ -180,8 +188,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::digital_goods
+	 * @covers ::__construct
+	 * @covers ::digital_goods
 	 */
 	public function testDigitalGoodsNoTax() {
 		$user                     = new UserView();
@@ -194,8 +202,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::digital_goods
+	 * @covers ::__construct
+	 * @covers ::digital_goods
 	 */
 	public function testDigitalGoodsWithTax() {
 		$user                     = new UserView();
@@ -218,8 +226,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::digital_goods
+	 * @covers ::__construct
+	 * @covers ::digital_goods
 	 */
 	public function testDigitalGoodsWithDigitalTax() {
 		$user                     = new UserView();
@@ -242,8 +250,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::digital_goods_verify
+	 * @covers ::__construct
+	 * @covers ::digital_goods_verify
 	 */
 	public function testDigitalGoodsVerifyNoTax() {
 		$user                     = new UserView();
@@ -256,8 +264,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::digital_goods_verify
+	 * @covers ::__construct
+	 * @covers ::digital_goods_verify
 	 */
 	public function testDigitalGoodsVerifyWithTax() {
 		$user                     = new UserView();
@@ -280,8 +288,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::digital_goods_verify
+	 * @covers ::__construct
+	 * @covers ::digital_goods_verify
 	 */
 	public function testDigitalGoodsVerifyWithTaxNoRates() {
 		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\UserView' )
@@ -307,8 +315,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::digital_goods_verify
+	 * @covers ::__construct
+	 * @covers ::digital_goods_verify
 	 */
 	public function testDigitalGoodsVerifyWithTaxWithRates() {
 		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\UserView' )
@@ -334,8 +342,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::b2b_taxes
+	 * @covers ::__construct
+	 * @covers ::b2b_taxes
 	 */
 	public function testB2bTaxesNoStatus() {
 		$user                   = new UserView();
@@ -345,8 +353,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::b2b_taxes
+	 * @covers ::__construct
+	 * @covers ::b2b_taxes
 	 */
 	public function testB2bTaxesWithStatusNoBusinessCheck() {
 		$user                   = new UserView();
@@ -356,8 +364,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::b2b_taxes
+	 * @covers ::__construct
+	 * @covers ::b2b_taxes
 	 */
 	public function testB2bTaxesWithStatusEmptyBusinessCheck() {
 		$user                   = new UserView();
@@ -367,9 +375,9 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::b2b_taxes
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::validate_b2b_sales_home_country
+	 * @covers ::__construct
+	 * @covers ::b2b_taxes
+	 * @covers ::validate_b2b_sales_home_country
 	 */
 	public function testB2bTaxesWithStatusWithBusinessCheck() {
 		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\UserView' )->makePartial();
@@ -381,9 +389,9 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::b2b_taxes
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::validate_b2b_sales_outside_home_country
+	 * @covers ::__construct
+	 * @covers ::b2b_taxes
+	 * @covers ::validate_b2b_sales_outside_home_country
 	 */
 	public function testB2bTaxesWithStatusWithBusinessCheckOtherCountry() {
 		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\UserView' )->makePartial();
@@ -395,8 +403,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::validate_b2b_sales_home_country
+	 * @covers ::__construct
+	 * @covers ::validate_b2b_sales_home_country
 	 */
 	public function testValidateB2bSales() {
 		$user                              = new UserView();
@@ -410,8 +418,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::validate_b2b_sales_home_country
+	 * @covers ::__construct
+	 * @covers ::validate_b2b_sales_home_country
 	 */
 	public function testValidateB2bSalesNoVies() {
 		$user                              = new UserView();
@@ -422,8 +430,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::validate_b2b_sales_home_country
+	 * @covers ::__construct
+	 * @covers ::validate_b2b_sales_home_country
 	 */
 	public function testValidateB2bSalesEmptyTaxId() {
 		$user                              = new UserView();
@@ -434,8 +442,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::validate_b2b_sales_home_country
+	 * @covers ::__construct
+	 * @covers ::validate_b2b_sales_home_country
 	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::isValid
 	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::isValidCountryCode
 	 */
@@ -452,8 +460,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::validate_b2b_sales_home_country
+	 * @covers ::__construct
+	 * @covers ::validate_b2b_sales_home_country
 	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::isValid
 	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::isValidCountryCode
 	 */
@@ -470,8 +478,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::validate_b2b_sales_outside_home_country
+	 * @covers ::__construct
+	 * @covers ::validate_b2b_sales_outside_home_country
 	 */
 	public function testValidateB2bSalesOutsideHomeCountryNoTax() {
 		$user                             = new UserView();
@@ -481,8 +489,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::validate_b2b_sales_outside_home_country
+	 * @covers ::__construct
+	 * @covers ::validate_b2b_sales_outside_home_country
 	 */
 	public function testValidateB2bSalesOutsideHomeCountryWithTax() {
 		$user                             = new UserView();
@@ -496,8 +504,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::zero_rate_tax
+	 * @covers ::__construct
+	 * @covers ::zero_rate_tax
 	 */
 	public function testZeroTaxRate() {
 		$user = new UserView();
@@ -508,8 +516,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::zero_rate_tax_verify
+	 * @covers ::__construct
+	 * @covers ::zero_rate_tax_verify
 	 */
 	public function testZeroTaxRateVerifyZeroRate() {
 		$user    = new UserView();
@@ -526,8 +534,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::zero_rate_tax_verify
+	 * @covers ::__construct
+	 * @covers ::zero_rate_tax_verify
 	 */
 	public function testZeroTaxRateVerifyNotZeroRate() {
 		$user    = new UserView();
@@ -544,8 +552,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::checkout_validation
+	 * @covers ::__construct
+	 * @covers ::checkout_validation
 	 */
 	public function testCheckoutValidationNoTaxRequired() {
 		$user                      = new UserView();
@@ -556,8 +564,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::checkout_validation
+	 * @covers ::__construct
+	 * @covers ::checkout_validation
 	 */
 	public function testCheckoutValidationNoBusinessCheck() {
 		$user                      = new UserView();
@@ -568,8 +576,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::checkout_validation
+	 * @covers ::__construct
+	 * @covers ::checkout_validation
 	 */
 	public function testCheckoutValidationTaxIdNotEmpty() {
 		$user                      = new UserView();
@@ -588,8 +596,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::checkout_validation
+	 * @covers ::__construct
+	 * @covers ::checkout_validation
 	 */
 	public function testCheckoutValidationTaxIdEmpty() {
 		$user                      = new UserView();
@@ -610,8 +618,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::update_order_meta
+	 * @covers ::__construct
+	 * @covers ::update_order_meta
 	 */
 	public function testUpdateOrderMetaNoBusinessCheck() {
 		$user = new UserView();
@@ -619,8 +627,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::update_order_meta
+	 * @covers ::__construct
+	 * @covers ::update_order_meta
 	 */
 	public function testUpdateOrderMetaWithBusinessCheck() {
 		$user = new UserView();
@@ -647,8 +655,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::vies
+	 * @covers ::__construct
+	 * @covers ::vies
 	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::__construct
 	 */
 	public function testVies() {
@@ -657,8 +665,8 @@ class UserViewTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\UserView::get_digital_tax_rate_for_user
+	 * @covers ::__construct
+	 * @covers ::get_digital_tax_rate_for_user
 	 */
 	public function testGetDigitalTaxRate() {
 		$user = new UserView();

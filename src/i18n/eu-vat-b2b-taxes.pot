@@ -1,15 +1,15 @@
-# Copyright (C) 2020 WooCart
+# Copyright (C) 2021 WooCart
 # This file is distributed under the same license as the EU VAT & B2B Taxes plugin.
 msgid ""
 msgstr ""
 "Project-Id-Version: EU VAT & B2B Taxes @##VERSION##@\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/src\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/eu-vat-b2b-taxes\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-07-16T13:29:34+05:30\n"
+"POT-Creation-Date: 2021-04-12T07:45:51+05:30\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: eu-vat-b2b-taxes\n"
@@ -30,242 +30,242 @@ msgstr ""
 msgid "https://woocart.com"
 msgstr ""
 
-#: classes/admin.php:82
+#: inc/Admin.php:82
 msgid "EU VAT Handling for B2B"
 msgstr ""
 
-#: classes/admin.php:84
+#: inc/Admin.php:84
 msgid "Customize settings if you sell to companies. Defaults are ticked checkboxes."
 msgstr ""
 
-#: classes/admin.php:88
+#: inc/Admin.php:88
 msgid "B2B sales (adds fields Company Name and VAT ID)"
 msgstr ""
 
-#: classes/admin.php:91
+#: inc/Admin.php:91
 msgid "disabled"
 msgstr ""
 
-#: classes/admin.php:92
+#: inc/Admin.php:92
 msgid "EU store"
 msgstr ""
 
-#: classes/admin.php:93
+#: inc/Admin.php:93
 msgid "Non-EU store"
 msgstr ""
 
-#: classes/admin.php:99
+#: inc/Admin.php:99
 msgid "VAT ID field required for B2B"
 msgstr ""
 
-#: classes/admin.php:101
+#: inc/Admin.php:101
 msgid "VAT ID required"
 msgstr ""
 
-#: classes/admin.php:106
+#: inc/Admin.php:106
 msgid "B2B sales in the home country"
 msgstr ""
 
-#: classes/admin.php:108
+#: inc/Admin.php:108
 msgid "Charge Tax"
 msgstr ""
 
-#: classes/admin.php:113
+#: inc/Admin.php:113
 msgid "B2B sales in the EU when VIES/VAT ID is provided"
 msgstr ""
 
-#: classes/admin.php:115
-#: classes/admin.php:122
+#: inc/Admin.php:115
+#: inc/Admin.php:122
 msgid "Do not charge Tax"
 msgstr ""
 
-#: classes/admin.php:120
+#: inc/Admin.php:120
 msgid "B2B sales outside the EU"
 msgstr ""
 
-#: classes/admin.php:131
+#: inc/Admin.php:131
 msgid "EU VAT Handling for Digital Goods (B2C)"
 msgstr ""
 
-#: classes/admin.php:133
+#: inc/Admin.php:133
 msgid "If you sell digital goods in/to EU, you need to charge the customer's country Tax. Automatically validates the customer IP against their billing address, and prompts the customer to self-declare their address if they do not match. Applies only to digital goods and services sold to consumers (B2C)."
 msgstr ""
 
-#: classes/admin.php:137
+#: inc/Admin.php:137
 msgid "EU VAT Handling for Digital Goods"
 msgstr ""
 
-#: classes/admin.php:139
+#: inc/Admin.php:139
 msgid "Enable"
 msgstr ""
 
-#: classes/admin.php:146
+#: inc/Admin.php:146
 msgid "Import & Create"
 msgstr ""
 
-#: classes/admin.php:201
+#: inc/Admin.php:201
 msgid "Digital Goods"
 msgstr ""
 
-#: classes/admin.php:250
+#: inc/Admin.php:250
 msgid "Nothing has been added or updated in the database."
 msgstr ""
 
-#: classes/admin.php:345
+#: inc/Admin.php:345
 msgid "Yes"
 msgstr ""
 
-#: classes/admin.php:345
+#: inc/Admin.php:345
 msgid "No"
 msgstr ""
 
-#: classes/admin.php:346
+#: inc/Admin.php:346
 msgid "B2B Sale"
 msgstr ""
 
-#: classes/admin.php:355
-#: classes/admin.php:359
-#: classes/userview.php:127
+#: inc/Admin.php:355
+#: inc/Admin.php:359
+#: inc/UserView.php:127
 msgid "Business Tax ID"
 msgstr ""
 
-#: classes/admin.php:355
+#: inc/Admin.php:355
 msgid "None"
 msgstr ""
 
-#: classes/admin.php:364
+#: inc/Admin.php:364
 msgid "The Tax ID has been verified and is marked as valid."
 msgstr ""
 
-#: classes/admin.php:366
+#: inc/Admin.php:366
 msgid "The TAX ID has been verified and is marked as invalid."
 msgstr ""
 
-#: classes/admin.php:372
+#: inc/Admin.php:372
 msgid "Check VAT ID"
 msgstr ""
 
-#: classes/admin.php:373
+#: inc/Admin.php:373
 msgid "Business Tax ID verification has not been done."
 msgstr ""
 
-#: classes/admin.php:398
+#: inc/Admin.php:398
 msgid "The TAX ID has been verified and is marked as valid."
 msgstr ""
 
-#: classes/admin.php:403
+#: inc/Admin.php:403
 msgid "The Tax ID has been verified and is marked as invalid."
 msgstr ""
 
-#: classes/admin.php:406
+#: inc/Admin.php:406
 msgid "Unable to verify Tax ID because of the missing data."
 msgstr ""
 
-#: classes/config.php:169
+#: inc/Config.php:169
 msgid "The minimum PHP version required for this plugin is %1$s. You are running %2$s."
 msgstr ""
 
-#: classes/rates.php:67
+#: inc/Rates.php:67
 msgid "Standard Rate"
 msgstr ""
 
-#: classes/rates.php:68
+#: inc/Rates.php:68
 msgid "Reduced Rate"
 msgstr ""
 
-#: classes/rates.php:110
+#: inc/Rates.php:110
 msgid "Add / Update EU Tax Rates"
 msgstr ""
 
-#: classes/rates.php:111
+#: inc/Rates.php:111
 msgid "Name"
 msgstr ""
 
-#: classes/rates.php:112
+#: inc/Rates.php:112
 msgid "Use rates"
 msgstr ""
 
-#: classes/rates.php:113
+#: inc/Rates.php:113
 msgid "The description that will be used when using the button for mass adding/updating of EU rates"
 msgstr ""
 
-#: classes/rates.php:114
+#: inc/Rates.php:114
 msgid "Standard Tax"
 msgstr ""
 
-#: classes/rates.php:115
+#: inc/Rates.php:115
 msgid "Grab all the EU Tax rates at the click of a button."
 msgstr ""
 
-#: classes/rates.php:163
+#: inc/Rates.php:163
 msgid "Isle of Man"
 msgstr ""
 
-#: classes/reports.php:38
+#: inc/Reports.php:38
 msgid "Tax Collected By Country"
 msgstr ""
 
-#: classes/reports.php:45
+#: inc/Reports.php:45
 msgid "B2B Transactions"
 msgstr ""
 
-#: classes/reports/businesstransactionsreport.php:36
-#: classes/reports/taxesreportbycountry.php:36
+#: inc/Reports/BusinessTransactionsReport.php:36
+#: inc/Reports/TaxesReportByCountry.php:36
 msgid "Export CSV"
 msgstr ""
 
-#: classes/reports/businesstransactionsreport.php:46
-#: classes/reports/taxesreportbycountry.php:46
+#: inc/Reports/BusinessTransactionsReport.php:46
+#: inc/Reports/TaxesReportByCountry.php:46
 msgid "Year"
 msgstr ""
 
-#: classes/reports/businesstransactionsreport.php:47
-#: classes/reports/taxesreportbycountry.php:47
+#: inc/Reports/BusinessTransactionsReport.php:47
+#: inc/Reports/TaxesReportByCountry.php:47
 msgid "Last month"
 msgstr ""
 
-#: classes/reports/businesstransactionsreport.php:48
-#: classes/reports/taxesreportbycountry.php:48
+#: inc/Reports/BusinessTransactionsReport.php:48
+#: inc/Reports/TaxesReportByCountry.php:48
 msgid "This month"
 msgstr ""
 
-#: classes/reports/businesstransactionsreport.php:113
-#: classes/reports/taxesreportbycountry.php:110
+#: inc/Reports/BusinessTransactionsReport.php:113
+#: inc/Reports/TaxesReportByCountry.php:110
 msgid "Country"
 msgstr ""
 
-#: classes/reports/businesstransactionsreport.php:114
+#: inc/Reports/BusinessTransactionsReport.php:114
 msgid "Date"
 msgstr ""
 
-#: classes/reports/businesstransactionsreport.php:115
+#: inc/Reports/BusinessTransactionsReport.php:115
 msgid "Order Number"
 msgstr ""
 
-#: classes/reports/businesstransactionsreport.php:116
+#: inc/Reports/BusinessTransactionsReport.php:116
 msgid "Tax ID"
 msgstr ""
 
-#: classes/reports/businesstransactionsreport.php:117
+#: inc/Reports/BusinessTransactionsReport.php:117
 msgid "Amount Sales"
 msgstr ""
 
-#: classes/reports/taxesreportbycountry.php:111
+#: inc/Reports/TaxesReportByCountry.php:111
 msgid "Number Of Transactions"
 msgstr ""
 
-#: classes/reports/taxesreportbycountry.php:112
+#: inc/Reports/TaxesReportByCountry.php:112
 msgid "Total Taxable Sales"
 msgstr ""
 
-#: classes/reports/taxesreportbycountry.php:113
+#: inc/Reports/TaxesReportByCountry.php:113
 msgid "Total Tax Collected"
 msgstr ""
 
-#: classes/userview.php:117
+#: inc/UserView.php:117
 msgid "Are you making this purchase as a Business entity?"
 msgstr ""
 
-#: classes/userview.php:346
+#: inc/UserView.php:346
 msgid "%1$sBusiness Tax ID%2$s is a required field."
 msgstr ""

@@ -5,17 +5,25 @@
  * @package eu-vat-b2b-taxes
  */
 
+namespace Niteo\WooCart\EUVatTaxes;
+
 use Niteo\WooCart\EUVatTaxes\Rates;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Tests Rates class functions in isolation.
+ *
+ * @package Niteo\WooCart\EUVatTaxes
+ * @coversDefaultClass \Niteo\WooCart\EUVatTaxes\Rates
+ */
 class RatesTest extends TestCase {
 
-	function setUp() {
+	function setUp() : void {
 		\WP_Mock::setUsePatchwork( true );
 		\WP_Mock::setUp();
 	}
 
-	function tearDown() {
+	function tearDown() : void {
 		$this->addToAssertionCount(
 			\Mockery::getContainer()->mockery_getExpectationCount()
 		);
@@ -24,7 +32,7 @@ class RatesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
+	 * @covers ::__construct
 	 */
 	public function testConstructor() {
 		$rates = new Rates();
@@ -36,8 +44,8 @@ class RatesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::init
+	 * @covers ::__construct
+	 * @covers ::init
 	 */
 	public function testInitNoAdminPage() {
 		global $pagenow;
@@ -51,8 +59,8 @@ class RatesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::init
+	 * @covers ::__construct
+	 * @covers ::init
 	 */
 	public function testInitNoPage() {
 		global $pagenow;
@@ -66,8 +74,8 @@ class RatesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::init
+	 * @covers ::__construct
+	 * @covers ::init
 	 */
 	public function testInitNoTab() {
 		global $pagenow;
@@ -82,8 +90,8 @@ class RatesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::init
+	 * @covers ::__construct
+	 * @covers ::init
 	 */
 	public function testInitNoSection() {
 		global $pagenow;
@@ -107,8 +115,8 @@ class RatesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::init
+	 * @covers ::__construct
+	 * @covers ::init
 	 */
 	public function testInit() {
 		global $pagenow;
@@ -133,8 +141,8 @@ class RatesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::footer
+	 * @covers ::__construct
+	 * @covers ::footer
 	 */
 	public function testFooter() {
 		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Rates' )->makePartial();
@@ -177,8 +185,8 @@ class RatesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_tax_rates
+	 * @covers ::__construct
+	 * @covers ::get_tax_rates
 	 */
 	public function testGetTaxRatesPresent() {
 		$rates        = new Rates();
@@ -205,9 +213,9 @@ class RatesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_tax_rates
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_iso_code
+	 * @covers ::__construct
+	 * @covers ::get_tax_rates
+	 * @covers ::get_iso_code
 	 */
 	public function testGetTaxRatesNotPresent() {
 		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Rates' )->makePartial();
@@ -249,9 +257,9 @@ class RatesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_tax_rates
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_iso_code
+	 * @covers ::__construct
+	 * @covers ::get_tax_rates
+	 * @covers ::get_iso_code
 	 */
 	public function testGetTaxRatesFranceMonaco() {
 		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Rates' )->makePartial();
@@ -300,8 +308,8 @@ class RatesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_tax_code
+	 * @covers ::__construct
+	 * @covers ::get_tax_code
 	 */
 	public function testGetTaxCode() {
 		$rates = new Rates();
@@ -310,8 +318,8 @@ class RatesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_tax_code
+	 * @covers ::__construct
+	 * @covers ::get_tax_code
 	 */
 	public function testGetTaxCodeExceptionGR() {
 		$rates = new Rates();
@@ -320,8 +328,8 @@ class RatesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_tax_code
+	 * @covers ::__construct
+	 * @covers ::get_tax_code
 	 */
 	public function testGetTaxCodeExceptionGB() {
 		$rates = new Rates();
@@ -330,8 +338,8 @@ class RatesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_tax_code
+	 * @covers ::__construct
+	 * @covers ::get_tax_code
 	 */
 	public function testGetTaxCodeExceptionIM() {
 		$rates = new Rates();
@@ -340,8 +348,8 @@ class RatesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_tax_code
+	 * @covers ::__construct
+	 * @covers ::get_tax_code
 	 */
 	public function testGetTaxCodeExceptionMC() {
 		$rates = new Rates();
@@ -350,8 +358,8 @@ class RatesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_iso_code
+	 * @covers ::__construct
+	 * @covers ::get_iso_code
 	 */
 	public function testGetIsoCode() {
 		$rates = new Rates();
@@ -360,8 +368,8 @@ class RatesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_iso_code
+	 * @covers ::__construct
+	 * @covers ::get_iso_code
 	 */
 	public function testGetIsoCodeExceptionUK() {
 		$rates = new Rates();
@@ -370,8 +378,8 @@ class RatesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_iso_code
+	 * @covers ::__construct
+	 * @covers ::get_iso_code
 	 */
 	public function testGetIsoCodeExceptionEL() {
 		$rates = new Rates();
@@ -380,10 +388,10 @@ class RatesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_tax_rate_for_country
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_tax_rates
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::fetch_tax_rates
+	 * @covers ::__construct
+	 * @covers ::get_tax_rate_for_country
+	 * @covers ::get_tax_rates
+	 * @covers ::fetch_tax_rates
 	 */
 	public function testGetTaxRatesForCountryFalse() {
 		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Rates' )->makePartial();
@@ -394,10 +402,10 @@ class RatesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_tax_rate_for_country
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_tax_rates
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::fetch_tax_rates
+	 * @covers ::__construct
+	 * @covers ::get_tax_rate_for_country
+	 * @covers ::get_tax_rates
+	 * @covers ::fetch_tax_rates
 	 */
 	public function testGetTaxRatesForCountryNotArray() {
 		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Rates' )->makePartial();
@@ -408,10 +416,10 @@ class RatesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_tax_rate_for_country
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_tax_rates
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::fetch_tax_rates
+	 * @covers ::__construct
+	 * @covers ::get_tax_rate_for_country
+	 * @covers ::get_tax_rates
+	 * @covers ::fetch_tax_rates
 	 */
 	public function testGetTaxRatesForCountryNoCountryCode() {
 		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Rates' )->makePartial();
@@ -428,10 +436,10 @@ class RatesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_tax_rate_for_country
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_tax_rates
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::fetch_tax_rates
+	 * @covers ::__construct
+	 * @covers ::get_tax_rate_for_country
+	 * @covers ::get_tax_rates
+	 * @covers ::fetch_tax_rates
 	 */
 	public function testGetTaxRatesForCountryNoStandardRate() {
 		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Rates' )->makePartial();
@@ -448,10 +456,10 @@ class RatesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_tax_rate_for_country
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_tax_rates
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::fetch_tax_rates
+	 * @covers ::__construct
+	 * @covers ::get_tax_rate_for_country
+	 * @covers ::get_tax_rates
+	 * @covers ::fetch_tax_rates
 	 */
 	public function testGetTaxRatesForCountryStandardRate() {
 		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Rates' )->makePartial();
@@ -471,9 +479,9 @@ class RatesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::fetch_tax_rates
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_file_path
+	 * @covers ::__construct
+	 * @covers ::fetch_tax_rates
+	 * @covers ::get_file_path
 	 */
 	public function testFetchTaxRates() {
 		$rates = new Rates();
@@ -481,9 +489,9 @@ class RatesTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::fetch_tax_rates
-	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_file_path
+	 * @covers ::__construct
+	 * @covers ::fetch_tax_rates
+	 * @covers ::get_file_path
 	 */
 	public function testFetchTaxRatesDiffFile() {
 		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Rates' )->makePartial();

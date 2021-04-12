@@ -14,13 +14,19 @@ function class_exists( $class ) {
 	return true;
 }
 
+/**
+ * Tests Admin class functions in isolation.
+ *
+ * @package Niteo\WooCart\EUVatTaxes
+ * @coversDefaultClass \Niteo\WooCart\EUVatTaxes\Admin
+ */
 class AdminTest extends TestCase {
-	function setUp() {
+	function setUp() : void {
 		\WP_Mock::setUsePatchwork( true );
 		\WP_Mock::setUp();
 	}
 
-	function tearDown() {
+	function tearDown() : void {
 		$this->addToAssertionCount(
 			\Mockery::getContainer()->mockery_getExpectationCount()
 		);
@@ -29,7 +35,7 @@ class AdminTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::__construct
+	 * @covers ::__construct
 	 */
 	public function testConstructor() {
 		$admin = new Admin();
@@ -41,8 +47,8 @@ class AdminTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::init
+	 * @covers ::__construct
+	 * @covers ::init
 	 */
 	public function testInit() {
 		$admin = new Admin();
@@ -66,8 +72,8 @@ class AdminTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::settings
+	 * @covers ::__construct
+	 * @covers ::settings
 	 */
 	public function testSettings() {
 		$admin = new Admin();
@@ -76,8 +82,8 @@ class AdminTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::scripts
+	 * @covers ::__construct
+	 * @covers ::scripts
 	 */
 	public function testScriptsOrderPage() {
 		global $post;
@@ -116,9 +122,9 @@ class AdminTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::ajax_digital_tax_rates
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::add_taxes_to_db
+	 * @covers ::__construct
+	 * @covers ::ajax_digital_tax_rates
+	 * @covers ::add_taxes_to_db
 	 */
 	public function testAjaxDigitalTaxRates() {
 		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Admin' )
@@ -143,9 +149,9 @@ class AdminTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::order_meta
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::add_html
+	 * @covers ::__construct
+	 * @covers ::order_meta
+	 * @covers ::add_html
 	 */
 	public function testOrderMeta() {
 		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Admin' )->makePartial();
@@ -180,9 +186,9 @@ class AdminTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::ajax_tax_id_check
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::vies
+	 * @covers ::__construct
+	 * @covers ::ajax_tax_id_check
+	 * @covers ::vies
 	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::__construct
 	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::isValid
 	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::isValidCountryCode
@@ -224,9 +230,9 @@ class AdminTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::ajax_tax_id_check
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::vies
+	 * @covers ::__construct
+	 * @covers ::ajax_tax_id_check
+	 * @covers ::vies
 	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::__construct
 	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::isValid
 	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::isValidCountryCode
@@ -273,9 +279,9 @@ class AdminTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::add_taxes_to_db
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::rates
+	 * @covers ::__construct
+	 * @covers ::add_taxes_to_db
+	 * @covers ::rates
 	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
 	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_tax_rates
 	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::fetch_tax_rates
@@ -322,9 +328,9 @@ class AdminTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::add_taxes_to_db
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::rates
+	 * @covers ::__construct
+	 * @covers ::add_taxes_to_db
+	 * @covers ::rates
 	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
 	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::get_tax_rates
 	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::fetch_tax_rates
@@ -382,8 +388,8 @@ class AdminTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::vies
+	 * @covers ::__construct
+	 * @covers ::vies
 	 * @covers \Niteo\WooCart\EUVatTaxes\Vies::__construct
 	 */
 	public function testVies() {
@@ -396,8 +402,8 @@ class AdminTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Admin::rates
+	 * @covers ::__construct
+	 * @covers ::rates
 	 * @covers \Niteo\WooCart\EUVatTaxes\Rates::__construct
 	 */
 	public function testRates() {

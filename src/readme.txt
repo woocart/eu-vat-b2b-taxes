@@ -2,9 +2,9 @@
 Contributors: woocart
 Tags: woocart, woocommerce, taxes, vat
 Requires at least: 4.8
-Tested up to: 5.4.2
-Stable tag: 1.6.1
-Requires PHP: 5.6
+Tested up to: 5.7.0
+Stable tag: 1.7.0
+Requires PHP: 7.3
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -34,6 +34,12 @@ https://github.com/woocart/eu-vat-b2b-taxes
 4. Report for "Tax collected by country"
 
 == Changelog ==
+
+= 1.7.0 =
+* Compatible with WP v5.7
+* Code refactoring
+* Support for PHP 8
+
 = 1.6.1 =
 * Minor bug fixes
 
@@ -42,7 +48,7 @@ https://github.com/woocart/eu-vat-b2b-taxes
 * Support for WooCommerce v4.2.0 and onwards
 
 = 1.0 =
-First release of the plugin
+* First release of the plugin
 
 == Upgrade Notice ==
 

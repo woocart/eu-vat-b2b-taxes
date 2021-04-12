@@ -1,19 +1,21 @@
-VERSION := 1.6.1
+VERSION := 1.7.0
 PLUGINSLUG := eu-vat-b2b-taxes
 SRCPATH := $(shell pwd)/src
 
-bin/linux/amd64/github-release:
-	wget https://github.com/aktau/github-release/releases/download/v0.7.2/linux-amd64-github-release.tar.bz2
-	tar -xvf linux-amd64-github-release.tar.bz2
-	chmod +x bin/linux/amd64/github-release
-	rm linux-amd64-github-release.tar.bz2
-
-ensure: vendor
+install: vendor
 vendor: src/vendor
-	composer install --dev
-	composer dump-autoload -a
+	composer install
+	composer dump-autoload -o
 
 clover.xml: vendor test
+
+update_version:
+	sed -i "s/@##VERSION##@/${VERSION}/" src/$(PLUGINSLUG).php
+	sed -i "s/@##VERSION##@/${VERSION}/" src/i18n/$(PLUGINSLUG).pot
+
+remove_version:
+	sed -i "s/${VERSION}/@##VERSION##@/" src/$(PLUGINSLUG).php
+	sed -i "s/${VERSION}/@##VERSION##@/" src/i18n/$(PLUGINSLUG).pot
 
 unit: test
 
@@ -22,40 +24,26 @@ test: vendor
 
 src/vendor:
 	cd src && composer install
-	cd src && composer dump-autoload -a
+	cd src && composer dump-autoload -o
 
-build: ensure
-	sed -i "s/@##VERSION##@/${VERSION}/" src/$(PLUGINSLUG).php
-	sed -i "s/@##VERSION##@/${VERSION}/" src/i18n/$(PLUGINSLUG).pot
+build: install update_version
 	mkdir -p build
 	rm -rf src/vendor
 	cd src && composer install --no-dev
-	cd src && composer dump-autoload -a
+	cd src && composer dump-autoload -o
 	cp -ar $(SRCPATH) $(PLUGINSLUG)
 	zip -r $(PLUGINSLUG).zip $(PLUGINSLUG)
 	rm -rf $(PLUGINSLUG)
 	mv $(PLUGINSLUG).zip build/
-	sed -i "s/${VERSION}/@##VERSION##@/" src/$(PLUGINSLUG).php
-	sed -i "s/${VERSION}/@##VERSION##@/" src/i18n/$(PLUGINSLUG).pot
+	make remove_version
 
-dist: ensure
-	sed -i "s/@##VERSION##@/${VERSION}/" src/$(PLUGINSLUG).php
-	sed -i "s/@##VERSION##@/${VERSION}/" src/i18n/$(PLUGINSLUG).pot
+dist: install update_version
 	mkdir -p dist
 	rm -rf src/vendor
 	cd src && composer install --no-dev
-	cd src && composer dump-autoload -a
+	cd src && composer dump-autoload -o
 	cp -r $(SRCPATH)/. dist/
-	sed -i "s/${VERSION}/@##VERSION##@/" src/$(PLUGINSLUG).php
-	sed -i "s/${VERSION}/@##VERSION##@/" src/i18n/$(PLUGINSLUG).pot
-
-publish: build bin/linux/amd64/github-release
-	bin/linux/amd64/github-release upload \
-		--user woocart \
-		--repo $(PLUGINSLUG) \
-		--tag "v$(VERSION)" \
-		--name $(PLUGINSLUG)-$(VERSION).zip \
-		--file build/$(PLUGINSLUG).zip
+	make remove_version
 
 release:
 	git stash
@@ -66,23 +54,23 @@ release:
 	git push origin v$(VERSION)
 	git pull -r
 
-fmt: ensure
-	bin/phpcbf --standard=WordPress src --ignore=src/vendor
-	bin/phpcbf --standard=WordPress tests --ignore=vendor
+fmt: install
+	bin/phpcbf --standard=WordPress src --ignore=src/vendor,src/assets
+	bin/phpcbf --standard=WordPress tests
 
-lint: ensure
-	bin/phpcs --standard=WordPress src --ignore=src/vendor
-	bin/phpcs --standard=WordPress tests --ignore=vendor
+lint: install
+	bin/phpcs --standard=WordPress src --ignore=src/vendor,src/assets
+	bin/phpcs --standard=WordPress tests
 
 psr: src/vendor
-	composer dump-autoload -a
-	cd src && composer dump-autoload -a
+	composer dump-autoload -o
+	cd src && composer dump-autoload -o
 
 i18n: src/vendor
-	wp i18n make-pot src src/i18n/$(PLUGINSLUG).pot
+	wp i18n make-pot src src/i18n/$(PLUGINSLUG).pot --slug=$(PLUGINSLUG) --skip-js --exclude=vendor
 
 cover: vendor
-	bin/coverage-check clover.xml 94
+	bin/coverage-check clover.xml 92
 
 clean:
-	rm -rf vendor/ bin src/vendor/
+	rm -rf vendor/ src/vendor/

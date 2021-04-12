@@ -5,17 +5,25 @@
  * @package eu-vat-b2b-taxes
  */
 
+namespace Niteo\WooCart\EUVatTaxes;
+
 use Niteo\WooCart\EUVatTaxes\Config;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Tests Config class functions in isolation.
+ *
+ * @package Niteo\WooCart\EUVatTaxes
+ * @coversDefaultClass \Niteo\WooCart\EUVatTaxes\Config
+ */
 class ConfigTest extends TestCase {
 
-	function setUp() {
+	function setUp() : void {
 		\WP_Mock::setUsePatchwork( true );
 		\WP_Mock::setUp();
 	}
 
-	function tearDown() {
+	function tearDown() : void {
 		$this->addToAssertionCount(
 			\Mockery::getContainer()->mockery_getExpectationCount()
 		);
@@ -24,7 +32,7 @@ class ConfigTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::__construct
+	 * @covers ::__construct
 	 */
 	public function testConstructor() {
 		$config = new Config();
@@ -36,8 +44,8 @@ class ConfigTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::init
+	 * @covers ::__construct
+	 * @covers ::init
 	 */
 	public function testInit() {
 		$config = new Config();
@@ -59,15 +67,15 @@ class ConfigTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::check_environment
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::is_environment_compatible
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::deactivate_plugin
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::add_admin_notice
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::get_environment_message
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::get_php_version
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::get_plugin_name
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::get_plugin_base
+	 * @covers ::__construct
+	 * @covers ::check_environment
+	 * @covers ::is_environment_compatible
+	 * @covers ::deactivate_plugin
+	 * @covers ::add_admin_notice
+	 * @covers ::get_environment_message
+	 * @covers ::get_php_version
+	 * @covers ::get_plugin_name
+	 * @covers ::get_plugin_base
 	 */
 	public function testCheckEnvironment() {
 		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Config' )->makePartial();
@@ -92,14 +100,14 @@ class ConfigTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::add_plugin_notices
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::is_wp_compatible
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::is_wc_compatible
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::add_admin_notice
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::get_plugin_name
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::get_wc_version
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::get_wp_version
+	 * @covers ::__construct
+	 * @covers ::add_plugin_notices
+	 * @covers ::is_wp_compatible
+	 * @covers ::is_wc_compatible
+	 * @covers ::add_admin_notice
+	 * @covers ::get_plugin_name
+	 * @covers ::get_wc_version
+	 * @covers ::get_wp_version
 	 */
 	public function testAddPluginNotices() {
 		$config = new Config();
@@ -127,8 +135,8 @@ class ConfigTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::admin_notices
+	 * @covers ::__construct
+	 * @covers ::admin_notices
 	 */
 	public function testAdminNotices() {
 		$config          = new Config();
@@ -151,9 +159,9 @@ class ConfigTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::is_wc_compatible
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::get_wc_version
+	 * @covers ::__construct
+	 * @covers ::is_wc_compatible
+	 * @covers ::get_wc_version
 	 */
 	public function testIsWcCompatible() {
 		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Config' )->makePartial();
@@ -162,9 +170,9 @@ class ConfigTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::is_wp_compatible
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::get_wp_version
+	 * @covers ::__construct
+	 * @covers ::is_wp_compatible
+	 * @covers ::get_wp_version
 	 */
 	public function testIsWpCompatible() {
 		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Config' )->makePartial();
@@ -173,12 +181,12 @@ class ConfigTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::is_plugin_compatible
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::is_wp_compatible
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::is_wc_compatible
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::get_wp_version
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::get_wc_version
+	 * @covers ::__construct
+	 * @covers ::is_plugin_compatible
+	 * @covers ::is_wp_compatible
+	 * @covers ::is_wc_compatible
+	 * @covers ::get_wp_version
+	 * @covers ::get_wc_version
 	 */
 	public function testIsPluginCompatible() {
 		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Config' )->makePartial();
@@ -187,9 +195,9 @@ class ConfigTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::is_environment_compatible
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::get_php_version
+	 * @covers ::__construct
+	 * @covers ::is_environment_compatible
+	 * @covers ::get_php_version
 	 */
 	public function testEnvironmentCompatibleTrue() {
 		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Config' )->makePartial();
@@ -198,9 +206,9 @@ class ConfigTest extends TestCase {
 	}
 
 	/**
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::__construct
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::is_environment_compatible
-	 * @covers \Niteo\WooCart\EUVatTaxes\Config::get_php_version
+	 * @covers ::__construct
+	 * @covers ::is_environment_compatible
+	 * @covers ::get_php_version
 	 */
 	public function testEnvironmentCompatibleFalse() {
 		$mock = \Mockery::mock( '\Niteo\WooCart\EUVatTaxes\Config' )->makePartial();
